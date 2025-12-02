@@ -1,0 +1,33 @@
+<Project>
+
+	<PropertyGroup>
+		<Company>Byrone</Company>
+		<Authors>Byrone</Authors>
+
+		<TargetFramework>net10.0</TargetFramework>
+		<LangVersion>preview</LangVersion>
+		<Nullable>enable</Nullable>
+		<Features>strict</Features>
+		<AnalysisLevel>latest</AnalysisLevel>
+
+		<DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
+		<EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
+		<EnableUnsafeUTF7Encoding>false</EnableUnsafeUTF7Encoding>
+		<NoWarn>$(NoWarn);MA0016;MA0046;MA0048;MA0051;MA0003;CS0436;MA0038;MA0041</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(Configuration)' != 'Release' ">
+		<PackageReference Include="AsyncFixer" Version="1.6.0" PrivateAssets="All"/>
+		<PackageReference Include="ErrorProne.NET.CoreAnalyzers" Version="0.8.2-beta.1" PrivateAssets="all"/>
+		<PackageReference Include="ErrorProne.NET.Structs" Version="0.6.1-beta.1" PrivateAssets="all"/>
+		<PackageReference Include="Meziantou.Analyzer" Version="2.0.257" PrivateAssets="all"/>
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.100" PrivateAssets="all"/>
+		<PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15" PrivateAssets="all"/>
+		<PackageReference Include="Roslynator.Analyzers" Version="4.14.1" PrivateAssets="all"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="JetBrains.Annotations" Version="2025.2.4" PrivateAssets="all"/>
+	</ItemGroup>
+
+</Project>
