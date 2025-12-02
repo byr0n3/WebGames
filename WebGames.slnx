@@ -7,4 +7,7 @@
 		<File Path="NuGet.Config"/>
 	</Folder>
 	<Project Path="WebGames/WebGames.csproj"/>
+	<Project Path="WebGames.Core/WebGames.Core.csproj"/>
+	<Project Path="WebGames.Database/WebGames.Database.csproj"/>
+	<Project Path="WebGames.Tests/WebGames.Tests.csproj"/>
 </Solution>

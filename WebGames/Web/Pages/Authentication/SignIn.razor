@@ -1,0 +1,34 @@
+@page "/sign-in"
+@using Microsoft.AspNetCore.Components.Forms
+
+@* @todo Show `sign-up` alert *@
+
+<EditForm EditContext="@(context)" OnValidSubmit="@(SignInAsync)" FormName="@(SignIn.formName)">
+	<DataAnnotationsValidator />
+
+	<div>
+		<label for="user">Username/e-mail</label>
+		<InputText @bind-Value="@(Model.User)"
+		           id="user"
+		           autocomplete="username"
+		           required />
+		<ValidationMessage For="@(() => Model.User)" />
+	</div>
+
+	<div>
+		<label for="password">Password</label>
+		<InputText @bind-Value="@(Model.Password)"
+		           type="password"
+		           id="password"
+		           autocomplete="current-password"
+		           required />
+		<ValidationMessage For="@(() => Model.Password)" />
+	</div>
+
+	<div>
+		<InputCheckbox @bind-Value="@(Model.Persistent)" id="persistent" />
+		<label for="persistent">Stay signed in?</label>
+	</div>
+
+	<button type="submit">Sign in</button>
+</EditForm>
