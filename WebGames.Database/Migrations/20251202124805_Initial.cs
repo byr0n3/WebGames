@@ -21,13 +21,15 @@ namespace WebGames.Database.Migrations
                     Username = table.Column<byte[]>(type: "bytea", nullable: false),
                     Email = table.Column<byte[]>(type: "bytea", nullable: false),
                     Password = table.Column<byte[]>(type: "bytea", nullable: false),
+                    Flags = table.Column<int>(type: "integer", nullable: false),
+                    PasswordResetToken = table.Column<Guid>(type: "uuid", nullable: true),
+                    PasswordResetExpiry = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     SecurityStamp = table.Column<string>(type: "text", nullable: true),
                     LastSignInTimestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     AccessFailedCount = table.Column<int>(type: "integer", nullable: false),
                     AccessLockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     HasMfaEnabled = table.Column<bool>(type: "boolean", nullable: false),
-                    Flags = table.Column<int>(type: "integer", nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()")
+                    Created = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                 },
                 constraints: table =>
                 {

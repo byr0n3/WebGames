@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Extensions.Options;
 
 namespace WebGames.Database.Encryption
@@ -13,7 +14,7 @@ namespace WebGames.Database.Encryption
 			{
 				if (value.Length != EncryptionOptions.KeyLength)
 				{
-					throw new System.Exception($"Encryption key has to be exactly {KeyLength} bytes.");
+					throw new Exception($"Encryption key has to be exactly {KeyLength} bytes.");
 				}
 
 				field = value;

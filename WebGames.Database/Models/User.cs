@@ -23,7 +23,13 @@ namespace WebGames.Database.Models
 
 		public required byte[] Password { get; init; }
 
-		public string? SecurityStamp { get; init; } = System.Guid.NewGuid().ToString();
+		public UserFlags Flags { get; init; }
+
+		public Guid? PasswordResetToken { get; init; }
+
+		public DateTimeOffset? PasswordResetExpiry { get; init; }
+
+		public string? SecurityStamp { get; init; } = Guid.NewGuid().ToString();
 
 		public DateTimeOffset? LastSignInTimestamp { get; set; }
 
@@ -33,12 +39,10 @@ namespace WebGames.Database.Models
 
 		public bool HasMfaEnabled { get; init; }
 
-		public UserFlags Flags { get; init; }
-
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public DateTime Created { get; init; }
+		public DateTimeOffset Created { get; init; }
 
-		public static Expression<Func<User, bool>> FindAuthenticatable(string user, System.IServiceProvider services)
+		public static Expression<Func<User, bool>> FindAuthenticatable(string user, IServiceProvider services)
 		{
 			var encrypted = services.GetRequiredService<DbEncryptor>().Encrypt(user);
 

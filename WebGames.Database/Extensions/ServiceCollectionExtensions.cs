@@ -1,4 +1,6 @@
+using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using WebGames.Database.Encryption;
@@ -19,6 +21,12 @@ namespace WebGames.Database.Extensions
 
 					var dataSource = builder.Build();
 
+					options.ConfigureWarnings(static (warnings) =>
+					{
+						// As I like to make manual changes to migration files, I despise this error.
+						warnings.Ignore(RelationalEventId.PendingModelChangesWarning);
+					});
+
 					options.EnableSensitiveDataLogging(isDevelopment)
 						   .EnableDetailedErrors(isDevelopment)
 						   .EnableThreadSafetyChecks(isDevelopment)
@@ -26,7 +34,7 @@ namespace WebGames.Database.Extensions
 				}, poolSize);
 			}
 
-			public void AddDatabaseEncryptor(System.Action<EncryptionOptions> configure)
+			public void AddDatabaseEncryptor(Action<EncryptionOptions> configure)
 			{
 				services.Configure(configure);
 				services.AddSingleton<DbEncryptor>();

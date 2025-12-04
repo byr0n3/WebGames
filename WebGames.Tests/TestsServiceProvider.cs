@@ -13,7 +13,7 @@ using Xunit;
 
 namespace WebGames.Tests
 {
-	public sealed class TestsServiceProvider : System.IServiceProvider, System.IDisposable, System.IAsyncDisposable
+	public sealed class TestsServiceProvider : IServiceProvider, IDisposable, IAsyncDisposable
 	{
 		private readonly ServiceProvider provider;
 
@@ -35,7 +35,7 @@ namespace WebGames.Tests
 				});
 			});
 
-			services.AddDatabase(configuration.GetConnectionString("WebGames") ?? throw new System.Exception(), true);
+			services.AddDatabase(configuration.GetConnectionString("WebGames") ?? throw new Exception(), true);
 			services.AddDatabaseEncryptor((options) =>
 			{
 				var encryption = configuration.GetSection("Encryption");

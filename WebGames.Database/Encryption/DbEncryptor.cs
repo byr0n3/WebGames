@@ -50,7 +50,7 @@ namespace WebGames.Database.Encryption
 				aes.BlockSize = aes.KeySize / 2;
 				aes.Key = this.options.Key;
 				// @todo Support different IV per encrypted data/model
-				// Currently fixed to compare encrypted values in DB without the values differing.
+				// Currently fixed to compare encrypted values in DB without the encrypted values differing.
 				aes.IV = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16];
 				aes.Padding = PaddingMode.PKCS7;
 			}

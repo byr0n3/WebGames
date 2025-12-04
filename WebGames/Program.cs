@@ -64,7 +64,7 @@ static void ConfigureServices(IServiceCollection services, ConfigurationManager 
 		}
 	);
 
-	services.AddDatabase(configuration.GetConnectionString("WebGames") ?? throw new System.Exception(), environment.IsDevelopment());
+	services.AddDatabase(configuration.GetConnectionString("WebGames") ?? throw new Exception(), environment.IsDevelopment());
 	services.AddDatabaseEncryptor((options) =>
 	{
 		var encryption = configuration.GetSection("Encryption");

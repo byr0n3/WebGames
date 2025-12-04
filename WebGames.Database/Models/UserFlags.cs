@@ -1,6 +1,8 @@
+using System;
+
 namespace WebGames.Database.Models
 {
-	[System.Flags]
+	[Flags]
 	public enum UserFlags
 	{
 		None = 0,
