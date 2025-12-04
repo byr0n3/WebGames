@@ -3,10 +3,8 @@ using System.Threading.Tasks;
 using Elegance.AspNet.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Http;
-using WebGames.Database;
-using WebGames.Database.Models;
 using WebGames.Models.Requests;
+using WebGames.Services;
 
 namespace WebGames.Web.Pages.Authentication
 {
@@ -14,11 +12,9 @@ namespace WebGames.Web.Pages.Authentication
 	{
 		private const string formName = nameof(SignIn);
 
-		[CascadingParameter] public required HttpContext HttpContext { get; init; }
-
 		[Inject] public required NavigationManager Navigation { get; init; }
 
-		[Inject] public required AuthenticationService<User, WebGamesDbContext> Authentication { get; init; }
+		[Inject] public required AuthenticationService Authentication { get; init; }
 
 		[SupplyParameterFromQuery(Name = nameof(SignIn.ReturnUrl))]
 		public string? ReturnUrl { get; set; }
@@ -39,10 +35,8 @@ namespace WebGames.Web.Pages.Authentication
 		{
 			Debug.Assert(this.Model.IsValid);
 
-			var result = await this.Authentication.AuthenticateAsync(this.HttpContext,
-																	 this.Model.User,
-																	 this.Model.Password,
-																	 this.Model.Persistent);
+			// @todo
+			var result = await this.Authentication.AuthenticateAsync(this.Model.User, this.Model.Password, this.Model.Persistent);
 
 			if (result is not AuthenticationResult.Success)
 			{

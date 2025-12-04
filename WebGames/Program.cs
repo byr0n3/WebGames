@@ -1,6 +1,7 @@
 using System;
 using Elegance.AspNet.Authentication.Extensions;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,6 +47,11 @@ return;
 static void ConfigureServices(IServiceCollection services, ConfigurationManager configuration, IWebHostEnvironment environment)
 {
 	services.AddRazorComponents().AddInteractiveServerComponents();
+
+	services.AddHttpContextAccessor();
+
+	services.AddScoped<AuthenticationService>();
+	services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
 
 	services.AddAuth<User, WebGamesDbContext, UserClaimsProvider>(
 		configureCookie: static (options) =>
