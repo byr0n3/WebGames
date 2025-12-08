@@ -25,6 +25,8 @@ namespace WebGames.Database.Models
 
 		public UserFlags Flags { get; init; }
 
+		public Guid? AccountConfirmationToken { get; init; }
+
 		public Guid? PasswordResetToken { get; init; }
 
 		public DateTimeOffset? PasswordResetExpiry { get; init; }

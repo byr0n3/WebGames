@@ -1,12 +1,12 @@
 @using Microsoft.Extensions.Options
 @using WebGames.Models
 
-<p>Click the button/link to configure a new password for your account:</p>
-<a href="@(Href)">Reset password</a>
+<p>Click the button/link to activate your account:</p>
+<a href="@(Href)">Activate your account</a>
 
 @code {
 
-	public const string Subject = "Your password reset";
+	public const string Subject = "Activate your account";
 
 	[Inject] public required IOptions<AppOptions> App { get; init; }
 
@@ -15,7 +15,7 @@
 	private string Href =>
 		new UriBuilder(App.Value.BaseUrl)
 		{
-			Path = $"/reset-password/{Token:D}",
+			Path = $"/activate-account/{Token:D}",
 		}.ToString();
 
 }

@@ -19,6 +19,9 @@ namespace WebGames.Web.Pages.Authentication
 		[SupplyParameterFromQuery(Name = nameof(SignIn.ReturnUrl))]
 		public string? ReturnUrl { get; set; }
 
+		[SupplyParameterFromQuery(Name = nameof(SignIn.SignedUp))]
+		public bool SignedUp { get; set; }
+
 		[SupplyParameterFromForm(FormName = SignIn.formName)]
 		private SignInModel Model { get; set; } = new();
 

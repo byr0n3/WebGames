@@ -82,7 +82,7 @@ namespace WebGames.Web.Pages.Authentication
 
 			var html = await this.Renderer.RenderAsync<ResetPasswordLink>(new Dictionary<string, object?>(System.StringComparer.Ordinal)
 			{
-				{ nameof(ResetPasswordLink.ResetToken), token },
+				{ nameof(ResetPasswordLink.Token), token },
 			});
 
 			await this.Smtp.SendAsync(new SmtpService.SmtpMessageDescriptor

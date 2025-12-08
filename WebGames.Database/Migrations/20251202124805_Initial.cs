@@ -22,6 +22,7 @@ namespace WebGames.Database.Migrations
                     Email = table.Column<byte[]>(type: "bytea", nullable: false),
                     Password = table.Column<byte[]>(type: "bytea", nullable: false),
                     Flags = table.Column<int>(type: "integer", nullable: false),
+                    AccountConfirmationToken = table.Column<Guid>(type: "uuid", nullable: true),
                     PasswordResetToken = table.Column<Guid>(type: "uuid", nullable: true),
                     PasswordResetExpiry = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     SecurityStamp = table.Column<string>(type: "text", nullable: true),

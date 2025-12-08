@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebGames;
 using WebGames.Database;
 using WebGames.Database.Extensions;
 using WebGames.Database.Models;
@@ -40,6 +41,8 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
    .AddInteractiveServerRenderMode();
+
+app.MapGet("/activate-account/{token:guid}", Endpoints.ActivateAsync);
 
 await app.RunAsync().ConfigureAwait(false);
 

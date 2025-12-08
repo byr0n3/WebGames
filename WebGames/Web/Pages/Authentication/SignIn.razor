@@ -1,7 +1,10 @@
 @page "/sign-in"
 @using Microsoft.AspNetCore.Components.Forms
 
-@* @todo Show `sign-up` alert *@
+@if (SignedUp)
+{
+	<div>Your account has been created. Make sure to activate it using the e-mail in your inbox before signing in.</div>
+}
 
 <EditForm EditContext="@(context)" OnValidSubmit="@(SignInAsync)" FormName="@(SignIn.formName)">
 	<DataAnnotationsValidator />
@@ -32,6 +35,6 @@
 
 	<a href="/forgot-password">Forgot your password?</a>
 	<a href="/sign-up">No account yet?</a>
-	
+
 	<button type="submit">Sign in</button>
 </EditForm>
