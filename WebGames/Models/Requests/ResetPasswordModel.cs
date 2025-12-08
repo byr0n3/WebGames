@@ -1,32 +1,25 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using Elegance.AspNet.Authentication;
+using WebGames.AspNet;
+using WebGames.Resources;
 
 namespace WebGames.Models.Requests
 {
-	internal sealed class ResetPasswordModel : IValidatableObject
+	internal sealed class ResetPasswordModel
 	{
-		[Required] public string? Password { get; set; }
+		[Required]
+		[Password]
+		[Display(Name = nameof(ResetPasswordModel.Password), ResourceType = typeof(UserLocalization))]
+		public string? Password { get; set; }
 
-		[Required] public string? PasswordConfirmation { get; set; }
+		[Required]
+		[Display(Name = nameof(ResetPasswordModel.PasswordConfirmation), ResourceType = typeof(UserLocalization))]
+		public string? PasswordConfirmation { get; set; }
 
 		public bool IsValid
 		{
 			[MemberNotNullWhen(true, nameof(this.Password), nameof(this.PasswordConfirmation))]
 			get => (this.Password is not null) && (this.PasswordConfirmation is not null);
-		}
-
-		public IEnumerable<ValidationResult> Validate(ValidationContext context)
-		{
-			Debug.Assert(this.IsValid);
-
-			if (!PasswordStrength.ValidateStrength(this.Password))
-			{
-				// @todo Localize
-				yield return new ValidationResult("Password not strong enough.", [nameof(SignUpModel.Password)]);
-			}
 		}
 	}
 }

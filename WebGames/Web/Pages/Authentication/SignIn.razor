@@ -1,40 +1,32 @@
 @page "/sign-in"
 @using Microsoft.AspNetCore.Components.Forms
+@using WebGames.Web.Components
+
+<PageTitle>@(Localizer["SignIn"])</PageTitle>
 
 @if (SignedUp)
 {
-	<div>Your account has been created. Make sure to activate it using the e-mail in your inbox before signing in.</div>
+	<div>@(Localizer[nameof(SignIn.SignedUp)])</div>
 }
 
 <EditForm EditContext="@(context)" OnValidSubmit="@(SignInAsync)" FormName="@(SignIn.formName)">
 	<DataAnnotationsValidator />
 
-	<div>
-		<label for="user">Username/e-mail</label>
-		<InputText @bind-Value="@(Model.User)"
-		           id="user"
-		           autocomplete="username"
-		           required />
-		<ValidationMessage For="@(() => Model.User)" />
-	</div>
+	<InputTextField @bind-Value="@(Model.User)"
+	                Id="user"
+	                autocomplete="username"
+	                required />
 
-	<div>
-		<label for="password">Password</label>
-		<InputText @bind-Value="@(Model.Password)"
-		           type="password"
-		           id="password"
-		           autocomplete="current-password"
-		           required />
-		<ValidationMessage For="@(() => Model.Password)" />
-	</div>
+	<InputTextField @bind-Value="@(Model.Password)"
+	                Id="password"
+	                type="password"
+	                autocomplete="current-password"
+	                required />
 
-	<div>
-		<InputCheckbox @bind-Value="@(Model.Persistent)" id="persistent" />
-		<label for="persistent">Stay signed in?</label>
-	</div>
+	<InputCheckboxField @bind-Value="@(Model.Persistent)" Id="persistent" />
 
-	<a href="/forgot-password">Forgot your password?</a>
-	<a href="/sign-up">No account yet?</a>
+	<a href="/forgot-password">@(Localizer["ForgotPassword"])</a>
+	<a href="/sign-up">@(Localizer["SignUp"])</a>
 
-	<button type="submit">Sign in</button>
+	<button type="submit">@(Localizer["SignIn"])</button>
 </EditForm>

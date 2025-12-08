@@ -1,14 +1,20 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using WebGames.Resources;
 
 namespace WebGames.Models.Requests
 {
 	internal sealed class SignInModel
 	{
-		[Required] public string? User { get; set; }
+		[Required]
+		[Display(Name = nameof(SignInModel.User), ResourceType = typeof(SignInModelLocalization))]
+		public string? User { get; set; }
 
-		[Required] public string? Password { get; set; }
+		[Required]
+		[Display(Name = nameof(SignInModel.Password), ResourceType = typeof(UserLocalization))]
+		public string? Password { get; set; }
 
+		[Display(Name = nameof(SignInModel.Persistent), ResourceType = typeof(SignInModelLocalization))]
 		public bool Persistent { get; set; } = true;
 
 		public bool IsValid

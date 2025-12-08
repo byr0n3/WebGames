@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Elegance.AspNet.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Localization;
 using WebGames.Models.Requests;
 using WebGames.Services;
 
@@ -15,6 +16,8 @@ namespace WebGames.Web.Pages.Authentication
 		[Inject] public required NavigationManager Navigation { get; init; }
 
 		[Inject] public required AuthenticationService Authentication { get; init; }
+
+		[Inject] public required IStringLocalizer<SignInLocalization> Localizer { get; init; }
 
 		[SupplyParameterFromQuery(Name = nameof(SignIn.ReturnUrl))]
 		public string? ReturnUrl { get; set; }
@@ -42,13 +45,12 @@ namespace WebGames.Web.Pages.Authentication
 
 			if (result is not AuthenticationResult.Success)
 			{
-				// @todo Localize
 				var error = (result) switch
 				{
-					AuthenticationResult.InvalidCredentials => "Invalid credentials.",
-					AuthenticationResult.MfaRequired        => "MFA is not supported yet.",
-					AuthenticationResult.AccountLockedOut   => "Your account has been temporarily locked.",
-					_                                       => "Unknown error",
+					AuthenticationResult.InvalidCredentials => nameof(AuthenticationResult.InvalidCredentials),
+					AuthenticationResult.MfaRequired        => nameof(AuthenticationResult.MfaRequired),
+					AuthenticationResult.AccountLockedOut   => nameof(AuthenticationResult.AccountLockedOut),
+					_                                       => nameof(AuthenticationResult.UnknownError),
 				};
 
 				this.messageStore.Add(FieldIdentifier.Create(() => this.Model.User), error);

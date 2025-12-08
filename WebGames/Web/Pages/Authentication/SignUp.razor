@@ -1,49 +1,36 @@
 @page "/sign-up"
 @using Microsoft.AspNetCore.Components.Forms
+@using WebGames.Web.Components
+
+<PageTitle>@(Localizer["SignUp"])</PageTitle>
 
 <EditForm Model="@(Model)" OnValidSubmit="@(SignUpAsync)" FormName="@(SignUp.formName)">
 	<DataAnnotationsValidator />
 
-	<div>
-		<label for="user">Username</label>
-		<InputText @bind-Value="@(Model.Username)"
-		           id="user"
-		           autocomplete="username"
-		           required />
-		<ValidationMessage For="@(() => Model.Username)" />
-	</div>
+	<InputTextField @bind-Value="@(Model.Username)"
+	                Id="username"
+	                autocomplete="username"
+	                required />
 
-	<div>
-		<label for="email">E-mail</label>
-		<InputText @bind-Value="@(Model.Email)"
-		           type="email"
-		           id="email"
-		           autocomplete="email"
-		           required />
-		<ValidationMessage For="@(() => Model.Email)" />
-	</div>
+	<InputTextField @bind-Value="@(Model.Email)"
+	                Id="email"
+	                type="email"
+	                autocomplete="email"
+	                required />
 
-	<div>
-		<label for="password">Password</label>
-		<InputText @bind-Value="@(Model.Password)"
-		           type="password"
-		           id="password"
-		           autocomplete="new-password"
-		           required />
-		<ValidationMessage For="@(() => Model.Password)" />
-	</div>
+	<InputTextField @bind-Value="@(Model.Password)"
+	                Id="password"
+	                type="password"
+	                autocomplete="new-password"
+	                required />
 
-	<div>
-		<label for="password-confirmation">Confirm password</label>
-		<InputText @bind-Value="@(Model.PasswordConfirmation)"
-		           type="password"
-		           id="password-confirmation"
-		           autocomplete="new-password"
-		           required />
-		<ValidationMessage For="@(() => Model.PasswordConfirmation)" />
-	</div>
+	<InputTextField @bind-Value="@(Model.PasswordConfirmation)"
+	                Id="password-confirmation"
+	                type="password"
+	                autocomplete="new-password"
+	                required />
 
-	<a href="/sign-in">Already have an account?</a>
+	<a href="/sign-in">@(Localizer["SignIn"])</a>
 
-	<button type="submit">Sign up</button>
+	<button type="submit">@(Localizer["SignUp"])</button>
 </EditForm>

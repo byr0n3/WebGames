@@ -1,50 +1,37 @@
 @page "/account"
 @using Microsoft.AspNetCore.Components.Forms
+@using WebGames.Web.Components
 
 @if (success)
 {
-	<div>Changes saved successfully.</div>
+	<div>@(Localizer["Saved"])</div>
 }
 
 <EditForm EditContext="@(context)" OnValidSubmit="@(UpdateAsync)" FormName="@(Account.formName)">
 	<DataAnnotationsValidator />
 
-	<div>
-		<label for="user">Username</label>
-		<InputText @bind-Value="@(Model.Username)"
-		           id="user"
-		           autocomplete="username"
-		           required />
-		<ValidationMessage For="@(() => Model.Username)" />
-	</div>
+	<InputTextField @bind-Value="@(Model.Username)"
+	                Id="username"
+	                autocomplete="username"
+	                required />
 
-	<div>
-		<label for="email">E-mail</label>
-		<InputText @bind-Value="@(Model.Email)"
-		           type="email"
-		           id="email"
-		           autocomplete="email"
-		           required />
-		<ValidationMessage For="@(() => Model.Email)" />
-	</div>
+	<InputTextField @bind-Value="@(Model.Email)"
+	                Id="email"
+	                type="email"
+	                autocomplete="email"
+	                required />
 
-	<div>
-		<label for="password">Password</label>
-		<InputText @bind-Value="@(Model.Password)"
-		           type="password"
-		           id="password"
-		           autocomplete="new-password" />
-		<ValidationMessage For="@(() => Model.Password)" />
-	</div>
+	<InputTextField @bind-Value="@(Model.Password)"
+	                Id="password"
+	                type="password"
+	                autocomplete="new-password"
+	                required />
 
-	<div>
-		<label for="password-confirmation">Confirm password</label>
-		<InputText @bind-Value="@(Model.PasswordConfirmation)"
-		           type="password"
-		           id="password-confirmation"
-		           autocomplete="new-password" />
-		<ValidationMessage For="@(() => Model.PasswordConfirmation)" />
-	</div>
+	<InputTextField @bind-Value="@(Model.PasswordConfirmation)"
+	                Id="password-confirmation"
+	                type="password"
+	                autocomplete="new-password"
+	                required />
 
-	<button type="submit">Save</button>
+	<button type="submit">@(Localizer["Save"])</button>
 </EditForm>

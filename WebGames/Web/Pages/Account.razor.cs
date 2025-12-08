@@ -6,6 +6,7 @@ using Elegance.AspNet.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using WebGames.Database;
 using WebGames.Database.Encryption;
 using WebGames.Extensions;
@@ -24,6 +25,8 @@ namespace WebGames.Web.Pages
 		[Inject] public required AuthenticationService Authentication { get; init; }
 
 		[Inject] public required IDbContextFactory<WebGamesDbContext> DbFactory { get; init; }
+
+		[Inject] public required IStringLocalizer<AccountLocalization> Localizer { get; init; }
 
 		[SupplyParameterFromForm(FormName = Account.formName)]
 		private UpdateAccountModel Model { get; set; } = new();
@@ -83,7 +86,7 @@ namespace WebGames.Web.Pages
 				}
 				else
 				{
-					this.messageStore.Add(FieldIdentifier.Create(() => this.Model.Username), "Something went wrong saving your changes.");
+					this.messageStore.Add(FieldIdentifier.Create(() => this.Model.Username), this.Localizer["Failed"]);
 				}
 			}
 		}

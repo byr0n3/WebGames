@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Elegance.AspNet.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using MimeKit;
 using WebGames.Database;
 using WebGames.Database.Encryption;
@@ -25,6 +26,8 @@ namespace WebGames.Web.Pages.Authentication
 		[Inject] public required RendererService Renderer { get; init; }
 
 		[Inject] public required NavigationManager Navigation { get; init; }
+
+		[Inject] public required IStringLocalizer<SignUpLocalization> Localizer { get; init; }
 
 		[Inject] public required IDbContextFactory<WebGamesDbContext> DbFactory { get; init; }
 
@@ -61,7 +64,7 @@ namespace WebGames.Web.Pages.Authentication
 			await this.Smtp.SendAsync(new SmtpService.SmtpMessageDescriptor
 			{
 				To = new MailboxAddress(this.Model.Username, this.Model.Email),
-				Subject = AccountConfirmation.Subject,
+				Subject = AccountConfirmationLocalization.Subject,
 				HtmlBody = html,
 			});
 

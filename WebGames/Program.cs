@@ -3,6 +3,7 @@ using Elegance.AspNet.Authentication.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,6 +35,22 @@ app.UseStatusCodePagesWithReExecute("/not-found", null, true);
 
 app.MapStaticAssets();
 
+app.UseRequestLocalization(
+	new RequestLocalizationOptions
+	{
+		RequestCultureProviders =
+		[
+			new CookieRequestCultureProvider
+			{
+				CookieName = Cultures.CookieName,
+			},
+		],
+		DefaultRequestCulture = new RequestCulture(Cultures.Default),
+		SupportedCultures = Cultures.Supported,
+		SupportedUICultures = Cultures.Supported,
+	}
+);
+
 app.UseAuth<User, WebGamesDbContext>();
 app.UseAuthorization();
 
@@ -61,6 +78,8 @@ static void ConfigureServices(IServiceCollection services, ConfigurationManager 
 	services.AddRazorComponents().AddInteractiveServerComponents();
 
 	services.AddHttpContextAccessor();
+
+	services.AddLocalization();
 
 	services.AddScoped<AuthenticationService>();
 	services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();

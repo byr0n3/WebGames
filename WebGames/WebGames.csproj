@@ -9,10 +9,8 @@
 	<ItemGroup>
 		<PackageReference Include="Elegance.AspNet.Authentication" Version="$(EleganceVersion)"/>
 		<PackageReference Include="Elegance.Enums" Version="$(EleganceVersion)"/>
-	</ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="MailKitLite" Version="4.14.1" />
+		<PackageReference Include="MailKitLite" Version="4.14.1"/>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -21,6 +19,26 @@
 
 	<ItemGroup>
 		<ProjectReference Include="../WebGames.Database/WebGames.Database.csproj"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource
+				Update="**/*.resx"
+				Generator="PublicResXFileCodeGenerator"
+				LastGenOutput="%(Filename).Designer.cs"
+		/>
+
+		<EmbeddedResource Update="**/*Localization.resx">
+			<DependentUpon>$([System.IO.Path]::GetFileNameWithoutExtension('%(Filename)').Replace('Localization', '')).razor</DependentUpon>
+		</EmbeddedResource>
+
+		<EmbeddedResource Update="**/*.*.resx">
+			<DependentUpon>$([System.IO.Path]::GetFileNameWithoutExtension('%(Filename)')).resx</DependentUpon>
+		</EmbeddedResource>
+
+		<Compile Update="**/*.Designer.cs" DesignTime="True" AutoGen="True">
+			<DependentUpon>%(Filename).resx</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>

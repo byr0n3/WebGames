@@ -1,0 +1,12 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using WebGames.Utilities
+
+<div>
+	<label for="@(Id)">@(DisplayName.Get(ValueExpression))</label>
+	<InputText Value="@(Value)"
+	           ValueChanged="@(ValueChanged)"
+	           ValueExpression="@(ValueExpression)"
+	           id="@(Id)"
+	           @attributes="@(AdditionalAttributes)" />
+	<ValidationMessage For="@(ValueExpression)" />
+</div>

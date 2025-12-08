@@ -6,6 +6,7 @@ using Elegance.AspNet.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using WebGames.Database;
 using WebGames.Database.Models;
 using WebGames.Models.Requests;
@@ -19,6 +20,8 @@ namespace WebGames.Web.Pages.Authentication
 		[Inject] public required NavigationManager Navigation { get; init; }
 
 		[Inject] public required IDbContextFactory<WebGamesDbContext> DbFactory { get; init; }
+
+		[Inject] public required IStringLocalizer<ResetPasswordLocalization> Localizer { get; init; }
 
 		[Parameter] public Guid Token { get; set; }
 

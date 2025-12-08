@@ -5,10 +5,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using WebGames.AspNet;
 using WebGames.Database;
 using WebGames.Database.Encryption;
 using WebGames.Database.Models;
+using WebGames.Resources;
 
 namespace WebGames.Models.Requests
 {
@@ -16,16 +18,23 @@ namespace WebGames.Models.Requests
 	{
 		[Required]
 		[MaxLength(User.UsernameMaxLength)]
+		[Display(Name = nameof(SignUpModel.Username), ResourceType = typeof(UserLocalization))]
 		public string? Username { get; set; }
 
 		[Required]
 		[EmailAddress]
 		[MaxLength(User.EmailMaxLength)]
+		[Display(Name = nameof(SignUpModel.Email), ResourceType = typeof(UserLocalization))]
 		public string? Email { get; set; }
 
-		[Required] [Password] public string? Password { get; set; }
+		[Required]
+		[Password]
+		[Display(Name = nameof(SignUpModel.Password), ResourceType = typeof(UserLocalization))]
+		public string? Password { get; set; }
 
-		[Required] public string? PasswordConfirmation { get; set; }
+		[Required]
+		[Display(Name = nameof(SignUpModel.PasswordConfirmation), ResourceType = typeof(UserLocalization))]
+		public string? PasswordConfirmation { get; set; }
 
 		public bool IsValid
 		{
@@ -36,12 +45,12 @@ namespace WebGames.Models.Requests
 				   (this.Password is not null) && (this.PasswordConfirmation is not null);
 		}
 
-		// @todo Localize errors
 		public IEnumerable<ValidationResult> Validate(ValidationContext context)
 		{
 			Debug.Assert(this.IsValid);
 
 			var encryptor = context.GetRequiredService<DbEncryptor>();
+			var localizer = context.GetRequiredService<IStringLocalizer<SignUpModel>>();
 			var db = context.GetRequiredService<IDbContextFactory<WebGamesDbContext>>().CreateDbContext();
 
 			var encryptedUsername = encryptor.Encrypt(this.Username);
@@ -54,12 +63,12 @@ namespace WebGames.Models.Requests
 
 				if (usernameExists)
 				{
-					yield return new ValidationResult("Username is already taken.", [nameof(SignUpModel.Username)]);
+					yield return new ValidationResult(localizer["UsernameTaken"], [nameof(SignUpModel.Username)]);
 				}
 
 				if (emailExists)
 				{
-					yield return new ValidationResult("E-mail is already taken.", [nameof(SignUpModel.Email)]);
+					yield return new ValidationResult(localizer["EmailTaken"], [nameof(SignUpModel.Email)]);
 				}
 			}
 		}

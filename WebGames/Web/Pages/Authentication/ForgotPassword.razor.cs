@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using MimeKit;
 using WebGames.Database;
 using WebGames.Database.Encryption;
@@ -26,6 +27,8 @@ namespace WebGames.Web.Pages.Authentication
 		[Inject] public required RendererService Renderer { get; init; }
 
 		[Inject] public required IDbContextFactory<WebGamesDbContext> DbFactory { get; init; }
+
+		[Inject] public required IStringLocalizer<ForgotPasswordLocalization> Localizer { get; init; }
 
 		[SupplyParameterFromForm(FormName = ForgotPassword.formName)]
 		private ForgotPasswordModel Model { get; set; } = new();
@@ -88,7 +91,7 @@ namespace WebGames.Web.Pages.Authentication
 			await this.Smtp.SendAsync(new SmtpService.SmtpMessageDescriptor
 			{
 				To = new MailboxAddress(username, email),
-				Subject = ResetPasswordLink.Subject,
+				Subject = ResetPasswordLinkLocalization.Subject,
 				HtmlBody = html,
 			});
 		}

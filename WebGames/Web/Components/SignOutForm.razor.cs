@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Localization;
 using WebGames.Services;
 
 namespace WebGames.Web.Components
@@ -12,6 +13,8 @@ namespace WebGames.Web.Components
 		[Inject] public required NavigationManager Navigation { get; init; }
 
 		[Inject] public required AuthenticationService Authentication { get; init; }
+
+		[Inject] public required IStringLocalizer<SignOutFormLocalization> Localizer { get; init; }
 
 		private readonly EditContext editContext = new(0);
 
