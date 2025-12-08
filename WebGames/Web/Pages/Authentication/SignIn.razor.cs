@@ -35,7 +35,6 @@ namespace WebGames.Web.Pages.Authentication
 		{
 			Debug.Assert(this.Model.IsValid);
 
-			// @todo
 			var result = await this.Authentication.AuthenticateAsync(this.Model.User, this.Model.Password, this.Model.Persistent);
 
 			if (result is not AuthenticationResult.Success)

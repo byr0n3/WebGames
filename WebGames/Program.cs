@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using WebGames.Database;
 using WebGames.Database.Extensions;
 using WebGames.Database.Models;
+using WebGames.Models;
 using WebGames.Services;
 using WebGames.Web;
 using WebGames.Web.Pages.Authentication;
@@ -46,6 +47,14 @@ return;
 
 static void ConfigureServices(IServiceCollection services, ConfigurationManager configuration, IWebHostEnvironment environment)
 {
+	services.Configure<AppOptions>((options) =>
+	{
+		var app = configuration.GetSection("App");
+
+		options.Name = app[nameof(options.Name)] ?? options.Name;
+		options.BaseUrl = app[nameof(options.BaseUrl)] ?? options.BaseUrl;
+	});
+
 	services.AddRazorComponents().AddInteractiveServerComponents();
 
 	services.AddHttpContextAccessor();
@@ -81,4 +90,21 @@ static void ConfigureServices(IServiceCollection services, ConfigurationManager 
 			options.Key = Convert.FromBase64String(key);
 		}
 	});
+
+	services.AddSingleton<RendererService>();
+
+	services.Configure<SmtpOptions>((options) =>
+	{
+		var smtp = configuration.GetSection("Smtp");
+
+		options.Host = smtp[nameof(options.Host)];
+		options.Port = smtp.GetValue<int>(nameof(options.Port));
+		options.Username = smtp[nameof(options.Username)];
+		options.Password = smtp[nameof(options.Password)];
+		options.UseSsl = smtp.GetValue<bool>(nameof(options.UseSsl));
+		options.ValidateSslCertificate = smtp.GetValue<bool>(nameof(options.ValidateSslCertificate));
+		options.DefaultFrom = smtp[nameof(options.DefaultFrom)] ?? options.DefaultFrom;
+	});
+
+	services.AddSingleton<SmtpService>();
 }

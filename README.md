@@ -7,33 +7,6 @@ A web-app for playing simple games, made in C# & Blazor.
 - **_Virtual Funhouse_**
 - **Arcadia Nexus**
 - **Pixel Playground**
-- GameSphere Online
-- Infinite Arcade
-- Neon Arcade Hub
-- RetroVerse Arcade
-- PlayPortal
-- HyperHall Arcade
-- OmniArcade
-- The Card & Board Club
-- Tabletop Tower
-- Boardwalk Arcade
-- CardDeck Central
-- Dice & Deal Arcade
-- The Digital Boardroom
-- Tabletop Tavern Online
-- DeckHouse Arcade
-- Roll & Deal Hub
-- GameTable Galaxy
-- PlayGrid
-- GameVault XR
-- VirtualPlay Station
-- MetaArcade
-- LudoLab
-- PlayMatrix
-- GameLoop Lounge
-- The Grid Arcade
-- CyberCoin Arcade
-- Virtual Clubhouse
 
 ## Development
 
@@ -42,4 +15,16 @@ A web-app for playing simple games, made in C# & Blazor.
 ```shell
 createuser --pwprompt webgames
 createdb --owner webgames webgames
+```
+
+### Secrets
+
+```shell
+# Database (if default credentials changed)
+dotnet user-secrets set "ConnectionStrings:WebGames" "📈" --project WebGames
+
+# SMTP
+dotnet user-secrets set "Smtp:Host" "📧" --project WebGames
+dotnet user-secrets set "Smtp:Username" "🧍" --project WebGames
+dotnet user-secrets set "Smtp:Password" "🔑" --project WebGames
 ```
