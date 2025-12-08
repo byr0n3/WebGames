@@ -10,5 +10,10 @@ namespace WebGames.Database
 		public WebGamesDbContext(DbContextOptions<WebGamesDbContext> options) : base(options)
 		{
 		}
+
+		protected override void OnModelCreating(ModelBuilder builder)
+		{
+			builder.HasPostgresExtension("pgcrypto");
+		}
 	}
 }

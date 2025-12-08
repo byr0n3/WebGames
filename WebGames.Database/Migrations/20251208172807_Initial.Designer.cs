@@ -12,7 +12,7 @@ using WebGames.Database;
 namespace WebGames.Database.Migrations
 {
     [DbContext(typeof(WebGamesDbContext))]
-    [Migration("20251202124805_Initial")]
+    [Migration("20251208172807_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -40,9 +40,13 @@ namespace WebGames.Database.Migrations
                     b.Property<DateTimeOffset?>("AccessLockoutEnd")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<Guid?>("AccountConfirmationToken")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("Created")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("now()");
 
                     b.Property<byte[]>("Email")
                         .IsRequired()
@@ -60,6 +64,12 @@ namespace WebGames.Database.Migrations
                     b.Property<byte[]>("Password")
                         .IsRequired()
                         .HasColumnType("bytea");
+
+                    b.Property<DateTimeOffset?>("PasswordResetExpiry")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("PasswordResetToken")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");

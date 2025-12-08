@@ -9,10 +9,12 @@ using WebGames.AspNet;
 using WebGames.Database;
 using WebGames.Database.Encryption;
 using WebGames.Database.Models;
+using WebGames.Extensions;
+using WebGames.Services;
 
 namespace WebGames.Models.Requests
 {
-	internal sealed class SignUpModel : IValidatableObject
+	internal sealed class UpdateAccountModel : IValidatableObject
 	{
 		[Required]
 		[MaxLength(User.UsernameMaxLength)]
@@ -23,23 +25,24 @@ namespace WebGames.Models.Requests
 		[MaxLength(User.EmailMaxLength)]
 		public string? Email { get; set; }
 
-		[Required] [Password] public string? Password { get; set; }
+		[Password(false)] public string? Password { get; set; }
 
-		[Required] public string? PasswordConfirmation { get; set; }
+		public string? PasswordConfirmation { get; set; }
 
 		public bool IsValid
 		{
-			[MemberNotNullWhen(true,
-							   nameof(this.Username), nameof(this.Email),
-							   nameof(this.Password), nameof(this.PasswordConfirmation))]
-			get => (this.Username is not null) && (this.Email is not null) &&
-				   (this.Password is not null) && (this.PasswordConfirmation is not null);
+			[MemberNotNullWhen(true, nameof(this.Username), nameof(this.Email))]
+			get => (this.Username is not null) && (this.Email is not null);
 		}
 
 		// @todo Localize errors
 		public IEnumerable<ValidationResult> Validate(ValidationContext context)
 		{
 			Debug.Assert(this.IsValid);
+
+			var userId = context.GetRequiredService<AuthenticationService>().User?.GetClaimValue<int>(ClaimType.Id) ?? default;
+
+			Debug.Assert(userId != default);
 
 			var encryptor = context.GetRequiredService<DbEncryptor>();
 			var db = context.GetRequiredService<IDbContextFactory<WebGamesDbContext>>().CreateDbContext();
@@ -49,8 +52,10 @@ namespace WebGames.Models.Requests
 
 			using (db)
 			{
-				var usernameExists = db.Users.Any((u) => u.Username == encryptedUsername);
-				var emailExists = db.Users.Any((u) => u.Email == encryptedEmail);
+				var query = db.Users.Where((u) => u.Id != userId);
+
+				var usernameExists = query.Any((u) => u.Username == encryptedUsername);
+				var emailExists = query.Any((u) => u.Email == encryptedEmail);
 
 				if (usernameExists)
 				{

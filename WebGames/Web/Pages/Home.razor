@@ -1,7 +1,4 @@
 ﻿@page "/"
-@using Microsoft.AspNetCore.Components.Authorization
-@using WebGames.Extensions
-@using WebGames.Models
 @using WebGames.Web.Components
 
 <PageTitle>Home</PageTitle>
@@ -9,10 +6,4 @@
 <h1>Hello, world!</h1>
 <p>Welcome to your new app.</p>
 
-<AuthorizeView>
-	<Authorized Context="state">
-		<SignOutForm />
-
-		<p>Welcome, @(state.User.GetRequiredClaimValue(ClaimType.Username))</p>
-	</Authorized>
-</AuthorizeView>
+<SignOutForm />

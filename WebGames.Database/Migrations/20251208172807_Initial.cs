@@ -12,6 +12,9 @@ namespace WebGames.Database.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("Npgsql:PostgresExtension:pgcrypto", ",,");
+
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -30,7 +33,7 @@ namespace WebGames.Database.Migrations
                     AccessFailedCount = table.Column<int>(type: "integer", nullable: false),
                     AccessLockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     HasMfaEnabled = table.Column<bool>(type: "boolean", nullable: false),
-                    Created = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
+                    Created = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()")
                 },
                 constraints: table =>
                 {

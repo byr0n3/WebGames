@@ -1,0 +1,50 @@
+@page "/account"
+@using Microsoft.AspNetCore.Components.Forms
+
+@if (success)
+{
+	<div>Changes saved successfully.</div>
+}
+
+<EditForm EditContext="@(context)" OnValidSubmit="@(UpdateAsync)" FormName="@(Account.formName)">
+	<DataAnnotationsValidator />
+
+	<div>
+		<label for="user">Username</label>
+		<InputText @bind-Value="@(Model.Username)"
+		           id="user"
+		           autocomplete="username"
+		           required />
+		<ValidationMessage For="@(() => Model.Username)" />
+	</div>
+
+	<div>
+		<label for="email">E-mail</label>
+		<InputText @bind-Value="@(Model.Email)"
+		           type="email"
+		           id="email"
+		           autocomplete="email"
+		           required />
+		<ValidationMessage For="@(() => Model.Email)" />
+	</div>
+
+	<div>
+		<label for="password">Password</label>
+		<InputText @bind-Value="@(Model.Password)"
+		           type="password"
+		           id="password"
+		           autocomplete="new-password" />
+		<ValidationMessage For="@(() => Model.Password)" />
+	</div>
+
+	<div>
+		<label for="password-confirmation">Confirm password</label>
+		<InputText @bind-Value="@(Model.PasswordConfirmation)"
+		           type="password"
+		           id="password-confirmation"
+		           autocomplete="new-password" />
+		<ValidationMessage For="@(() => Model.PasswordConfirmation)" />
+	</div>
+
+	<button type="submit">Save</button>
+</EditForm>

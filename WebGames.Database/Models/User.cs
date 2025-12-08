@@ -5,11 +5,13 @@ using Elegance.AspNet.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WebGames.Database.Encryption;
+using WebGames.Database.EntityTypeConfiguration;
 
 namespace WebGames.Database.Models
 {
 	[Index(nameof(User.Username), IsUnique = true)]
 	[Index(nameof(User.Email), IsUnique = true)]
+	[EntityTypeConfiguration(typeof(UserEntityTypeConfiguration))]
 	public sealed class User : IAuthenticatable<User>
 	{
 		public const int UsernameMaxLength = 128;
@@ -17,11 +19,11 @@ namespace WebGames.Database.Models
 
 		public int Id { get; init; }
 
-		public required byte[] Username { get; init; }
+		public required byte[] Username { get; set; }
 
-		public required byte[] Email { get; init; }
+		public required byte[] Email { get; set; }
 
-		public required byte[] Password { get; init; }
+		public required byte[] Password { get; set; }
 
 		public UserFlags Flags { get; init; }
 

@@ -55,6 +55,15 @@ namespace WebGames.Services
 			return result;
 		}
 
+		public Task SignInAsync(User user, bool persistent)
+		{
+			var context = this.httpContextAccessor.HttpContext;
+
+			Debug.Assert(context is not null);
+
+			return this.authentication.SignInAsync(context, user, persistent);
+		}
+
 		public Task SignOutAsync()
 		{
 			var context = this.httpContextAccessor.HttpContext;
