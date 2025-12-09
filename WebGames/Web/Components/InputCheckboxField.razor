@@ -1,0 +1,11 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using WebGames.Utilities
+
+<div>
+	<InputCheckbox Value="@(Value)"
+	               ValueChanged="@(ValueChanged)"
+	               ValueExpression="@(ValueExpression)"
+				   id="@(Id)"
+				   @attributes="@(AdditionalAttributes)" />
+	<label for="@(Id)">@(DisplayName.Get(ValueExpression))</label>
+</div>

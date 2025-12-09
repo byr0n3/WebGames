@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<IsPackable>false</IsPackable>
+		<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+		<UserSecretsId>b1c583ab-c03e-4e7c-96ba-5edea53647c2</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1"/>
+		<PackageReference Include="xunit.v3" Version="3.0.0"/>
+		<PackageReference Include="xunit.runner.visualstudio" Version="3.1.5"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\WebGames.Database\WebGames.Database.csproj"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest"/>
+		<Content Include="../WebGames/appsettings.json" CopyToOutputDirectory="PreserveNewest"/>
+		<Content Include="../WebGames/appsettings.Development.json" CopyToOutputDirectory="PreserveNewest"/>
+	</ItemGroup>
+
+</Project>

@@ -1,10 +1,13 @@
 <Solution>
 	<Folder Name="/Solution Items/">
-		<File Path=".gitignore"/>
-		<File Path="docker-compose.yml"/>
-		<File Path=".env.example"/>
-		<File Path="Directory.Build.props"/>
-		<File Path="NuGet.Config"/>
+		<File Path=".gitignore" />
+		<File Path="docker-compose.yml" />
+		<File Path=".env.example" />
+		<File Path="Directory.Build.props" />
+		<File Path="NuGet.Config" />
 	</Folder>
-	<Project Path="WebGames/WebGames.csproj"/>
+	<Project Path="WebGames/WebGames.csproj" />
+	<Project Path="WebGames.Core/WebGames.Core.csproj" />
+	<Project Path="WebGames.Database/WebGames.Database.csproj" />
+	<Project Path="WebGames.Tests/WebGames.Tests.csproj" />
 </Solution>

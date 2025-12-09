@@ -1,0 +1,37 @@
+@page "/account"
+@using Microsoft.AspNetCore.Components.Forms
+@using WebGames.Web.Components
+
+@if (success)
+{
+	<div>@(Localizer["Saved"])</div>
+}
+
+<EditForm EditContext="@(context)" OnValidSubmit="@(UpdateAsync)" FormName="@(Account.formName)">
+	<DataAnnotationsValidator />
+
+	<InputTextField @bind-Value="@(Model.Username)"
+	                Id="username"
+	                autocomplete="username"
+	                required />
+
+	<InputTextField @bind-Value="@(Model.Email)"
+	                Id="email"
+	                type="email"
+	                autocomplete="email"
+	                required />
+
+	<InputTextField @bind-Value="@(Model.Password)"
+	                Id="password"
+	                type="password"
+	                autocomplete="new-password"
+	                required />
+
+	<InputTextField @bind-Value="@(Model.PasswordConfirmation)"
+	                Id="password-confirmation"
+	                type="password"
+	                autocomplete="new-password"
+	                required />
+
+	<button type="submit">@(Localizer["Save"])</button>
+</EditForm>

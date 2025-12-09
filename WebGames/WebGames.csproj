@@ -1,8 +1,45 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
+		<IsPublishable>true</IsPublishable>
 		<BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+		<UserSecretsId>b1c583ab-c03e-4e7c-96ba-5edea53647c2</UserSecretsId>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Elegance.AspNet.Authentication" Version="$(EleganceVersion)"/>
+		<PackageReference Include="Elegance.Enums" Version="$(EleganceVersion)"/>
+
+		<PackageReference Include="MailKitLite" Version="4.14.1"/>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="../WebGames.Database/WebGames.Database.csproj"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource
+				Update="**/*.resx"
+				Generator="PublicResXFileCodeGenerator"
+				LastGenOutput="%(Filename).Designer.cs"
+		/>
+
+		<EmbeddedResource Update="**/*Localization.resx">
+			<DependentUpon>$([System.IO.Path]::GetFileNameWithoutExtension('%(Filename)').Replace('Localization', '')).razor</DependentUpon>
+		</EmbeddedResource>
+
+		<EmbeddedResource Update="**/*.*.resx">
+			<DependentUpon>$([System.IO.Path]::GetFileNameWithoutExtension('%(Filename)')).resx</DependentUpon>
+		</EmbeddedResource>
+
+		<Compile Update="**/*.Designer.cs" DesignTime="True" AutoGen="True">
+			<DependentUpon>%(Filename).resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
 	<ItemGroup>
 		<Content Include="..\README.md">

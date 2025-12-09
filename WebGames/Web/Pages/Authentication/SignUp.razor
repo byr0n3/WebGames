@@ -1,0 +1,36 @@
+@page "/sign-up"
+@using Microsoft.AspNetCore.Components.Forms
+@using WebGames.Web.Components
+
+<PageTitle>@(Localizer["SignUp"])</PageTitle>
+
+<EditForm Model="@(Model)" OnValidSubmit="@(SignUpAsync)" FormName="@(SignUp.formName)">
+	<DataAnnotationsValidator />
+
+	<InputTextField @bind-Value="@(Model.Username)"
+	                Id="username"
+	                autocomplete="username"
+	                required />
+
+	<InputTextField @bind-Value="@(Model.Email)"
+	                Id="email"
+	                type="email"
+	                autocomplete="email"
+	                required />
+
+	<InputTextField @bind-Value="@(Model.Password)"
+	                Id="password"
+	                type="password"
+	                autocomplete="new-password"
+	                required />
+
+	<InputTextField @bind-Value="@(Model.PasswordConfirmation)"
+	                Id="password-confirmation"
+	                type="password"
+	                autocomplete="new-password"
+	                required />
+
+	<a href="/sign-in">@(Localizer["SignIn"])</a>
+
+	<button type="submit">@(Localizer["SignUp"])</button>
+</EditForm>
