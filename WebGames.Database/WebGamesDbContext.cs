@@ -7,6 +7,8 @@ namespace WebGames.Database
 	{
 		public required DbSet<User> Users { get; init; }
 
+		public required DbSet<UserClaim> UserClaims { get; init; }
+
 		public WebGamesDbContext(DbContextOptions<WebGamesDbContext> options) : base(options)
 		{
 		}

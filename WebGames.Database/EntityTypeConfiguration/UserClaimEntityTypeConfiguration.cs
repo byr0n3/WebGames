@@ -4,15 +4,12 @@ using WebGames.Database.Models;
 
 namespace WebGames.Database.EntityTypeConfiguration
 {
-	public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
+	public sealed class UserClaimEntityTypeConfiguration : IEntityTypeConfiguration<UserClaim>
 	{
-		public void Configure(EntityTypeBuilder<User> builder)
+		public void Configure(EntityTypeBuilder<UserClaim> builder)
 		{
 			builder.Property(static (u) => u.Created)
 				   .HasDefaultValueSql("now()");
-
-			builder.HasMany(static (u) => u.Claims)
-				   .WithOne(static (uc) => uc.User);
 		}
 	}
 }

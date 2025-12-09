@@ -1,9 +1,11 @@
 using System;
+using System.Threading.Tasks;
 using Elegance.AspNet.Authentication.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,6 +23,10 @@ var builder = WebApplication.CreateBuilder(args);
 ConfigureServices(builder.Services, builder.Configuration, builder.Environment);
 
 var app = builder.Build();
+
+#if !DEBUG
+await MigrateAsync(app.Services).ConfigureAwait(false);
+#endif
 
 if (app.Environment.IsDevelopment())
 {
@@ -129,4 +135,22 @@ static void ConfigureServices(IServiceCollection services, ConfigurationManager 
 	});
 
 	services.AddSingleton<SmtpService>();
+}
+
+static async Task MigrateAsync(IServiceProvider services)
+{
+	var scope = services.CreateAsyncScope();
+
+	await using (scope.ConfigureAwait(false))
+	{
+		var db = await scope.ServiceProvider
+							.GetRequiredService<IDbContextFactory<WebGamesDbContext>>()
+							.CreateDbContextAsync()
+							.ConfigureAwait(false);
+
+		await using (db.ConfigureAwait(false))
+		{
+			await db.Database.MigrateAsync().ConfigureAwait(false);
+		}
+	}
 }

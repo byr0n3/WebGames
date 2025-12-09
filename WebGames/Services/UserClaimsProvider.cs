@@ -25,6 +25,11 @@ namespace WebGames.Services
 			yield return Claim.FromClaimType(ClaimType.Username, this.encryptor.Decrypt(user.Username));
 			yield return Claim.FromClaimType(ClaimType.Email, this.encryptor.Decrypt(user.Email));
 			yield return Claim.FromClaimType(ClaimType.Created, user.Created);
+
+			foreach (var claim in user.Claims)
+			{
+				yield return new Claim(claim.Type, claim.Value);
+			}
 		}
 	}
 }

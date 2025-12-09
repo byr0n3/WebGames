@@ -12,7 +12,7 @@ using WebGames.Database;
 namespace WebGames.Database.Migrations
 {
     [DbContext(typeof(WebGamesDbContext))]
-    [Migration("20251208172807_Initial")]
+    [Migration("20251209071818_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -87,6 +87,45 @@ namespace WebGames.Database.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("WebGames.Database.Models.UserClaim", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("now()");
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasKey("UserId", "Type");
+
+                    b.ToTable("UserClaims");
+                });
+
+            modelBuilder.Entity("WebGames.Database.Models.UserClaim", b =>
+                {
+                    b.HasOne("WebGames.Database.Models.User", "User")
+                        .WithMany("Claims")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebGames.Database.Models.User", b =>
+                {
+                    b.Navigation("Claims");
                 });
 #pragma warning restore 612, 618
         }

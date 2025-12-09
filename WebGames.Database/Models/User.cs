@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Linq.Expressions;
 using Elegance.AspNet.Authentication;
 using Microsoft.EntityFrameworkCore;
@@ -46,11 +48,16 @@ namespace WebGames.Database.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public DateTimeOffset Created { get; init; }
 
+		public List<UserClaim> Claims { get; init; } = null!;
+
 		public static Expression<Func<User, bool>> FindAuthenticatable(string user, IServiceProvider services)
 		{
 			var encrypted = services.GetRequiredService<DbEncryptor>().Encrypt(user);
 
 			return (u) => ((u.Flags & UserFlags.Active) != UserFlags.None) && ((u.Username == encrypted) || (u.Email == encrypted));
 		}
+
+		public static IQueryable<User> Include(IQueryable<User> queryable) =>
+			queryable.Include(static (u) => u.Claims);
 	}
 }
