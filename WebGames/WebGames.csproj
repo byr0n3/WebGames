@@ -19,6 +19,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="../WebGames.Database/WebGames.Database.csproj"/>
+		<ProjectReference Include="../WebGames.Core/WebGames.Core.csproj"/>
 	</ItemGroup>
 
 	<ItemGroup>

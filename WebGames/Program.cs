@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebGames;
+using WebGames.Core;
 using WebGames.Database;
 using WebGames.Database.Extensions;
 using WebGames.Database.Models;
@@ -135,6 +136,8 @@ static void ConfigureServices(IServiceCollection services, ConfigurationManager 
 	});
 
 	services.AddSingleton<SmtpService>();
+
+	services.AddSingleton<GameManager>();
 }
 
 static async Task MigrateAsync(IServiceProvider services)
