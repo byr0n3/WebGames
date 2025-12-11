@@ -12,7 +12,7 @@ namespace WebGames.Models.Requests
 
 	internal enum GameType
 	{
-		Solitaire = 0,
+		Solitaire,
 		Blackjack,
 		Uno,
 	}

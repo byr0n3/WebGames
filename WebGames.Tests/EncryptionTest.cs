@@ -24,6 +24,6 @@ namespace WebGames.Tests
 			Assert.Equal(testValue, decrypted);
 		}
 
-		// @todo Test database comparison
+		// @todo Test database comparison/encryption
 	}
 }

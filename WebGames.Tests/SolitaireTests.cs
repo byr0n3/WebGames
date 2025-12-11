@@ -24,12 +24,15 @@ namespace WebGames.Tests
 
 			var (player, game) = SolitaireTests.Create(gameManager, Solitaire.DefaultConfiguration);
 
-			SolitaireTests.AssertGame(gameManager, player, game);
+			SolitaireTests.AssertNewGame(gameManager, player, game);
 
+			// The default configuration for solitaire allows the game to automatically start.
 			Assert.Equal(GameState.Playing, game.State);
 
 			gameManager.Leave(game, player);
 
+			// Leaving the game should cause the game to have no players,
+			// and the game manager to have no games (because the game was empty).
 			Assert.Empty(game.CurrentPlayers);
 			Assert.Empty(gameManager.Games);
 		}
@@ -48,8 +51,9 @@ namespace WebGames.Tests
 
 			var (player, game) = SolitaireTests.Create(gameManager, configuration);
 
-			SolitaireTests.AssertGame(gameManager, player, game);
+			SolitaireTests.AssertNewGame(gameManager, player, game);
 
+			// Assert the configuration overrides.
 			Assert.Equal(1, game.Configuration.MinPlayers);
 			Assert.Equal(2, game.Configuration.MaxPlayers);
 			// We expect `Idle` because we disabled `AutoStart`.
@@ -68,10 +72,16 @@ namespace WebGames.Tests
 
 			var invalidPlayer = new DummyPlayer();
 
+			// Trying to create a game using the wrong player type should throw an exception.
 			Assert.Throws<PlayerTypeException>(() => gameManager.Create<Solitaire>(Solitaire.DefaultConfiguration, invalidPlayer));
 
-			var (_, game) = SolitaireTests.Create(gameManager, Solitaire.DefaultConfiguration);
+			// Create a standard game that can hold 2 players.
+			var (_, game) = SolitaireTests.Create(gameManager, Solitaire.DefaultConfiguration with { MaxPlayers = 2, AutoStart = false });
 
+			// Trying to join a game using the wrong player type should throw an exception.
+			Assert.Throws<PlayerTypeException>(() => gameManager.TryGetOrJoin(game, invalidPlayer));
+
+			// Trying to leave using the wrong player type should throw an exception.
 			Assert.Throws<PlayerTypeException>(() => gameManager.Leave(game, invalidPlayer));
 		}
 
@@ -89,15 +99,17 @@ namespace WebGames.Tests
 		}
 
 		[AssertionMethod]
-		private static void AssertGame<TPlayer, TGame>(GameManager gameManager, TPlayer player, TGame? game)
+		private static void AssertNewGame<TPlayer, TGame>(GameManager gameManager, TPlayer player, TGame? game)
 			where TPlayer : IPlayer
 			where TGame : IGame
 		{
 			Assert.NotNull(game);
 
+			// A new game should only have 1 player: the host.
 			Assert.Single(game.CurrentPlayers);
 			Assert.Contains(player, game.CurrentPlayers);
 
+			// The game manager should have the created game in its list.
 			Assert.Single(gameManager.Games);
 			Assert.Contains(game, gameManager.Games);
 		}
