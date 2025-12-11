@@ -1,4 +1,5 @@
 # Web Games
+[![Test](https://github.com/byr0n3/WebGames/actions/workflows/test.yml/badge.svg)](https://github.com/byr0n3/WebGames/actions/workflows/test.yml)
 
 A web-app for playing simple games, made in C# & Blazor.
 
