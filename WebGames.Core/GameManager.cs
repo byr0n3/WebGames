@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using WebGames.Core.Events;
@@ -47,7 +46,7 @@ namespace WebGames.Core
 		/// <param name="configuration">The configuration settings that define the game's parameters.</param>
 		/// <param name="player">The player to be joined to the newly created game.</param>
 		/// <returns>The newly created game instance implementing <see cref="IGame"/>.</returns>
-		public IGame Create<TGame>(GameConfiguration configuration, IPlayer player)
+		public TGame Create<TGame>(GameConfiguration configuration, IPlayer player)
 			where TGame : IGame, ICreatableGame
 		{
 			var code = CodeGenerator.Generate();
@@ -59,7 +58,7 @@ namespace WebGames.Core
 
 			this.GameListUpdated?.Invoke(this, new GameListUpdatedArgs(game, GameListUpdatedType.Created));
 
-			return game;
+			return (TGame)game;
 		}
 
 		/// <summary>

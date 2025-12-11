@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using WebGames.Core.Events;
+using WebGames.Core.Exceptions;
 
 namespace WebGames.Core.Games
 {
@@ -27,7 +29,7 @@ namespace WebGames.Core.Games
 		/// <summary>
 		/// Holds the list of players participating in the game.
 		/// </summary>
-		protected List<TPlayer> Players;
+		protected readonly List<TPlayer> Players;
 
 		/// <inheritdoc/>
 		public IReadOnlyList<IPlayer> CurrentPlayers =>
@@ -47,7 +49,12 @@ namespace WebGames.Core.Games
 		/// <inheritdoc/>
 		public void Join(IPlayer player)
 		{
-			this.Players.Add((TPlayer)player);
+			if (player is not TPlayer gamePlayer)
+			{
+				throw new PlayerTypeException(this.GetType(), typeof(TPlayer), player.GetType());
+			}
+
+			this.Players.Add(gamePlayer);
 
 			this.GameUpdated?.Invoke(this, new GameUpdatedArgs(GameUpdatedType.PlayerJoined));
 
@@ -61,7 +68,12 @@ namespace WebGames.Core.Games
 		/// <inheritdoc/>
 		public void Leave(IPlayer player)
 		{
-			this.Players.RemoveAll((pl) => pl.Id == player.Id);
+			if (player is not TPlayer gamePlayer)
+			{
+				throw new PlayerTypeException(this.GetType(), typeof(TPlayer), player.GetType());
+			}
+
+			this.Players.Remove(gamePlayer);
 
 			this.GameUpdated?.Invoke(this, new GameUpdatedArgs(GameUpdatedType.PlayerLeft));
 
@@ -69,11 +81,11 @@ namespace WebGames.Core.Games
 		}
 
 		/// <summary>
-		/// Transitions the game to <see cref="GameState.Started"/> and informs subscribers of the change.
+		/// Transitions the game to <see cref="GameState.Playing"/> and informs subscribers of the change.
 		/// </summary>
 		protected void Start()
 		{
-			this.State = GameState.Started;
+			this.State = GameState.Playing;
 
 			this.GameUpdated?.Invoke(this, new GameUpdatedArgs(GameUpdatedType.StateUpdated));
 		}

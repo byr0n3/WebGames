@@ -13,6 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\WebGames.Core\WebGames.Core.csproj"/>
 		<ProjectReference Include="..\WebGames.Database\WebGames.Database.csproj"/>
 	</ItemGroup>
 

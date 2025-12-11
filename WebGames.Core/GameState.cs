@@ -17,9 +17,9 @@ namespace WebGames.Core
 		Idle = 0,
 
 		/// <summary>
-		/// The game has started.
+		/// The game has started and is in-progress.
 		/// </summary>
-		[EnumValue("started")]
-		Started,
+		[EnumValue("playing")]
+		Playing,
 	}
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
+using WebGames.Core;
 using WebGames.Database.Extensions;
 using WebGames.Tests;
 using Xunit;
@@ -46,6 +47,10 @@ namespace WebGames.Tests
 					options.Key = Convert.FromBase64String(key);
 				}
 			});
+
+			// We want a new GameManager everytime we require it from the service provider,
+			// as multithreaded tests can influence the test results.
+			services.AddTransient<GameManager>();
 
 			this.provider = services.BuildServiceProvider();
 		}
