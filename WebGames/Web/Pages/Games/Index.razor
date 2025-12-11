@@ -13,7 +13,7 @@
 
 		<div @key="@(key)">
 			<h2>@(game.Code)</h2>
-			<p>@(game.Players.Count.Str())/@(game.Configuration.MaxPlayers.Str())</p>
+			<p>@(game.CurrentPlayers.Count.Str())/@(game.Configuration.MaxPlayers.Str())</p>
 			<p>@(game.State.ToString())</p>
 			<button type="button"
 			        disabled="@(!game.Joinable)"

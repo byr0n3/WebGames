@@ -2,6 +2,9 @@ using System.Runtime.InteropServices;
 
 namespace WebGames.Core
 {
+	/// <summary>
+	/// Represents the immutable configuration settings for a game instance.
+	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
 	public readonly struct GameConfiguration
 	{

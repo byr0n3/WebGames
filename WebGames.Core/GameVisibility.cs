@@ -3,6 +3,10 @@ using Elegance.Enums;
 
 namespace WebGames.Core
 {
+	/// <summary>
+	/// Defines the visibility level of a game.
+	/// </summary>
+	/// <remarks>This setting controls how the game appears in listings and who is allowed to join it.</remarks>
 	[Enum]
 	[JsonConverter(typeof(JsonGameVisibilityConverter))]
 	public enum GameVisibility

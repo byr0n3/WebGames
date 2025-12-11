@@ -4,6 +4,8 @@
 		<IsPublishable>true</IsPublishable>
 		<BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
 		<UserSecretsId>b1c583ab-c03e-4e7c-96ba-5edea53647c2</UserSecretsId>
+
+		<NoWarn>$(NoWarn);BL0008</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -1,11 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WebGames.Core.Events;
 
 namespace WebGames.Core
 {
+	/// <summary>
+	/// Defines a contract for game implementations.
+	/// </summary>
 	public interface IGame : IDisposable
 	{
+		/// <summary>
+		/// Delegate type used by the <see cref="IGame.GameUpdated"/> event to notify listeners of changes
+		/// to a game instance.
+		/// </summary>
+		public delegate void OnGameUpdated(IGame game, GameUpdatedArgs args);
+
 		/// <summary>
 		/// Gets the unique identifier for the game.
 		/// </summary>
@@ -14,7 +24,7 @@ namespace WebGames.Core
 		/// <summary>
 		/// Gets a read-only list of players that have joined the game.
 		/// </summary>
-		public IReadOnlyList<IPlayer> Players { get; }
+		public IReadOnlyList<IPlayer> CurrentPlayers { get; }
 
 		/// <summary>
 		/// Gets the game configuration that defines the game's parameters.
@@ -27,21 +37,15 @@ namespace WebGames.Core
 		public GameState State { get; }
 
 		/// <summary>
-		/// Gets a value indicating whether the game can currently accept additional players.
+		/// Indicates whether the game is currently able to accept additional players.
 		/// </summary>
-		/// <remarks>
-		/// A game is considered joinable when one of the following conditions is true:
-		/// <list type="bullet">
-		/// <item>The game configuration permits joining after the game has started (<see cref="GameConfiguration.CanJoinInProgress"/> is <see langword="true"/>).</item>
-		/// <item>The game is still in the <c>Idle</c> state.</item>
-		/// </list>
-		/// In addition, the current number of players must be less than the maximum allowed by the game's configuration (<see cref="GameConfiguration.MaxPlayers"/>).
-		/// </remarks>
-		/// <value>
-		/// <see langword="true"/> if the game can accept more players; otherwise, <see langword="false"/>.
-		/// </value>
 		public bool Joinable =>
-			(this.Players.Count < this.Configuration.MaxPlayers);
+			(this.CurrentPlayers.Count < this.Configuration.MaxPlayers);
+
+		/// <summary>
+		/// Fires whenever a change occurs within a game instance.
+		/// </summary>
+		public event OnGameUpdated? GameUpdated;
 
 		/// <summary>
 		/// Adds the specified player to the game.
@@ -61,9 +65,9 @@ namespace WebGames.Core
 		/// </summary>
 		/// <param name="player">The player whose membership in the game should be verified.</param>
 		/// <returns>
-		/// <see langword="true"/> if the player is contained in the game's <see cref="IGame.Players"/> collection; otherwise, <see langword="false"/>.
+		/// <see langword="true"/> if the player is contained in the game's <see cref="CurrentPlayers"/> collection; otherwise, <see langword="false"/>.
 		/// </returns>
 		public bool ContainsPlayer(IPlayer player) =>
-			this.Players.Contains(player);
+			this.CurrentPlayers.Contains(player);
 	}
 }

@@ -8,10 +8,11 @@
 }
 else
 {
-	<h1>Game @(game.Code ?? "none")</h1>
+	<h1>Game @(game.Code)</h1>
+	<p>@(game.State.ToString())</p>
 
 	<ul>
-		@foreach (var player in game.Players)
+		@foreach (var player in game.CurrentPlayers)
 		{
 			var key = $"player-{player.Id.Str()}";
 

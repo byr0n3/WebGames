@@ -8,19 +8,32 @@ using WebGames.Core.Utilities;
 
 namespace WebGames.Core
 {
+	/// <summary>
+	/// Manages the lifecycle of games within the application.
+	/// </summary>
 	public sealed class GameManager : IDisposable
 	{
+		/// <summary>
+		/// Represents the method signature for handlers that are invoked when the list of public games changes.
+		/// </summary>
 		public delegate void OnGameListUpdated(GameManager manager, GameListUpdatedArgs args);
 
 		private readonly List<IGame> games;
 		private readonly IServiceProvider services;
 
+		/// <summary>
+		/// Notifies subscribers that the list of games managed by <see cref="GameManager"/> has changed.
+		/// </summary>
 		public event OnGameListUpdated? GameListUpdated;
 
+		/// <summary>
+		/// Retrieves all games managed by this <see cref="GameManager"/> that are marked as <see cref="GameVisibility.Public"/>.
+		/// </summary>
 		public IEnumerable<IGame> Games =>
 			// @todo Handle `GameVisibility.FriendsOnly`
 			this.games.Where(static (g) => g.Configuration.Visibility == GameVisibility.Public);
 
+		/// <inheritdoc cref="GameManager" />
 		public GameManager(IServiceProvider services)
 		{
 			this.games = [];
@@ -113,7 +126,7 @@ namespace WebGames.Core
 			game.Leave(player);
 
 			// If the game is empty, we should remove it from the games-list.
-			if (game.Players.Count == 0)
+			if (game.CurrentPlayers.Count == 0)
 			{
 				game.Dispose();
 
@@ -130,6 +143,7 @@ namespace WebGames.Core
 		private IGame? FindGame(string code) =>
 			this.games.Find((g) => string.Equals(g.Code, code, StringComparison.Ordinal));
 
+		/// <inheritdoc />
 		public void Dispose()
 		{
 			foreach (var game in this.games)

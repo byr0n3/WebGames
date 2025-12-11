@@ -1,11 +1,16 @@
 using System;
-using System.Collections.Generic;
 using WebGames.Core.Players;
 
 namespace WebGames.Core.Games
 {
-	public sealed class Solitaire : IGame, ICreatableGame
+	/// <summary>
+	/// Represents a single‑player solitaire game that can be instantiated.
+	/// </summary>
+	public sealed class Solitaire : BaseGame<SolitairePlayer>, ICreatableGame
 	{
+		/// <summary>
+		/// Defines the default configuration used when creating a new <see cref="Solitaire"/> instance.
+		/// </summary>
 		public static readonly GameConfiguration DefaultConfiguration = new()
 		{
 			MinPlayers = 1,
@@ -13,35 +18,11 @@ namespace WebGames.Core.Games
 			AutoStart = true,
 		};
 
-		public string Code { get; init; }
-		public GameConfiguration Configuration { get; init; }
-
-		public GameState State { get; private set; }
-
-		private readonly List<SolitairePlayer> players;
-
-		private Solitaire(string code, GameConfiguration configuration)
+		private Solitaire(string code, GameConfiguration configuration) : base(code, configuration)
 		{
-			this.Code = code;
-			this.Configuration = configuration;
-
-			this.State = GameState.Idle;
-
-			this.players = new List<SolitairePlayer>(configuration.MaxPlayers);
 		}
 
-		public IReadOnlyList<IPlayer> Players =>
-			this.players;
-
-		public void Join(IPlayer player) =>
-			this.players.Add((SolitairePlayer)player);
-
-		public void Leave(IPlayer player) =>
-			this.players.RemoveAll((pl) => pl.Id == player.Id);
-
-		public void Dispose() =>
-			this.players.Clear();
-
+		/// <inheritdoc/>
 		public static IGame Create(string code, GameConfiguration configuration, IServiceProvider _) =>
 			new Solitaire(code, configuration);
 	}

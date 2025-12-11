@@ -140,7 +140,10 @@ static void ConfigureServices(IServiceCollection services, ConfigurationManager 
 	services.AddSingleton<GameManager>();
 }
 
+// Function is only used in prod.
+#pragma warning disable CS8321
 static async Task MigrateAsync(IServiceProvider services)
+#pragma warning restore CS8321
 {
 	var scope = services.CreateAsyncScope();
 

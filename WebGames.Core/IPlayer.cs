@@ -2,6 +2,9 @@ using System;
 
 namespace WebGames.Core
 {
+	/// <summary>
+	/// Defines a contract for player implementations that can join and play games.
+	/// </summary>
 	public interface IPlayer : IEquatable<IPlayer>
 	{
 		/// <summary>

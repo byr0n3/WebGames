@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Components;
 using WebGames.Core;
+using WebGames.Core.Events;
 using WebGames.Core.Players;
 using WebGames.Extensions;
 using WebGames.Services;
@@ -31,16 +32,25 @@ namespace WebGames.Web.Pages.Games
 			if (!this.GameManager.TryGetOrJoin(this.Code, this.player, out this.game))
 			{
 				this.Navigation.NavigateTo("/games", true);
+				return;
 			}
+
+			this.game.GameUpdated += this.InvokeRender;
 		}
+
+		private void InvokeRender(IGame __, GameUpdatedArgs ___) =>
+			_ = this.InvokeAsync(this.StateHasChanged);
 
 		// @todo Refactor
 		public void Dispose()
 		{
-			if (this.game is not null)
+			if (this.game is null)
 			{
-				this.GameManager.Leave(this.game, this.player);
+				return;
 			}
+
+			this.game.GameUpdated -= this.InvokeRender;
+			this.GameManager.Leave(this.game, this.player);
 		}
 	}
 }

@@ -2,6 +2,9 @@ using System;
 
 namespace WebGames.Core
 {
+	/// <summary>
+	/// Defines a contract for game implementations, that can be created at runtime.
+	/// </summary>
 	public interface ICreatableGame
 	{
 		/// <summary>
