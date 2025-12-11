@@ -2,15 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using WebGames.Core.Extensions;
+using System.Linq;
+using WebGames.Core.Events;
 using WebGames.Core.Utilities;
 
 namespace WebGames.Core
 {
 	public sealed class GameManager : IDisposable
 	{
+		public delegate void OnGameListUpdated(GameManager manager, GameListUpdatedArgs args);
+
 		private readonly List<IGame> games;
 		private readonly IServiceProvider services;
+
+		public event OnGameListUpdated? GameListUpdated;
+
+		public IEnumerable<IGame> Games =>
+			// @todo Handle `GameVisibility.FriendsOnly`
+			this.games.Where(static (g) => g.Configuration.Visibility == GameVisibility.Public);
 
 		public GameManager(IServiceProvider services)
 		{
@@ -31,42 +40,66 @@ namespace WebGames.Core
 			var code = CodeGenerator.Generate();
 			var game = TGame.Create(code, configuration, this.services);
 
-			var joined = game.TryJoin(player);
-
-			Debug.Assert(joined, "Unable to create newly created game");
+			game.Join(player);
 
 			this.games.Add(game);
+
+			this.GameListUpdated?.Invoke(this, new GameListUpdatedArgs(game, GameListUpdatedType.Created));
 
 			return game;
 		}
 
 		/// <summary>
-		/// Attempts to locate a game using the supplied join <paramref name="code"/> and, if the game is joinable and does not already contain the specified <paramref name="player"/>, adds the player to the game.
+		/// Attempts to locate a game by its unique code and ensure the specified player can join it.
+		/// If the game is found, is joinable, and the player is either already a participant or can be added,
+		/// the method will optionally add the player to the game.
 		/// </summary>
-		/// <param name="code">The unique identifier for the game to join.</param>
-		/// <param name="player">The player that is trying to join the game.</param>
+		/// <param name="code">The unique identifier of the game to retrieve.</param>
+		/// <param name="player">The player requesting access to the game.</param>
 		/// <param name="game">
-		/// When the method returns <see langword="true"/>, receives the <see cref="IGame"/> instance that the player successfully joined; otherwise, receives <see langword="null"/>.
+		/// When the method returns <see langword="true"/>, contains the matching <see cref="IGame"/> instance;
+		/// otherwise, set to <see langword="null"/>.
 		/// </param>
-		/// <returns><see langword="true"/> if the player was successfully added to the game; otherwise, <see langword="false"/>.</returns>
-		public bool TryJoin(string code, IPlayer player, [NotNullWhen(true)] out IGame? game)
+		/// <returns>
+		/// <see langword="true"/> if a matching game was found, is joinable, and the player is (or has become) a participant;
+		/// otherwise, <see langword="false"/>.
+		/// </returns>
+		public bool TryGetOrJoin(string code, IPlayer player, [NotNullWhen(true)] out IGame? game)
 		{
 			game = this.FindGame(code);
 
-			if ((game?.Joinable != true) || (game.ContainsPlayer(player)))
+			return game is not null && this.TryGetOrJoin(game, player);
+		}
+
+		/// <summary>
+		/// Attempts to locate a game by its unique code and ensure the specified player can join it.
+		/// If the game is found, is joinable, and the player is either already a participant or can be added,
+		/// the method will optionally add the player to the game.
+		/// </summary>
+		/// <param name="game">The game that the player is attempting to join.</param>
+		/// <param name="player">The player requesting access to the game.</param>
+		/// <returns>
+		/// <see langword="true"/> if a matching game was found, is joinable, and the player is (or has become) a participant;
+		/// otherwise, <see langword="false"/>.
+		/// </returns>
+		public bool TryGetOrJoin(IGame game, IPlayer player)
+		{
+			var joinable = game.Joinable;
+			var joined = game.ContainsPlayer(player);
+
+			if (!joinable && !joined)
 			{
-				game = null;
 				return false;
 			}
 
-			var joined = game.TryJoin(player);
-
 			if (!joined)
 			{
-				game = null;
+				game.Join(player);
+
+				this.GameListUpdated?.Invoke(this, new GameListUpdatedArgs(game, GameListUpdatedType.Updated));
 			}
 
-			return joined;
+			return true;
 		}
 
 		/// <summary>
@@ -79,14 +112,19 @@ namespace WebGames.Core
 		{
 			game.Leave(player);
 
-			if (game.Players.Count != 0)
+			// If the game is empty, we should remove it from the games-list.
+			if (game.Players.Count == 0)
 			{
-				return;
+				game.Dispose();
+
+				this.games.Remove(game);
+
+				this.GameListUpdated?.Invoke(this, new GameListUpdatedArgs(game, GameListUpdatedType.Removed));
 			}
-
-			game.Dispose();
-
-			this.games.Remove(game);
+			else
+			{
+				this.GameListUpdated?.Invoke(this, new GameListUpdatedArgs(game, GameListUpdatedType.Updated));
+			}
 		}
 
 		private IGame? FindGame(string code) =>

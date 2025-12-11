@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using Elegance.AspNet.Authentication.Extensions;
+using WebGames.Core;
 using WebGames.Models;
 
 namespace WebGames.Extensions
@@ -42,6 +43,14 @@ namespace WebGames.Extensions
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			public T? GetClaimValue<T>(ClaimType claimType) where T : ISpanParsable<T> =>
 				claimsPrincipal.GetClaimValue<T>(ClaimTypeEnumData.GetValue(claimType));
+
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			public TPlayer AsPlayer<TPlayer>() where TPlayer : IPlayer, new() =>
+				new()
+				{
+					Id = claimsPrincipal.GetClaimValue<int>(ClaimType.Id),
+					DisplayName = claimsPrincipal.GetRequiredClaimValue(ClaimType.Username),
+				};
 		}
 	}
 }

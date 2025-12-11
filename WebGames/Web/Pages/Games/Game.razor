@@ -1,0 +1,21 @@
+@page "/games/{code:required}"
+@using WebGames.Extensions
+@rendermode RenderModes.Interactive
+
+@if (game is null)
+{
+	<p>Game not found.</p>
+}
+else
+{
+	<h1>Game @(game.Code ?? "none")</h1>
+
+	<ul>
+		@foreach (var player in game.Players)
+		{
+			var key = $"player-{player.Id.Str()}";
+
+			<li @key="@(key)">@(player.DisplayName)</li>
+		}
+	</ul>
+}

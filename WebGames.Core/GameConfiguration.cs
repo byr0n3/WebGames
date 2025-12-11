@@ -13,7 +13,13 @@ namespace WebGames.Core
 		/// <summary>
 		/// The maximum amount of players that can join the game.
 		/// </summary>
-		public int MaxPLayers { get; init; }
+		public int MaxPlayers { get; init; }
+
+		/// <summary>
+		/// The visibility setting for the game, indicating whether it is publicly discoverable,
+		/// limited to friends only, or private.
+		/// </summary>
+		public GameVisibility Visibility { get; init; }
 
 		/// <summary>
 		/// Should the game automatically start when it's able to?
@@ -26,11 +32,5 @@ namespace WebGames.Core
 		/// </list>
 		/// </remarks>
 		public bool AutoStart { get; init; }
-
-		/// <summary>
-		/// Can players join after the game has already started?
-		/// </summary>
-		/// <remarks>A player would most-likely join as a spectator.</remarks>
-		public bool CanJoinInProgress { get; init; }
 	}
 }

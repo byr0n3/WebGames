@@ -1,0 +1,25 @@
+@using WebGames.Extensions
+@page "/games"
+@rendermode RenderModes.Interactive
+
+@* @todo Localize *@
+
+<h1>Games</h1>
+
+<div>
+	@foreach (var game in GameManager.Games)
+	{
+		var key = $"game-{game.Code}";
+
+		<div @key="@(key)">
+			<h2>@(game.Code)</h2>
+			<p>@(game.Players.Count.Str())/@(game.Configuration.MaxPlayers.Str())</p>
+			<p>@(game.State.ToString())</p>
+			<button type="button"
+			        disabled="@(!game.Joinable)"
+			        @onclick="@(() => JoinGame(game))">
+				Join
+			</button>
+		</div>
+	}
+</div>
