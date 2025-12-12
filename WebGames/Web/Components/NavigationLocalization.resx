@@ -18,7 +18,19 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
+    <data name="Home" xml:space="preserve">
+        <value>Home</value>
+    </data>
+    <data name="Games" xml:space="preserve">
+        <value>Play</value>
+    </data>
     <data name="SignOut" xml:space="preserve">
         <value>Sign out</value>
+    </data>
+    <data name="SignIn" xml:space="preserve">
+        <value>Sign in</value>
+    </data>
+    <data name="SignUp" xml:space="preserve">
+        <value>Sign up</value>
     </data>
 </root>

@@ -1,6 +1,19 @@
-﻿@inherits LayoutComponentBase
+﻿@using WebGames.Web.Components
+@inherits LayoutComponentBase
 
-@(Body)
+<div class="container">
+	<div class="sidebar">
+		<div>
+			WebGames
+		</div>
+
+		<Navigation />
+	</div>
+
+	<main class="content">
+		@(Body)
+	</main>
+</div>
 
 <div id="blazor-error-ui" data-nosnippet>
 	An unhandled error has occurred.

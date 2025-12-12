@@ -1,0 +1,36 @@
+ul.nav-items {
+	list-style: none;
+	margin: 0;
+	padding-inline: var(--spacing-small);
+
+	& li:not(:first-child) {
+		margin-block-start: var(--spacing-small);
+	}
+
+	& ::deep a,
+	& ::deep .btn-link {
+		display: block;
+		width: 100%;
+
+		text-align: left;
+		text-decoration: none;
+
+		color: var(--color-body);
+
+		padding: var(--spacing-tiny) var(--spacing-small);
+
+		border-radius: var(--border-radius);
+
+		&:not(.active):hover {
+			background-color: var(--background-color-tertiary);
+		}
+	}
+
+	& ::deep svg {
+		margin-inline-end: var(--spacing-tiny);
+	}
+
+	& ::deep a.active {
+		background-color: var(--background-color-light);
+	}
+}

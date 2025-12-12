@@ -16,7 +16,7 @@
 		<NoWarn>$(NoWarn);MA0016;MA0046;MA0048;MA0051;MA0003;CS0436;MA0038;MA0041</NoWarn>
 
 		<IsPublishable>false</IsPublishable>
-		<EleganceVersion>0.5.0</EleganceVersion>
+		<EleganceVersion>0.5.1</EleganceVersion>
 	</PropertyGroup>
 
 	<ItemGroup Condition=" '$(Configuration)' != 'Release' ">

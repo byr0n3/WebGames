@@ -6,15 +6,15 @@ using WebGames.Services;
 
 namespace WebGames.Web.Components
 {
-	public sealed partial class SignOutForm : ComponentBase
+	public sealed partial class Navigation : ComponentBase
 	{
-		private const string formName = nameof(SignOutForm);
+		private const string signOutFormName = "SignOut";
 
-		[Inject] public required NavigationManager Navigation { get; init; }
+		[Inject] public required NavigationManager Nav { get; init; }
 
 		[Inject] public required AuthenticationService Authentication { get; init; }
 
-		[Inject] public required IStringLocalizer<SignOutFormLocalization> Localizer { get; init; }
+		[Inject] public required IStringLocalizer<NavigationLocalization> Localizer { get; init; }
 
 		private readonly EditContext editContext = new(0);
 
@@ -22,7 +22,7 @@ namespace WebGames.Web.Components
 		{
 			await this.Authentication.SignOutAsync();
 
-			this.Navigation.NavigateTo("/", true);
+			this.Nav.NavigateTo("/", true);
 		}
 	}
 }

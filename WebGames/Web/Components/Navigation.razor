@@ -1,0 +1,46 @@
+@using Elegance.Icons
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+
+<nav>
+	<ul class="nav-items">
+		<li>
+			<NavLink href="/" Match="@(NavLinkMatch.All)">
+				@(Icons.Home) @(Localizer["Home"])
+			</NavLink>
+		</li>
+
+		<AuthorizeView>
+			<Authorized Context="auth">
+				<li>
+					<NavLink href="/games">
+						@(Icons.DeviceGamepad) @(Localizer["Play"])
+					</NavLink>
+				</li>
+				<li>
+					<EditForm EditContext="@(editContext)"
+					          OnValidSubmit="@(SignOutAsync)"
+					          FormName="@(Navigation.signOutFormName)">
+						<button type="submit" class="btn-link">
+							@(Icons.SignOut) @(Localizer["SignOut"])
+						</button>
+					</EditForm>
+				</li>
+			</Authorized>
+
+			<NotAuthorized>
+				<li>
+					<NavLink href="/sign-in">
+						@(Icons.SignIn) @(Localizer["SignIn"])
+					</NavLink>
+				</li>
+				<li>
+					<NavLink href="/sign-up">
+						@(Icons.UserPlus) @(Localizer["SignUp"])
+					</NavLink>
+				</li>
+			</NotAuthorized>
+		</AuthorizeView>
+	</ul>
+</nav>
