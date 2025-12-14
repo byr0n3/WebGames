@@ -1,0 +1,25 @@
+@using Elegance.Icons
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using WebGames.Extensions
+@using WebGames.Models
+
+<div class="account">
+	<div class="user">
+		<span class="user-avatar">@(Icons.User)</span>
+		<NavLink href="/account" class="account-link">
+			@(User.GetRequiredClaimValue(ClaimType.Username))
+		</NavLink>
+	</div>
+
+	<EditForm EditContext="@(editContext)"
+	          OnValidSubmit="@(SignOutAsync)"
+	          FormName="@(AccountDisplay.signOutFormName)">
+		<button type="submit"
+		        class="sign-out-btn btn-icon"
+		        title="@(Localizer["SignOut"])"
+		        aria-label="@(Localizer["SignOut"])">
+			@(Icons.SignOut)
+		</button>
+	</EditForm>
+</div>

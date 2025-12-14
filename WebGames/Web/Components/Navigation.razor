@@ -1,6 +1,5 @@
 @using Elegance.Icons
 @using Microsoft.AspNetCore.Components.Authorization
-@using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 
 <nav>
@@ -12,20 +11,11 @@
 		</li>
 
 		<AuthorizeView>
-			<Authorized Context="auth">
+			<Authorized Context="_">
 				<li>
 					<NavLink href="/games">
 						@(Icons.DeviceGamepad) @(Localizer["Play"])
 					</NavLink>
-				</li>
-				<li>
-					<EditForm EditContext="@(editContext)"
-					          OnValidSubmit="@(SignOutAsync)"
-					          FormName="@(Navigation.signOutFormName)">
-						<button type="submit" class="btn-link">
-							@(Icons.SignOut) @(Localizer["SignOut"])
-						</button>
-					</EditForm>
 				</li>
 			</Authorized>
 

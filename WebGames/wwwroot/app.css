@@ -19,8 +19,8 @@
 	--color-primary-contrast: hsl(0, 0%, 95%);
 
 	--background-color-body: hsl(0, 0%, 10%);
-	--background-color-secondary: hsl(0, 0%, 12%);
-	--background-color-tertiary: hsl(0, 0%, 15%);
+	--background-color-secondary: hsl(0, 0%, 15%);
+	--background-color-tertiary: hsl(0, 0%, 20%);
 	--background-color-disabled: hsla(0, 0%, 90%, 10%);
 	--background-color-light: hsl(0, 0%, 25%);
 
@@ -67,6 +67,7 @@
 	--font-size-h5: 1em;
 	--font-size-h6: 0.875em;
 
+	--spacing-extra-tiny: 0.125em;
 	--spacing-tiny: 0.25em;
 	--spacing-small: 0.5em;
 	--spacing-medium: 1em;

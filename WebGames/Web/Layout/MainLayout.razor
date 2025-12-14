@@ -17,9 +17,7 @@
 
 		<AuthorizeView>
 			<Authorized Context="auth">
-				<div class="account">
-					@(auth.User.GetRequiredClaimValue(ClaimType.Username))
-				</div>
+				<AccountDisplay User="@(auth.User)" />
 			</Authorized>
 		</AuthorizeView>
 	</div>

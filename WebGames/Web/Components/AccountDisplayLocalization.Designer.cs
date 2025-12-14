@@ -14,21 +14,21 @@ namespace WebGames.Web.Components {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class NavigationLocalization {
+    public class AccountDisplayLocalization {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal NavigationLocalization() {
+        internal AccountDisplayLocalization() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Components.NavigationLocalization", typeof(NavigationLocalization).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Components.AccountDisplayLocalization", typeof(AccountDisplayLocalization).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -45,27 +45,9 @@ namespace WebGames.Web.Components {
             }
         }
         
-        public static string Home {
+        public static string SignOut {
             get {
-                return ResourceManager.GetString("Home", resourceCulture);
-            }
-        }
-        
-        public static string Games {
-            get {
-                return ResourceManager.GetString("Games", resourceCulture);
-            }
-        }
-        
-        public static string SignIn {
-            get {
-                return ResourceManager.GetString("SignIn", resourceCulture);
-            }
-        }
-        
-        public static string SignUp {
-            get {
-                return ResourceManager.GetString("SignUp", resourceCulture);
+                return ResourceManager.GetString("SignOut", resourceCulture);
             }
         }
     }

@@ -1,0 +1,42 @@
+.account {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--spacing-tiny);
+
+	padding: var(--spacing-medium);
+}
+
+.user {
+	flex: 1;
+
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	gap: var(--spacing-small);
+}
+
+.user-avatar {
+	font-size: 1em;
+
+	padding: var(--spacing-tiny);
+
+	border-radius: var(--border-radius);
+
+	background-color: hsl(0, 0%, 30%);
+}
+
+::deep .account-link {
+	flex: 1;
+
+	color: var(--color-body);
+
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.sign-out-btn {
+	font-size: 0.625em;
+}
