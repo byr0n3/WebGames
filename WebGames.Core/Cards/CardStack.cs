@@ -1,5 +1,6 @@
 using System;
 using System.Buffers;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using JetBrains.Annotations;
@@ -103,6 +104,41 @@ namespace WebGames.Core.Cards
 			var copied = this.cards.AsSpan(this.position, count).TryCopyTo(dst);
 
 			Debug.Assert(copied);
+
+			this.position += count;
+
+			if (this.position >= this.capacity)
+			{
+				this.ResetAndShuffle();
+			}
+		}
+
+		/// <summary>
+		/// Copies a specified number of cards from the stack into the provided destination list
+		/// and advances the internal position accordingly.
+		/// </summary>
+		/// <param name="dst">The list into which the drawn cards are copied.</param>
+		/// <param name="count">
+		/// The number of cards to draw. A non‑positive value causes the method to use
+		/// <paramref name="dst"/>'s length as the count.
+		/// </param>
+		/// <exception cref="ArgumentException">
+		/// Thrown when <paramref name="count"/> is greater than the stack's capacity.
+		/// </exception>
+		public void Take(List<Card> dst, int count = 0)
+		{
+			if (count <= 0)
+			{
+				count = int.Min(this.Remaining, dst.Capacity);
+			}
+
+			if (count > this.capacity)
+			{
+				// @todo Support?
+				throw new ArgumentException($"Can't draw more than {this.capacity} cards", nameof(count));
+			}
+
+			dst.AddRange(this.cards.AsSpan(this.position, count));
 
 			this.position += count;
 

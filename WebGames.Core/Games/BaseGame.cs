@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using WebGames.Core.Events;
 using WebGames.Core.Exceptions;
 
@@ -56,7 +56,7 @@ namespace WebGames.Core.Games
 
 			this.Players.Add(gamePlayer);
 
-			this.GameUpdated?.Invoke(this, new GameUpdatedArgs(GameUpdatedType.PlayerJoined));
+			this.GameUpdated?.Invoke(this, new GameUpdatedArgs(GameUpdateType.PlayerJoined));
 
 			// @todo Start timer, start shorter timer when max. players have been reached.
 			if (this.Configuration.AutoStart && (this.Players.Count >= this.Configuration.MinPlayers))
@@ -68,14 +68,14 @@ namespace WebGames.Core.Games
 		/// <inheritdoc/>
 		public void Leave(IPlayer player)
 		{
-			if (player is not TPlayer gamePlayer)
+			if (player is not TPlayer)
 			{
 				throw new PlayerTypeException(this.GetType(), typeof(TPlayer), player.GetType());
 			}
 
-			this.Players.Remove(gamePlayer);
+			this.Players.RemoveAll((pl) => pl.Id == player.Id);
 
-			this.GameUpdated?.Invoke(this, new GameUpdatedArgs(GameUpdatedType.PlayerLeft));
+			this.GameUpdated?.Invoke(this, new GameUpdatedArgs(GameUpdateType.PlayerLeft));
 
 			// @todo Stop game?
 		}
@@ -83,25 +83,28 @@ namespace WebGames.Core.Games
 		/// <summary>
 		/// Transitions the game to <see cref="GameState.Playing"/> and informs subscribers of the change.
 		/// </summary>
-		protected void Start()
+		protected virtual void Start()
 		{
 			this.State = GameState.Playing;
 
-			this.GameUpdated?.Invoke(this, new GameUpdatedArgs(GameUpdatedType.StateUpdated));
+			this.GameUpdated?.Invoke(this, new GameUpdatedArgs(GameUpdateType.StateUpdated));
 		}
 
 		/// <summary>
 		/// Transitions the game to <see cref="GameState.Idle"/> and informs subscribers of the change.
 		/// </summary>
-		protected void Stop()
+		protected virtual void Stop()
 		{
 			this.State = GameState.Idle;
 
-			this.GameUpdated?.Invoke(this, new GameUpdatedArgs(GameUpdatedType.StateUpdated));
+			this.GameUpdated?.Invoke(this, new GameUpdatedArgs(GameUpdateType.StateUpdated));
 		}
 
 		/// <inheritdoc/>
-		public void Dispose() =>
+		public virtual void Dispose()
+		{
 			this.Players.Clear();
+			GC.SuppressFinalize(this);
+		}
 	}
 }

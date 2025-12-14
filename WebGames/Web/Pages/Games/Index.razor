@@ -1,10 +1,11 @@
-@using WebGames.Extensions
 @page "/games"
+@using WebGames.Extensions
 @rendermode RenderModes.Interactive
 
 @* @todo Localize *@
 
 <h1>Games</h1>
+<a href="/games/create">Create</a>
 
 <div>
 	@foreach (var game in GameManager.Games)

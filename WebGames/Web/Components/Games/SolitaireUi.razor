@@ -1,0 +1,57 @@
+<script src="@(Assets["Web/Components/Games/SolitaireUi.razor.js"])"></script>
+
+<div id="solitaire-container">
+	<div class="row">
+		<div class="row">
+			<PlayingCard Card="@(default)" Clicked="@(NextTalonCard)" />
+			@if (Game.TalonCard != default)
+			{
+				<PlayingCard Card="@(Game.TalonCard)" />
+			}
+		</div>
+
+		<div class="row">
+			@for (var i = 0; i < Game.Foundations.Length; i++)
+			{
+				var foundationKey = $"foundation-{i}";
+				var foundation = Game.Foundations[i];
+				var card = foundation.Count != 0 ? foundation[^1] : default;
+
+				<PlayingCard @key="@(foundationKey)"
+				             Card="@(card)"
+				             Clicked="@(HandleTalonCardClicked)" />
+			}
+		</div>
+	</div>
+
+	<div class="card-lists">
+		@for (var i = 0; i < Game.Tableaus.Length; i++)
+		{
+			var tableauIndex = i;
+			var tableauKey = $"tableau-{tableauIndex}";
+			var tableau = Game.Tableaus[tableauIndex];
+
+			<ol @key="@(tableauKey)" class="card-list">
+				@if (tableau.Count != 0)
+				{
+					for (var cardIndex = 0; cardIndex < tableau.Count; cardIndex++)
+					{
+						var cardKey = $"{tableauKey}-card-{cardIndex}";
+						var card = cardIndex == tableau.Count - 1 ? tableau[cardIndex] : default;
+
+						<li @key="@(cardKey)">
+							<PlayingCard Card="@(card)" Clicked="@(() => HandleTableauCardClicked(tableauIndex))" />
+						</li>
+					}
+				}
+				else
+				{
+					<li>
+						<PlayingCard Card="@(default)" />
+					</li>
+				}
+			</ol>
+		}
+	</div>
+
+</div>

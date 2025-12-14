@@ -1,0 +1,26 @@
+.row {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: start;
+	gap: var(--spacing-small);
+}
+
+.card-lists {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: start;
+	gap: var(--spacing-small);
+
+	margin-block-start: var(--spacing-small);
+}
+
+.card-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.card-list li:not(:first-child) {
+	margin-top: -75%;
+}
