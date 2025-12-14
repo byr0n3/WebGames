@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using WebGames.Database;
-using WebGames.Database.Encryption;
 using WebGames.Extensions;
 using WebGames.Models;
 using WebGames.Models.Requests;
@@ -19,8 +18,6 @@ namespace WebGames.Web.Pages
 	public sealed partial class Account : ComponentBase
 	{
 		private const string formName = nameof(Account);
-
-		[Inject] public required DbEncryptor Encryptor { get; init; }
 
 		[Inject] public required AuthenticationService Authentication { get; init; }
 
@@ -67,8 +64,8 @@ namespace WebGames.Web.Pages
 
 				Debug.Assert(user is not null);
 
-				user.Username = this.Encryptor.Encrypt(this.Model.Username);
-				user.Email = this.Encryptor.Encrypt(this.Model.Email);
+				user.Username = this.Model.Username;
+				user.Email = this.Model.Email;
 
 				if (!string.IsNullOrWhiteSpace(this.Model.Password))
 				{

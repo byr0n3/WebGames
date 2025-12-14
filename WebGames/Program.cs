@@ -109,16 +109,6 @@ static void ConfigureServices(IServiceCollection services, ConfigurationManager 
 	);
 
 	services.AddDatabase(configuration.GetConnectionString("WebGames") ?? throw new Exception(), environment.IsDevelopment());
-	services.AddDatabaseEncryptor((options) =>
-	{
-		var encryption = configuration.GetSection("Encryption");
-		var key = encryption[nameof(options.Key)];
-
-		if (!string.IsNullOrWhiteSpace(key))
-		{
-			options.Key = Convert.FromBase64String(key);
-		}
-	});
 
 	services.AddSingleton<RendererService>();
 

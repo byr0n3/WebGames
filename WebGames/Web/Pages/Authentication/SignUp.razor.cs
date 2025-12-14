@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using MimeKit;
 using WebGames.Database;
-using WebGames.Database.Encryption;
 using WebGames.Database.Models;
 using WebGames.EmailTemplates;
 using WebGames.Models.Requests;
@@ -20,8 +19,6 @@ namespace WebGames.Web.Pages.Authentication
 		private const string formName = nameof(SignUp);
 
 		[Inject] public required SmtpService Smtp { get; init; }
-
-		[Inject] public required DbEncryptor Encryptor { get; init; }
 
 		[Inject] public required RendererService Renderer { get; init; }
 
@@ -44,8 +41,8 @@ namespace WebGames.Web.Pages.Authentication
 			{
 				db.Users.Add(new User
 				{
-					Username = this.Encryptor.Encrypt(this.Model.Username),
-					Email = this.Encryptor.Encrypt(this.Model.Email),
+					Username = this.Model.Username,
+					Email = this.Model.Email,
 					Password = Hashing.Hash(this.Model.Password),
 					AccountConfirmationToken = token,
 				});

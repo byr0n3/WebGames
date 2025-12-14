@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using WebGames.AspNet;
 using WebGames.Database;
-using WebGames.Database.Encryption;
 using WebGames.Database.Models;
 using WebGames.Resources;
 
@@ -49,17 +48,13 @@ namespace WebGames.Models.Requests
 		{
 			Debug.Assert(this.IsValid);
 
-			var encryptor = context.GetRequiredService<DbEncryptor>();
 			var localizer = context.GetRequiredService<IStringLocalizer<SignUpModel>>();
 			var db = context.GetRequiredService<IDbContextFactory<WebGamesDbContext>>().CreateDbContext();
 
-			var encryptedUsername = encryptor.Encrypt(this.Username);
-			var encryptedEmail = encryptor.Encrypt(this.Email);
-
 			using (db)
 			{
-				var usernameExists = db.Users.Any((u) => u.Username == encryptedUsername);
-				var emailExists = db.Users.Any((u) => u.Email == encryptedEmail);
+				var usernameExists = db.Users.Any((u) => u.Username == this.Username);
+				var emailExists = db.Users.Any((u) => u.Email == this.Email);
 
 				if (usernameExists)
 				{

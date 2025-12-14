@@ -12,17 +12,14 @@ namespace WebGames.Database.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterDatabase()
-                .Annotation("Npgsql:PostgresExtension:pgcrypto", ",,");
-
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Username = table.Column<byte[]>(type: "bytea", nullable: false),
-                    Email = table.Column<byte[]>(type: "bytea", nullable: false),
+                    Username = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
+                    Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     Password = table.Column<byte[]>(type: "bytea", nullable: false),
                     Flags = table.Column<int>(type: "integer", nullable: false),
                     AccountConfirmationToken = table.Column<Guid>(type: "uuid", nullable: true),

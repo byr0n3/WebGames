@@ -12,7 +12,7 @@ using WebGames.Database;
 namespace WebGames.Database.Migrations
 {
     [DbContext(typeof(WebGamesDbContext))]
-    [Migration("20251209071818_Initial")]
+    [Migration("20251214154205_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -23,7 +23,6 @@ namespace WebGames.Database.Migrations
                 .HasAnnotation("ProductVersion", "10.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "pgcrypto");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("WebGames.Database.Models.User", b =>
@@ -48,9 +47,10 @@ namespace WebGames.Database.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("now()");
 
-                    b.Property<byte[]>("Email")
+                    b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("bytea");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<int>("Flags")
                         .HasColumnType("integer");
@@ -74,9 +74,10 @@ namespace WebGames.Database.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
-                    b.Property<byte[]>("Username")
+                    b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("bytea");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.HasKey("Id");
 
@@ -104,6 +105,7 @@ namespace WebGames.Database.Migrations
                         .HasDefaultValueSql("now()");
 
                     b.Property<string>("Value")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 

@@ -37,16 +37,6 @@ namespace WebGames.Tests
 			});
 
 			services.AddDatabase(configuration.GetConnectionString("WebGames") ?? throw new Exception(), true);
-			services.AddDatabaseEncryptor((options) =>
-			{
-				var encryption = configuration.GetSection("Encryption");
-				var key = encryption[nameof(options.Key)];
-
-				if (!string.IsNullOrWhiteSpace(key))
-				{
-					options.Key = Convert.FromBase64String(key);
-				}
-			});
 
 			// We want a new GameManager everytime we require it from the service provider,
 			// as multithreaded tests can influence the test results.

@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Linq.Expressions;
 using Elegance.AspNet.Authentication;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using WebGames.Database.Encryption;
 using WebGames.Database.EntityTypeConfiguration;
 
 namespace WebGames.Database.Models
@@ -21,9 +20,9 @@ namespace WebGames.Database.Models
 
 		public int Id { get; init; }
 
-		public required byte[] Username { get; set; }
+		[StringLength(User.UsernameMaxLength)] public required string Username { get; set; }
 
-		public required byte[] Email { get; set; }
+		[StringLength(User.EmailMaxLength)] public required string Email { get; set; }
 
 		public required byte[] Password { get; set; }
 
@@ -50,12 +49,8 @@ namespace WebGames.Database.Models
 
 		public List<UserClaim> Claims { get; init; } = null!;
 
-		public static Expression<Func<User, bool>> FindAuthenticatable(string user, IServiceProvider services)
-		{
-			var encrypted = services.GetRequiredService<DbEncryptor>().Encrypt(user);
-
-			return (u) => ((u.Flags & UserFlags.Active) != UserFlags.None) && ((u.Username == encrypted) || (u.Email == encrypted));
-		}
+		public static Expression<Func<User, bool>> FindAuthenticatable(string user, IServiceProvider _) =>
+			(u) => ((u.Flags & UserFlags.Active) != UserFlags.None) && ((u.Username == user) || (u.Email == user));
 
 		public static IQueryable<User> Include(IQueryable<User> queryable) =>
 			queryable.Include(static (u) => u.Claims);

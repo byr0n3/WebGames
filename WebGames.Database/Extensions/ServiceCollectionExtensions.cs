@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
-using WebGames.Database.Encryption;
 
 namespace WebGames.Database.Extensions
 {
@@ -32,12 +31,6 @@ namespace WebGames.Database.Extensions
 						   .EnableThreadSafetyChecks(isDevelopment)
 						   .UseNpgsql(dataSource);
 				}, poolSize);
-			}
-
-			public void AddDatabaseEncryptor(Action<EncryptionOptions> configure)
-			{
-				services.Configure(configure);
-				services.AddSingleton<DbEncryptor>();
 			}
 		}
 	}

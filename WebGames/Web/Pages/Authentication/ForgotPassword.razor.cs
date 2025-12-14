@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using MimeKit;
 using WebGames.Database;
-using WebGames.Database.Encryption;
 using WebGames.Database.Models;
 using WebGames.EmailTemplates;
 using WebGames.Models.Requests;
@@ -21,8 +20,6 @@ namespace WebGames.Web.Pages.Authentication
 		private const string formName = nameof(ForgotPassword);
 
 		[Inject] public required SmtpService Smtp { get; init; }
-
-		[Inject] public required DbEncryptor Encryptor { get; init; }
 
 		[Inject] public required RendererService Renderer { get; init; }
 
@@ -46,8 +43,7 @@ namespace WebGames.Web.Pages.Authentication
 			await using (var db = await this.DbFactory.CreateDbContextAsync())
 			{
 				var saved = await db.Users
-									.Where((u) => ((u.Flags & UserFlags.Active) != UserFlags.None) &&
-												  (u.Email == this.Encryptor.Encrypt(this.Model.Email)))
+									.Where((u) => ((u.Flags & UserFlags.Active) != UserFlags.None) && (u.Email == this.Model.Email))
 									.ExecuteUpdateAsync((calls) => calls.SetProperty(static (u) => u.PasswordResetToken, token)
 																		.SetProperty(static (u) => u.PasswordResetExpiry, expiry));
 
@@ -80,9 +76,6 @@ namespace WebGames.Web.Pages.Authentication
 
 		private async Task SendEmailAsync(UserEmailData data, Guid token)
 		{
-			var username = this.Encryptor.Decrypt(data.Username);
-			var email = this.Encryptor.Decrypt(data.Email);
-
 			var html = await this.Renderer.RenderAsync<ResetPasswordLink>(new Dictionary<string, object?>(System.StringComparer.Ordinal)
 			{
 				{ nameof(ResetPasswordLink.Token), token },
@@ -90,7 +83,7 @@ namespace WebGames.Web.Pages.Authentication
 
 			await this.Smtp.SendAsync(new SmtpService.SmtpMessageDescriptor
 			{
-				To = new MailboxAddress(username, email),
+				To = new MailboxAddress(data.Username, data.Email),
 				Subject = ResetPasswordLinkLocalization.Subject,
 				HtmlBody = html,
 			});
@@ -98,9 +91,9 @@ namespace WebGames.Web.Pages.Authentication
 
 		private readonly struct UserEmailData
 		{
-			public required byte[] Username { get; init; }
+			public required string Username { get; init; }
 
-			public required byte[] Email { get; init; }
+			public required string Email { get; init; }
 		}
 	}
 }
