@@ -47,10 +47,10 @@
 
 	--border-width-small: max(1px, 0.0625em);
 	--border-width: max(2px, 0.125em);
-	--border-radius-small: 0.25em;
-	--border-radius: 0.5em;
-	--border-radius-large: 0.75em;
-	--border-radius-pill: 2.5em;
+	--border-radius-small: 0.25rem;
+	--border-radius: 0.5rem;
+	--border-radius-large: 0.75rem;
+	--border-radius-pill: 2.5rem;
 	--border-radius-circle: 100%;
 
 	--font-size-tiny: 0.75em;
@@ -76,6 +76,7 @@
 
 	--animation-duration-short: 80ms;
 	--animation-duration: 120ms;
+	--animation-duration-long: 160ms;
 	--animation-curve: cubic-bezier(0.33, 1, 0.66, 1);
 }
 

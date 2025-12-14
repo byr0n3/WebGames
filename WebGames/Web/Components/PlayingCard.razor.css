@@ -1,0 +1,42 @@
+.flippable-container {
+	font-size: 6rem;
+	width: 1em;
+	height: 1.333em;
+
+	display: inline-block;
+	/* @todo */
+	perspective: 800px;
+}
+
+.flippable-content {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	transform-style: preserve-3d;
+	transition: transform 1s cubic-bezier(0.3, 0.8, 0.2, 1.3);
+	z-index: 1;
+}
+
+.flippable-content > .playing-card {
+	position: absolute;
+	backface-visibility: hidden;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+}
+
+.flippable-content > :nth-child(2) {
+	transform: rotateY(180deg);
+}
+
+.flippable-content.flipped {
+	transform: rotateY(180deg);
+}
+
+.playing-card {
+	font-size: 6rem;
+}
+
+.playing-card.clickable {
+	cursor: pointer;
+}

@@ -1,6 +1,47 @@
 ﻿@page "/"
+@using WebGames.Core.Cards
+@using WebGames.Web.Components
+@rendermode RenderModes.Interactive
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 <p>Welcome to your new app.</p>
+
+<div>
+	@foreach (var suit in Enum.GetValues<CardSuit>().Where(static (s) => s > CardSuit.Invalid))
+	{
+		var suitKey = $"suit-{(int)suit}";
+
+		<div @key="@(suitKey)">
+			@foreach (var rank in Enum.GetValues<CardRank>().Where(static (s) => s > CardRank.Invalid))
+			{
+				var rankKey = $"{suitKey}-rank-{(int)rank}";
+
+				<PlayingCard @key="@(rankKey)"
+				             Card="@(new Card(suit, rank))"
+				             Hidden="@(flipped)"
+				             Clicked="@(() => flipped = !flipped)" />
+			}
+		</div>
+	}
+</div>
+
+<div>
+	@foreach (var value in (ReadOnlySpan<ulong>)[10000000, 1000000, 100000, 10000, 1000, 100, 10])
+	{
+		var valueKey = $"value-{value}";
+
+		<BettingChip @key="@(valueKey)"
+		             Value="@(value)"
+		             Clicked="@(static () =>
+		                      {
+		                      })" />
+	}
+</div>
+
+@code {
+
+	private bool flipped = true;
+
+}

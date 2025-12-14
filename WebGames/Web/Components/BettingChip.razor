@@ -1,0 +1,15 @@
+@using WebGames.Extensions
+
+<span class="betting-chip @(Clickable ? "clickable" : string.Empty)"
+      style="--chip-color:@(color);"
+      tabindex="-1"
+      @onclick="@(ClickedAsync)">
+	<span class="visually-hidden">@(Localizer.Format("ChipWorth", label))</span>
+	<span class="value" aria-hidden="true">@(label)</span>
+	<svg viewBox="0 0 128 128" width="1em" height="1em">
+		<circle cx="64" cy="64" r="64" fill="currentColor" />
+		<circle cx="64" cy="64" r="45" fill="#FFF" />
+		<path fill="#FFF"
+		      d="m64 119.515 7.99 7.991A64.632 64.632 0 0 1 64 128c-2.706 0-5.373-.168-7.99-.494l7.99-7.991ZM114.748 103a64.38 64.38 0 0 1-11.747 11.747L103 103h11.748ZM25 103l-.002 11.747a64.38 64.38 0 0 1-11.746-11.746L25 103ZM.494 56.009 8.485 64 .494 71.991A64.632 64.632 0 0 1 0 64c0-2.706.168-5.373.494-7.991Zm127.012 0c.326 2.618.494 5.285.494 7.991 0 2.706-.168 5.373-.494 7.991L119.515 64l7.991-7.991Zm-24.505-42.757a64.38 64.38 0 0 1 11.746 11.746L103 25V13.252Zm-78.003 0L25 25l-11.747-.002a64.381 64.381 0 0 1 11.016-11.175l.73-.57ZM64 0c2.706 0 5.373.168 7.991.494L64 8.485 56.009.494A64.632 64.632 0 0 1 64 0Z" />
+	</svg>
+</span>

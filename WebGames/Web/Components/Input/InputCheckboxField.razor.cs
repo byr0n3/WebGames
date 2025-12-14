@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Components;
 
-namespace WebGames.Web.Components
+namespace WebGames.Web.Components.Input
 {
 	public sealed partial class InputCheckboxField : ComponentBase
 	{

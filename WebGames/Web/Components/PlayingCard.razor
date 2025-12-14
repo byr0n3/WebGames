@@ -1,0 +1,30 @@
+@using WebGames.Core.Cards
+@using WebGames.Extensions
+
+@if (Flippable)
+{
+	<div class="flippable-container">
+		<div class="flippable-content @(Hidden == true ? "flipped" : string.Empty)">
+			@* @todo When hidden, render default card (only change when animation is done, otherwise hiding card looks weird) *@
+			@(Element(Card))
+			@(Element(default))
+		</div>
+	</div>
+}
+else
+{
+	@(Element(Card))
+}
+
+@code {
+
+	private RenderFragment Element(Card card) =>
+		@<svg width="1em"
+		      height="1.333em"
+		      class="playing-card @(Clickable ? "clickable" : string.Empty) @(Class)"
+		      tabindex="0"
+		      @onclick="@(ClickedAsync)">
+			<use href="/cards.svg#@(card.Id.Str())" />
+		</svg>;
+
+}

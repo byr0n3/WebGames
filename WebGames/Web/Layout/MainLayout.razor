@@ -1,13 +1,27 @@
-﻿@using WebGames.Web.Components
+﻿@using Elegance.Icons
+@using Microsoft.AspNetCore.Components.Authorization
+@using WebGames.Extensions
+@using WebGames.Models
+@using WebGames.Web.Components
 @inherits LayoutComponentBase
 
 <div class="container">
 	<div class="sidebar">
-		<div>
-			WebGames
+		<div class="sidebar-header">
+			<span class="app-logo">
+				@(Icons.Joker)
+			</span>
 		</div>
 
 		<Navigation />
+
+		<AuthorizeView>
+			<Authorized Context="auth">
+				<div class="account">
+					@(auth.User.GetRequiredClaimValue(ClaimType.Username))
+				</div>
+			</Authorized>
+		</AuthorizeView>
 	</div>
 
 	<main class="content">
