@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using WebGames.Core.Cards;
 using WebGames.Core.Events;
 using WebGames.Core.Players;
@@ -38,6 +38,9 @@ namespace WebGames.Core.Games
 		// The 7 card stacks on the table that are played with.
 		public readonly List<Card>[] Tableaus;
 
+		// Indicates what card in the tableau stack is visible.
+		public readonly int[] TableauVisibility;
+
 		// The stack of cards the player can draw.
 		public readonly List<Card> Talon;
 
@@ -52,6 +55,7 @@ namespace WebGames.Core.Games
 		{
 			this.Foundations = new List<Card>[Solitaire.foundationCount];
 			this.Tableaus = new List<Card>[Solitaire.tableauCount];
+			this.TableauVisibility = new int[Solitaire.tableauCount];
 			this.Talon = [];
 
 			for (var i = 0; i < this.Foundations.Length; i++)
@@ -84,6 +88,8 @@ namespace WebGames.Core.Games
 					tableau.Clear();
 
 					stack.Take(tableau, i + 1);
+
+					this.TableauVisibility[i] = i;
 				}
 
 				this.Talon.Clear();
@@ -107,83 +113,189 @@ namespace WebGames.Core.Games
 
 			this.talonIndex = (this.talonIndex + 1) % this.Talon.Count;
 
-			this.StateUpdated?.Invoke(this, SolitaireStateUpdatedArgs.TalonCardUpdated(this.talonIndex));
+			this.StateUpdated?.Invoke(this, new SolitaireStateUpdatedArgs(StackType.Talon, default, StackType.Talon, default));
 		}
 
 		/// <summary>
-		/// Moves the current talon card to its corresponding foundation stack, if the move is valid.
+		/// Moves a card or a sequence of cards from one stack to another within the Solitaire game.
 		/// </summary>
-		public void MoveTalonCardToFoundation()
+		/// <param name="srcType">The type of the stack from which the card(s) will be moved.</param>
+		/// <param name="srcIndex">The index of the source stack. If <paramref name="srcType"/> is <see cref="StackType.Talon"/>, this value is ignored and the current talon index is used instead.</param>
+		/// <param name="dstType">The type of the stack to which the card(s) will be moved.</param>
+		/// <param name="dstIndex">The index of the destination stack. If <paramref name="dstType"/> is <see cref="StackType.Foundation"/>, this value is overridden to correspond to the suit of the card being moved.</param>
+		public void Move(StackType srcType, int srcIndex, StackType dstType, int dstIndex)
 		{
-			if (this.State != GameState.Playing)
+			if (srcType == StackType.Talon)
+			{
+				srcIndex = this.talonIndex;
+			}
+
+			this.ValidateMove(srcType, srcIndex, dstType, dstIndex);
+
+			var src = (srcType) switch
+			{
+				StackType.Tableau    => this.Tableaus[srcIndex],
+				StackType.Foundation => this.Foundations[srcIndex],
+				_                    => this.Talon,
+			};
+
+			var srcCard = src.Count != 0
+				? (srcType) switch
+				{
+					StackType.Tableau    => src[this.TableauVisibility[srcIndex]],
+					StackType.Foundation => src[^1],
+					_                    => this.TalonCard,
+				}
+				: default;
+
+			if (dstType == StackType.Foundation)
+			{
+				dstIndex = ((int)srcCard.Suit) - 1;
+			}
+
+			var dst = dstType switch
+			{
+				StackType.Tableau    => this.Tableaus[dstIndex],
+				StackType.Foundation => this.Foundations[dstIndex],
+				_                    => this.Talon,
+			};
+
+			var dstCard = dst.Count != 0
+				? (dstType) switch
+				{
+					StackType.Tableau    => dst[^1],
+					StackType.Foundation => dst[^1],
+					_                    => this.TalonCard,
+				}
+				: default;
+
+			if (!Solitaire.IsMoveValid(dstType, dstCard, srcCard))
 			{
 				return;
 			}
 
-			var card = this.TalonCard;
-			var foundationIndex = ((int)card.Suit) - 1;
+			this.MoveCards(srcType, srcIndex, src, srcCard, dstType, dst);
 
-			Debug.Assert((foundationIndex >= 0) && (foundationIndex <= this.Foundations.Length - 1));
-
-			var foundation = this.Foundations[foundationIndex];
-			var diff = (int)card.Rank - (foundation.Count != 0 ? (int)foundation[^1].Rank : 0);
-
-			if (diff != 1)
+			switch (srcType)
 			{
-				return;
+				case StackType.Tableau:
+					this.TableauVisibility[srcIndex]--;
+					break;
+
+				case StackType.Talon:
+					this.talonIndex--;
+					break;
 			}
 
-			foundation.Add(card);
-			this.talonIndex--;
-
-			this.StateUpdated?.Invoke(this, SolitaireStateUpdatedArgs.TalonCardToFoundation());
+			this.StateUpdated?.Invoke(this, new SolitaireStateUpdatedArgs(srcType, srcIndex, dstType, dstIndex));
 		}
 
 		/// <summary>
-		/// Moves the top card from the specified tableau to its corresponding foundation stack, if the move is valid.
+		/// Transfers card(s) between two stacks within the game.
 		/// </summary>
-		/// <param name="tableauIndex">
-		/// The zero‑based index of the tableau from which to attempt to move the top card.
-		/// </param>
-		/// <exception cref="ArgumentException">
-		/// Thrown when <paramref name="tableauIndex"/> is less than 0 or greater than or equal
-		/// to the number of tableau piles.
-		/// </exception>
-		public void MoveTableauCardToFoundation(int tableauIndex)
+		/// <param name="srcType">The <see cref="StackType"/> of the stack from which cards will be moved.</param>
+		/// <param name="srcIndex">The index of the source stack within its collection.</param>
+		/// <param name="src">The list that holds the cards of the source stack.</param>
+		/// <param name="srcCard">The card that is the primary element to be moved.</param>
+		/// <param name="dstType">The <see cref="StackType"/> of the stack to which cards will be added.</param>
+		/// <param name="dst">The list that holds the cards of the destination stack.</param>
+		private void MoveCards(StackType srcType, int srcIndex, List<Card> src, Card srcCard, StackType dstType, List<Card> dst)
 		{
-			if (this.State != GameState.Playing)
+			if ((srcType is StackType.Tableau) && (dstType is StackType.Tableau))
 			{
-				return;
-			}
+				var topCount = src.Count;
+				var visible = this.TableauVisibility[srcIndex];
 
-			if ((tableauIndex < 0) || (tableauIndex > this.Tableaus.Length))
+				for (var i = visible; i < topCount; i++)
+				{
+					dst.Add(src[i]);
+				}
+
+				src.RemoveRange(visible, src.Count - visible);
+			}
+			else
 			{
-				throw new ArgumentException($"Invalid tableau index: {tableauIndex}", nameof(tableauIndex));
+				dst.Add(srcCard);
+				src.Remove(srcCard);
 			}
-
-			var tableau = this.Tableaus[tableauIndex];
-			var card = tableau[^1];
-
-			var foundationIndex = ((int)card.Suit) - 1;
-
-			Debug.Assert((foundationIndex >= 0) && (foundationIndex <= this.Foundations.Length - 1));
-
-			var foundation = this.Foundations[foundationIndex];
-			var diff = (int)card.Rank - (foundation.Count != 0 ? (int)foundation[^1].Rank : 0);
-
-			if (diff != 1)
-			{
-				return;
-			}
-
-			foundation.Add(card);
-			tableau.RemoveAt(tableau.Count - 1);
-
-			this.StateUpdated?.Invoke(this, SolitaireStateUpdatedArgs.TableauCardToFoundation(tableau.Count));
 		}
+
+		[SuppressMessage("ReSharper", "SwitchStatementMissingSomeEnumCasesNoDefault")]
+		private void ValidateMove(StackType srcType, int srcIndex, StackType dstType, int dstIndex)
+		{
+			switch (srcType)
+			{
+				case StackType.Tableau when (srcIndex < 0) || (srcIndex > this.Tableaus.Length):
+					throw new ArgumentException($"Invalid tableau index: {srcIndex}", nameof(srcIndex));
+
+				case StackType.Foundation when (srcIndex < 0) || (srcIndex > this.Foundations.Length):
+					throw new ArgumentException($"Invalid foundation index: {srcIndex}", nameof(srcIndex));
+			}
+
+			switch (dstType)
+			{
+				case StackType.Tableau when (dstIndex < 0) || (dstIndex > this.Tableaus.Length):
+					throw new ArgumentException($"Invalid tableau index: {dstIndex}", nameof(dstIndex));
+
+				case StackType.Foundation when (dstIndex < 0) || (dstIndex > this.Foundations.Length):
+					throw new ArgumentException($"Invalid foundation index: {dstIndex}", nameof(dstIndex));
+			}
+		}
+
+		private static bool IsMoveValid(StackType dstType, Card dst, Card src)
+		{
+			// If there's no bottom card, the top card HAS to be a king.
+			if (dst == default)
+			{
+				return src.Rank == (dstType == StackType.Foundation ? CardRank.Ace : CardRank.King);
+			}
+
+			return Solitaire.IsMoveValid(dst.Rank, src.Rank) && Solitaire.IsMoveValid(dst.Suit, src.Suit);
+		}
+
+		private static bool IsMoveValid(CardRank dst, CardRank src) =>
+			int.Abs((int)src - (int)dst) == 1;
+
+		// @todo Refactor
+		private static bool IsMoveValid(CardSuit dst, CardSuit src) =>
+			(src) switch
+			{
+				CardSuit.Heart   => dst is CardSuit.Spade or CardSuit.Club,
+				CardSuit.Diamond => dst is CardSuit.Spade or CardSuit.Club,
+				CardSuit.Spade   => dst is CardSuit.Heart or CardSuit.Diamond,
+				CardSuit.Club    => dst is CardSuit.Heart or CardSuit.Diamond,
+				_                => throw new ArgumentException("Invalid suit", nameof(src)),
+			};
 
 		/// <inheritdoc/>
 		public static IGame Create(string code, GameConfiguration configuration, IServiceProvider _) =>
 			new Solitaire(code, configuration);
+
+		/// <summary>
+		/// Specifies the various types of card stacks that can exist in a solitaire game.
+		/// These values are used when moving cards or querying the state of the game.
+		/// </summary>
+		public enum StackType
+		{
+			/// <summary>
+			/// Invalid default value.
+			/// </summary>
+			Invalid,
+
+			/// <summary>
+			/// A stack that represents one of the tableau piles in a solitaire game.
+			/// </summary>
+			Tableau,
+
+			/// <summary>
+			/// A stack that represents one of the foundation piles in a solitaire game.
+			/// </summary>
+			Foundation,
+
+			/// <summary>
+			/// A stack that represents the talon pile in a solitaire game.
+			/// </summary>
+			Talon,
+		}
 	}
 }

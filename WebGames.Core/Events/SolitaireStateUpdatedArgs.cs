@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using WebGames.Core.Games;
 
 namespace WebGames.Core.Events
 {
@@ -11,58 +12,29 @@ namespace WebGames.Core.Events
 		/// <summary>
 		/// The type of update that happened.
 		/// </summary>
-		public readonly SolitaireStateUpdateTarget From;
-
-		/// <summary>
-		/// Defines the target pile of the solitaire game that has been updated.
-		/// </summary>
-		public readonly SolitaireStateUpdateTarget To;
+		public readonly Solitaire.StackType From;
 
 		/// <summary>
 		/// The zero‑based index identifying the specific element that was updated in the solitaire game state.
 		/// </summary>
-		public readonly int Index;
+		public readonly int FromIndex;
 
-		internal SolitaireStateUpdatedArgs(SolitaireStateUpdateTarget from, SolitaireStateUpdateTarget to, int index)
+		/// <summary>
+		/// Defines the target pile of the solitaire game that has been updated.
+		/// </summary>
+		public readonly Solitaire.StackType To;
+
+		/// <summary>
+		/// The zero‑based index identifying the specific element that was updated in the solitaire game state.
+		/// </summary>
+		public readonly int ToIndex;
+
+		internal SolitaireStateUpdatedArgs(Solitaire.StackType from, int fromIndex, Solitaire.StackType to, int toIndex)
 		{
 			this.From = from;
+			this.FromIndex = fromIndex;
 			this.To = to;
-			this.Index = index;
+			this.ToIndex = toIndex;
 		}
-
-		internal static SolitaireStateUpdatedArgs TalonCardUpdated(int index) =>
-			new(SolitaireStateUpdateTarget.Talon, SolitaireStateUpdateTarget.Invalid, index);
-
-		internal static SolitaireStateUpdatedArgs TalonCardToFoundation() =>
-			new(SolitaireStateUpdateTarget.Talon, SolitaireStateUpdateTarget.Foundation, default);
-
-		internal static SolitaireStateUpdatedArgs TableauCardToFoundation(int index) =>
-			new(SolitaireStateUpdateTarget.Tableau, SolitaireStateUpdateTarget.Foundation, index);
-	}
-
-	/// <summary>
-	/// Identifies the pile that has been updated during a solitaire game.
-	/// </summary>
-	public enum SolitaireStateUpdateTarget
-	{
-		/// <summary>
-		/// Invalid default value.
-		/// </summary>
-		Invalid = -1,
-
-		/// <summary>
-		/// The talon pile was the target of the update.
-		/// </summary>
-		Talon,
-
-		/// <summary>
-		/// A foundation pile was the target of the update.
-		/// </summary>
-		Foundation,
-
-		/// <summary>
-		/// A tableau pile was the target of the update.
-		/// </summary>
-		Tableau,
 	}
 }

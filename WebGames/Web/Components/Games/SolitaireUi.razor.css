@@ -24,3 +24,11 @@
 .card-list li:not(:first-child) {
 	margin-top: -75%;
 }
+
+.empty-card-slot {
+	background-color: var(--background-color-tertiary);
+	font-size: 6em;
+	width: 1em;
+	height: 1.333em;
+	border-radius: var(--border-radius-small);
+}

@@ -23,7 +23,6 @@ else
 		      height="1.333em"
 		      class="playing-card @(Clickable ? "clickable" : string.Empty) @(Class)"
 		      tabindex="0"
-		      data-playing-card="@(card.Id.Str())"
 		      @onclick="@(ClickedAsync)">
 			<use href="/cards.svg#@(card.Id.Str())" />
 		</svg>;

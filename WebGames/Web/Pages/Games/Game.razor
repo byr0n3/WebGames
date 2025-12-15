@@ -4,6 +4,8 @@
 @using WebGames.Web.Components.Games
 @rendermode RenderModes.Interactive
 
+<PageTitle>Game @(game?.Code ?? string.Empty)</PageTitle>
+
 @switch (game)
 {
 	case Solitaire solitaire when (player is SolitairePlayer solitairePlayer):
