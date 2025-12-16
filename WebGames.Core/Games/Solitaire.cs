@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using WebGames.Core.Cards;
 using WebGames.Core.Events;
 using WebGames.Core.Players;
@@ -12,7 +13,11 @@ namespace WebGames.Core.Games
 	/// </summary>
 	public sealed class Solitaire : BaseGame<SolitairePlayer>, ICreatableGame
 	{
-		private const int tableauCount = 7;
+		/// <summary>
+		/// The number of tableau piles used by the <see cref="Solitaire"/> game.
+		/// </summary>
+		public const int TableauCount = 7;
+
 		private static readonly int foundationCount = Enum.GetValues<CardSuit>().Length - 1;
 
 		/// <summary>
@@ -32,30 +37,56 @@ namespace WebGames.Core.Games
 			AutoStart = true,
 		};
 
-		// The 4 card stacks that need to be filled to win the game.
+		/// <summary>
+		/// The 4 card stacks that need to be filled to win the game.
+		/// </summary>
 		public readonly List<Card>[] Foundations;
 
-		// The 7 card stacks on the table that are played with.
+		/// <summary>
+		/// The 7 card stacks on the table that are played with.
+		/// </summary>
 		public readonly List<Card>[] Tableaus;
 
-		// Indicates what card in the tableau stack is visible.
+		/// <summary>
+		/// Indicates what card in the tableau stack is visible.
+		/// </summary>
 		public readonly int[] TableauVisibility;
 
-		// The stack of cards the player can draw.
+		/// <summary>
+		/// The stack of cards the player can draw.
+		/// </summary>
 		public readonly List<Card> Talon;
 
-		private int talonIndex;
-
+		/// <summary>
+		/// Returns the card currently at the top of the talon.
+		/// </summary>
 		public Card TalonCard =>
 			this.talonIndex != -1 ? this.Talon[this.talonIndex] : default;
 
+		/// <summary>
+		/// Raised whenever a move is performed or the talon changes, informing subscribers about the updated state of the <see cref="Solitaire"/> instance.
+		/// </summary>
 		public event OnStateUpdated? StateUpdated;
+
+		/// <summary>
+		/// Indicates whether the game can finish because all cards in every tableau stack is visible.
+		/// </summary>
+		public bool CanFinish =>
+			this.TableauVisibility.All(static (visibility) => visibility <= 0);
+
+		/// <summary>
+		/// Indicates whether the game has reached its finished state.
+		/// </summary>
+		public bool IsFinished =>
+			this.Foundations.All(static (foundation) => (foundation.Count != 0) && (foundation[^1].Rank is CardRank.King));
+
+		private int talonIndex;
 
 		private Solitaire(string code, GameConfiguration configuration) : base(code, configuration)
 		{
 			this.Foundations = new List<Card>[Solitaire.foundationCount];
-			this.Tableaus = new List<Card>[Solitaire.tableauCount];
-			this.TableauVisibility = new int[Solitaire.tableauCount];
+			this.Tableaus = new List<Card>[Solitaire.TableauCount];
+			this.TableauVisibility = new int[Solitaire.TableauCount];
 			this.Talon = [];
 
 			for (var i = 0; i < this.Foundations.Length; i++)
@@ -102,6 +133,19 @@ namespace WebGames.Core.Games
 		}
 
 		/// <summary>
+		/// Restarts the game by reinitializing its current state.
+		/// </summary>
+		public void Restart()
+		{
+			if (this.State == GameState.Idle)
+			{
+				return;
+			}
+
+			this.Start();
+		}
+
+		/// <summary>
 		/// Advances to the next card in the talon sequence.
 		/// </summary>
 		public void NextTalonCard()
@@ -111,7 +155,14 @@ namespace WebGames.Core.Games
 				return;
 			}
 
-			this.talonIndex = (this.talonIndex + 1) % this.Talon.Count;
+			if ((this.talonIndex + 1) >= this.Talon.Count)
+			{
+				this.talonIndex = -1;
+			}
+			else
+			{
+				this.talonIndex++;
+			}
 
 			this.StateUpdated?.Invoke(this, new SolitaireStateUpdatedArgs(StackType.Talon, default, StackType.Talon, default));
 		}
@@ -125,6 +176,11 @@ namespace WebGames.Core.Games
 		/// <param name="dstIndex">The index of the destination stack. If <paramref name="dstType"/> is <see cref="StackType.Foundation"/>, this value is overridden to correspond to the suit of the card being moved.</param>
 		public void Move(StackType srcType, int srcIndex, StackType dstType, int dstIndex)
 		{
+			if (this.State != GameState.Playing)
+			{
+				return;
+			}
+
 			if (srcType == StackType.Talon)
 			{
 				srcIndex = this.talonIndex;
@@ -139,10 +195,10 @@ namespace WebGames.Core.Games
 				_                    => this.Talon,
 			};
 
-			var srcCard = src.Count != 0
+			var srcCard = (src.Count != 0)
 				? (srcType) switch
 				{
-					StackType.Tableau    => src[this.TableauVisibility[srcIndex]],
+					StackType.Tableau    => dstType == StackType.Foundation ? src[^1] : src[this.TableauVisibility[srcIndex]],
 					StackType.Foundation => src[^1],
 					_                    => this.TalonCard,
 				}
@@ -160,7 +216,7 @@ namespace WebGames.Core.Games
 				_                    => this.Talon,
 			};
 
-			var dstCard = dst.Count != 0
+			var dstCard = (dst.Count != 0)
 				? (dstType) switch
 				{
 					StackType.Tableau    => dst[^1],
@@ -176,10 +232,11 @@ namespace WebGames.Core.Games
 
 			this.MoveCards(srcType, srcIndex, src, srcCard, dstType, dst);
 
+			// ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
 			switch (srcType)
 			{
 				case StackType.Tableau:
-					this.TableauVisibility[srcIndex]--;
+					this.TableauVisibility[srcIndex] = int.Max(this.TableauVisibility[srcIndex] - 1, 0);
 					break;
 
 				case StackType.Talon:
@@ -187,7 +244,14 @@ namespace WebGames.Core.Games
 					break;
 			}
 
-			this.StateUpdated?.Invoke(this, new SolitaireStateUpdatedArgs(srcType, srcIndex, dstType, dstIndex));
+			if (this.IsFinished)
+			{
+				this.Stop();
+			}
+			else
+			{
+				this.StateUpdated?.Invoke(this, new SolitaireStateUpdatedArgs(srcType, srcIndex, dstType, dstIndex));
+			}
 		}
 
 		/// <summary>
@@ -250,7 +314,12 @@ namespace WebGames.Core.Games
 				return src.Rank == (dstType == StackType.Foundation ? CardRank.Ace : CardRank.King);
 			}
 
-			return Solitaire.IsMoveValid(dst.Rank, src.Rank) && Solitaire.IsMoveValid(dst.Suit, src.Suit);
+			if (!Solitaire.IsMoveValid(dst.Rank, src.Rank))
+			{
+				return false;
+			}
+
+			return (dstType == StackType.Foundation) || Solitaire.IsMoveValid(dst.Suit, src.Suit);
 		}
 
 		private static bool IsMoveValid(CardRank dst, CardRank src) =>

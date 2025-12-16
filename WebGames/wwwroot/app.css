@@ -518,6 +518,7 @@ button,
 	border: var(--border-width) solid transparent;
 	border-radius: var(--border-radius-small);
 
+	text-decoration: none;
 	font-weight: normal;
 
 	transform-origin: center;

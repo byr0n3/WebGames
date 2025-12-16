@@ -1,5 +1,20 @@
+@using Microsoft.AspNetCore.Components.Sections
+@using WebGames.Core
 @using WebGames.Core.Games
 @using WebGames.Extensions
+
+<SectionContent SectionName="game-actions">
+	<button type="button" @onclick="@(Restart)">
+		Restart
+	</button>
+</SectionContent>
+
+@if (Game.State == GameState.Done)
+{
+	<div class="alert alert-success">
+		You won! Congratulations!
+	</div>
+}
 
 <div id="solitaire-container">
 	<div class="row">
@@ -7,7 +22,7 @@
 			<PlayingCard Card="@(default)" Clicked="@(NextTalonCard)" />
 			@if (Game.TalonCard != default)
 			{
-				<div draggable="true"
+				<div draggable="@(IsPlaying.Str())"
 				     @ondragstart="@(() => OnDragStart(Solitaire.StackType.Talon, default))">
 					<PlayingCard Card="@(Game.TalonCard)" Clicked="@(TalonCardClicked)" />
 				</div>
@@ -24,7 +39,7 @@
 				var card = hasCard ? foundation[^1] : default;
 
 				<div @key="@(foundationKey)"
-				     draggable="@(hasCard.Str())"
+				     draggable="@((IsPlaying && hasCard).Str())"
 				     class="@(hasCard ? string.Empty : "empty-card-slot")"
 				     @ondragstart="@(() => OnDragStart(Solitaire.StackType.Foundation, foundationIndex))"
 				     @ondragover:preventDefault
@@ -55,7 +70,7 @@
 						var card = isVisible ? tableau[cardIndex] : default;
 
 						<li @key="@(cardKey)"
-						    draggable="@(isVisible.Str())"
+						    draggable="@((IsPlaying && isVisible).Str())"
 						    @ondragstart="@(() => OnDragStart(Solitaire.StackType.Tableau, tableauIndex))"
 						    @ondragover:preventDefault
 						    @ondrop="@(() => OnDrop(Solitaire.StackType.Tableau, tableauIndex))">

@@ -1,6 +1,9 @@
+using System;
+using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using WebGames.Core;
+using WebGames.Core.Cards;
 using WebGames.Core.Exceptions;
 using WebGames.Core.Games;
 using WebGames.Core.Players;
@@ -28,6 +31,23 @@ namespace WebGames.Tests
 
 			// The default configuration for solitaire allows the game to automatically start.
 			Assert.Equal(GameState.Playing, game.State);
+
+			// Assert that initialization went well.
+			Assert.Equal(Enum.GetValues<CardSuit>().Length - 1, game.Foundations.Length);
+			Assert.Equal(Solitaire.TableauCount, game.Tableaus.Length);
+			Assert.Empty(game.Foundations.SelectMany(static (foundation) => foundation));
+
+			// Assert the tableau stacks got filled.
+			for (var i = 0; i < game.Tableaus.Length; i++)
+			{
+				var tableau = game.Tableaus[i];
+
+				Assert.Equal(i + 1, tableau.Count);
+			}
+
+			// Assert the talon got filled with the remaining cards in the deck.
+			var tableauSum = game.Tableaus.Sum(static (tableau) => tableau.Count);
+			Assert.Equal(CardStack.DeckSize - tableauSum, game.Talon.Count);
 
 			gameManager.Leave(game, player);
 

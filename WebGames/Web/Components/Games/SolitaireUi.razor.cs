@@ -1,35 +1,85 @@
+using System;
 using Microsoft.AspNetCore.Components;
+using WebGames.Core;
+using WebGames.Core.Events;
 using WebGames.Core.Games;
 using WebGames.Core.Players;
 
 namespace WebGames.Web.Components.Games
 {
-	public sealed partial class SolitaireUi : ComponentBase
+	public sealed partial class SolitaireUi : ComponentBase, IDisposable
 	{
-		[Parameter] [EditorRequired] public Solitaire Game { get; set; }
+		[Parameter] [EditorRequired] public required Solitaire Game { get; set; }
 
-		[Parameter] [EditorRequired] public SolitairePlayer Player { get; set; }
+		[Parameter] [EditorRequired] public required SolitairePlayer Player { get; set; }
+
+		private bool IsPlaying =>
+			this.Game.State == GameState.Playing;
 
 		private Solitaire.StackType draggedType;
 		private int draggedIndex;
 
-		private void NextTalonCard() =>
+		protected override void OnInitialized() =>
+			this.Game.StateUpdated += this.OnStateUpdate;
+
+		// @todo Fix double rerenders (rerender when invoking UI event & rerender when state update comes in)
+		// @todo Update player stats (cards moved, etc.)
+		// @todo If game finished, update player stats
+		private void OnStateUpdate(Solitaire __, SolitaireStateUpdatedArgs ___) =>
+			_ = this.InvokeAsync(this.StateHasChanged);
+
+		// @todo Show confirmation
+		private void Restart() =>
+			this.Game.Restart();
+
+		private void NextTalonCard()
+		{
+			if (!this.IsPlaying)
+			{
+				return;
+			}
+
 			this.Game.NextTalonCard();
+		}
 
-		private void TalonCardClicked() =>
+		private void TalonCardClicked()
+		{
+			if (!this.IsPlaying)
+			{
+				return;
+			}
+
 			this.Game.Move(Solitaire.StackType.Talon, default, Solitaire.StackType.Foundation, default);
+		}
 
-		private void TableauCardClicked(int tableauIndex) =>
+		private void TableauCardClicked(int tableauIndex)
+		{
+			if (!this.IsPlaying)
+			{
+				return;
+			}
+
 			this.Game.Move(Solitaire.StackType.Tableau, tableauIndex, Solitaire.StackType.Foundation, default);
+		}
 
 		private void OnDragStart(Solitaire.StackType type, int index)
 		{
+			if (!this.IsPlaying)
+			{
+				return;
+			}
+
 			this.draggedType = type;
 			this.draggedIndex = index;
 		}
 
 		private void OnDrop(Solitaire.StackType type, int index)
 		{
+			if (!this.IsPlaying || (this.draggedType == Solitaire.StackType.Invalid))
+			{
+				return;
+			}
+
 			if ((this.draggedType == type) && (this.draggedIndex == index))
 			{
 				return;
@@ -37,31 +87,11 @@ namespace WebGames.Web.Components.Games
 
 			this.Game.Move(this.draggedType, this.draggedIndex, type, index);
 
-			/*switch (this.draggedType)
-			{
-				case DropType.Tableau when (type is DropType.Tableau):
-					this.Game.MoveTableauCardToTableau(this.draggedIndex, index);
-					break;
-
-				case DropType.Tableau when (type is DropType.Foundation):
-					this.Game.MoveTableauCardToFoundation(this.draggedIndex);
-					break;
-
-				case DropType.Foundation when (type is DropType.Tableau):
-					this.Game.MoveFoundationCardToTableau(this.draggedIndex, index);
-					break;
-
-				case DropType.Talon when (type is DropType.Tableau):
-					this.Game.MoveTalonCardToTableau(index);
-					break;
-
-				case DropType.Talon when (type is DropType.Foundation):
-					this.Game.MoveTalonCardToFoundation();
-					break;
-			}*/
-
 			this.draggedType = Solitaire.StackType.Invalid;
 			this.draggedIndex = default;
 		}
+
+		public void Dispose() =>
+			this.Game.StateUpdated -= this.OnStateUpdate;
 	}
 }

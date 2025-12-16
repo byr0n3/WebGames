@@ -91,11 +91,11 @@ namespace WebGames.Core.Games
 		}
 
 		/// <summary>
-		/// Transitions the game to <see cref="GameState.Idle"/> and informs subscribers of the change.
+		/// Transitions the game to <see cref="GameState.Done"/> and informs subscribers of the change.
 		/// </summary>
 		protected virtual void Stop()
 		{
-			this.State = GameState.Idle;
+			this.State = GameState.Done;
 
 			this.GameUpdated?.Invoke(this, new GameUpdatedArgs(GameUpdateType.StateUpdated));
 		}

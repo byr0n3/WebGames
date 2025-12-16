@@ -1,4 +1,5 @@
 @page "/games/{code:required}"
+@using Microsoft.AspNetCore.Components.Sections
 @using WebGames.Core.Games
 @using WebGames.Core.Players
 @using WebGames.Web.Components.Games
@@ -6,13 +7,23 @@
 
 <PageTitle>Game @(game?.Code ?? string.Empty)</PageTitle>
 
-@switch (game)
+@if (game is not null)
 {
-	case Solitaire solitaire when (player is SolitairePlayer solitairePlayer):
-		<SolitaireUi Game="@(solitaire)" Player="@(solitairePlayer)" />
-		break;
+	<div class="game-actions">
+		@* @todo Show confirmation *@
+		<a href="/games" class="btn">Leave</a>
+		
+		<SectionOutlet SectionName="game-actions"/>
+	</div>
 
-	default:
-		<p>Game not found.</p>
-		break;
+	switch (game)
+	{
+		case Solitaire solitaire when (player is SolitairePlayer solitairePlayer):
+			<SolitaireUi Game="@(solitaire)" Player="@(solitairePlayer)" />
+			break;
+	}
+}
+else
+{
+	<p>Game not found.</p>
 }
