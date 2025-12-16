@@ -18,6 +18,6 @@ namespace WebGames.Core
 		/// <summary>
 		/// The game has finished.
 		/// </summary>
-		Done,
+		Finished,
 	}
 }

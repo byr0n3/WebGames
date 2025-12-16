@@ -11,6 +11,9 @@ namespace WebGames.Extensions
 	{
 		extension(IJSRuntime js)
 		{
+			public ValueTask<bool> ConfirmAsync(string title, CancellationToken token = default) =>
+				js.InvokeAsync<bool>("window.confirm", token, title);
+
 			public ValueTask ConfettiAsync(in ConfettiConfig config, CancellationToken token = default) =>
 				js.InvokeVoidAsync("window.confetti", token, config);
 

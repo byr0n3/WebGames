@@ -1,20 +1,29 @@
 @page "/games/{code:required}"
 @using Microsoft.AspNetCore.Components.Sections
+@using WebGames.Core
 @using WebGames.Core.Games
 @using WebGames.Core.Players
+@using WebGames.Extensions
 @using WebGames.Web.Components.Games
 @rendermode RenderModes.Interactive
 
-<PageTitle>Game @(game?.Code ?? string.Empty)</PageTitle>
+<PageTitle>@(Localizer.Format("Title", game?.Code))</PageTitle>
 
 @if (game is not null)
 {
 	<div class="game-actions">
-		@* @todo Show confirmation *@
-		<a href="/games" class="btn">Leave</a>
+		<a href="/games" class="btn">@(Localizer["Leave"])</a>
 
 		<SectionOutlet SectionName="game-actions" />
 	</div>
+
+	@if (game.State == GameState.Finished)
+	{
+		<div class="alert alert-success alert-glowing game-finished-alert" role="alert">
+			<h4>@(Localizer["FinishedTitle"])</h4>
+			<SectionOutlet SectionName="finish-alert" />
+		</div>
+	}
 
 	switch (game)
 	{
@@ -25,7 +34,7 @@
 }
 else
 {
-	<p>Game not found.</p>
+	<p>@(Localizer["NotFound"])</p>
 }
 
 <script src="@(Assets["Web/Pages/Games/Game.razor.js"])"></script>

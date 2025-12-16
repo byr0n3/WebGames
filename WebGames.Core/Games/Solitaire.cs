@@ -342,7 +342,7 @@ namespace WebGames.Core.Games
 			}
 
 			// The difference between the 2 cards should be exactly one and the suits of the 2 cards need to differ in color.
-			return (((int)dst.Rank - (int)src.Rank) == 1) || Solitaire.IsMoveValid(dst.Suit, src.Suit);
+			return (((int)dst.Rank - (int)src.Rank) == 1) && Solitaire.IsMoveValid(dst.Suit, src.Suit);
 		}
 
 		// @todo Refactor

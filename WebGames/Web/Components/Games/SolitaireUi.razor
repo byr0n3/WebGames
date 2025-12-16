@@ -1,32 +1,28 @@
 @using Microsoft.AspNetCore.Components.Sections
-@using WebGames.Core
 @using WebGames.Core.Games
 @using WebGames.Extensions
 
 <SectionContent SectionName="game-actions">
-	<button type="button" @onclick="@(Restart)">
-		Restart
+	<button type="button" @onclick="@(RestartAsync)">
+		@(Localizer["Restart"])
 	</button>
 
 	@if (Game.CanFinish)
 	{
 		<button type="button" @onclick="@(Finish)">
-			Finish
+			@(Localizer["Finish"])
 		</button>
 	}
 </SectionContent>
 
-@if (Game.State == GameState.Done)
-{
-	@* @todo Celebration *@
-	<div class="alert alert-success" role="alert">
-		<h4>Congratulations!</h4>
-		<span>You won! You want to go again?</span>
-		<button type="button" class="d-flex btn-primary" @onclick="@(Restart)">
-			Play again
+<SectionContent SectionName="finish-alert">
+	<span>@(Localizer["FinishedDescription"])</span>
+	<div class="finished-actions">
+		<button type="button" class="btn-primary" @onclick="@(RestartAsync)">
+			@(Localizer["PlayAgain"])
 		</button>
 	</div>
-}
+</SectionContent>
 
 <div id="solitaire-container">
 	<div class="row">

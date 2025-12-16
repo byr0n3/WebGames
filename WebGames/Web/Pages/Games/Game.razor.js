@@ -18,7 +18,7 @@ window.onunload = unhook;
 
 Blazor.addEventListener('enhancednavigationstart', unhook);
 
-document.querySelectorAll('button, a')
+document.querySelectorAll('a')
 	.forEach(function (clickable) {
 		clickable.addEventListener('click', function (event) {
 			if (!confirm(MSG)) {

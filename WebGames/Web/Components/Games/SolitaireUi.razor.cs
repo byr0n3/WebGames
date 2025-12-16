@@ -1,5 +1,7 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 using WebGames.Core;
 using WebGames.Core.Events;
@@ -12,6 +14,8 @@ namespace WebGames.Web.Components.Games
 	public sealed partial class SolitaireUi : ComponentBase, IDisposable
 	{
 		[Inject] public required IJSRuntime Js { get; init; }
+
+		[Inject] public required IStringLocalizer<SolitaireUiLocalization> Localizer { get; init; }
 
 		[Parameter] [EditorRequired] public required Solitaire Game { get; set; }
 
@@ -32,15 +36,18 @@ namespace WebGames.Web.Components.Games
 
 		private void OnGameUpdated(IGame game, GameUpdatedArgs args)
 		{
-			if (args.Type == GameUpdateType.StateUpdated)
+			if (args.Type != GameUpdateType.StateUpdated)
 			{
-				if (game.State == GameState.Playing)
-				{
-					// @todo Update player games stats
-				}
+				return;
+			}
 
-				if (game.State == GameState.Done)
-				{
+			switch (game.State)
+			{
+				case GameState.Playing:
+					// @todo Update player games stats
+					break;
+
+				case GameState.Finished:
 					_ = this.InvokeAsync(() => this.Js.ConfettiAsync(new ConfettiConfig
 					{
 						ParticleCount = 100,
@@ -52,7 +59,7 @@ namespace WebGames.Web.Components.Games
 					}).AsTask());
 
 					// @todo Update player win stats
-				}
+					break;
 			}
 		}
 
@@ -61,9 +68,15 @@ namespace WebGames.Web.Components.Games
 		private void OnStateUpdate(Solitaire __, SolitaireStateUpdatedArgs ___) =>
 			_ = this.InvokeAsync(this.StateHasChanged);
 
-		// @todo Show confirmation
-		private void Restart() =>
-			this.Game.Restart();
+		private async Task RestartAsync()
+		{
+			var confirmed = await this.Js.ConfirmAsync("Are you sure you want to restart the game?");
+
+			if (confirmed)
+			{
+				this.Game.Restart();
+			}
+		}
 
 		private void Finish()
 		{

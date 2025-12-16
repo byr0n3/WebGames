@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using WebGames.Core;
 using WebGames.Core.Events;
 using WebGames.Core.Players;
@@ -16,6 +17,8 @@ namespace WebGames.Web.Pages.Games
 		[Inject] public required NavigationManager Navigation { get; init; }
 
 		[Inject] public required AuthenticationService Authentication { get; init; }
+
+		[Inject] public required IStringLocalizer<GameLocalization> Localizer { get; init; }
 
 		[Parameter] public required string Code { get; init; }
 
@@ -35,10 +38,10 @@ namespace WebGames.Web.Pages.Games
 				return;
 			}
 
-			this.game.GameUpdated += this.InvokeRender;
+			this.game.GameUpdated += this.OnGameUpdated;
 		}
 
-		private void InvokeRender(IGame __, GameUpdatedArgs ___) =>
+		private void OnGameUpdated(IGame __, GameUpdatedArgs ___) =>
 			_ = this.InvokeAsync(this.StateHasChanged);
 
 		// @todo Refactor
@@ -49,7 +52,7 @@ namespace WebGames.Web.Pages.Games
 				return;
 			}
 
-			this.game.GameUpdated -= this.InvokeRender;
+			this.game.GameUpdated -= this.OnGameUpdated;
 			this.GameManager.Leave(this.game, this.player);
 		}
 	}

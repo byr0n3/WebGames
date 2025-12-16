@@ -22,13 +22,13 @@
 	--background-color-body: hsl(0, 0%, 10%);
 	--background-color-secondary: hsl(0, 0%, 15%);
 	--background-color-tertiary: hsl(0, 0%, 20%);
-	--background-color-disabled: hsla(0, 0%, 90%, 10%);
+	--background-color-disabled: hsl(0, 0%, 90%, 10%);
 	--background-color-light: hsl(0, 0%, 25%);
 
-	--background-color-info: hsla(215, 50%, 70%, 10%);
-	--background-color-success: hsla(120, 50%, 65%, 10%);
-	--background-color-warning: hsla(25, 70%, 65%, 10%);
-	--background-color-danger: hsla(0, 75%, 75%, 10%);
+	--background-color-info: hsl(215, 50%, 70%, 10%);
+	--background-color-success: hsl(120, 50%, 65%, 10%);
+	--background-color-warning: hsl(25, 70%, 65%, 10%);
+	--background-color-danger: hsl(0, 75%, 75%, 10%);
 
 	--border-color-body: hsl(0, 0%, 20%);
 	--border-color-hover: hsl(0, 0%, 30%);
@@ -543,15 +543,15 @@ button,
 	}
 
 	&.btn-light {
-		--bg: hsla(0, 0%, 100%, 10%);
+		--bg: hsl(0, 0%, 100%, 10%);
 		--fg: var(--color-body);
 
 		&:hover {
-			--bg: hsla(0, 0%, 100%, 15%);
+			--bg: hsl(0, 0%, 100%, 15%);
 		}
 
 		&:active {
-			--bg: hsla(0, 0%, 100%, 20%);
+			--bg: hsl(0, 0%, 100%, 20%);
 		}
 	}
 
@@ -664,40 +664,39 @@ svg {
 }
 
 .alert {
+	--bg: var(--background-color-secondary);
+
 	display: block;
 
 	padding: var(--spacing-large);
 	margin-block: 0 var(--spacing-medium);
 
-	background-color: var(--background-color-secondary);
+	background-color: var(--bg);
 	color: inherit;
 
 	border-radius: var(--border-radius);
 	font-size: 1em;
 
-	& button,
-	& .btn {
-		display: flex;
-
-		&:not(:first-child) {
-			margin-block-start: var(--spacing-medium);
-		}
-	}
-
 	&.alert-info {
-		background-color: var(--background-color-info);
+		--bg: var(--background-color-info);
 	}
 
 	&.alert-success {
-		background-color: var(--background-color-success);
+		--bg: var(--background-color-success);
 	}
 
 	&.alert-warning {
-		background-color: var(--background-color-warning);
+		--bg: var(--background-color-warning);
 	}
 
 	&.alert-danger {
-		background-color: var(--background-color-danger);
+		--bg: var(--background-color-danger);
+	}
+
+	&.alert-glowing {
+		-webkit-box-shadow: 0 0 2em 0.5em var(--bg);
+		-moz-box-shadow: 0 0 2em 0.5em var(--bg);
+		box-shadow: 0 0 2em 0.5em var(--bg);
 	}
 }
 

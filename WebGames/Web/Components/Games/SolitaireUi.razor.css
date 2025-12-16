@@ -26,9 +26,19 @@
 }
 
 .empty-card-slot {
-	background-color: var(--background-color-tertiary);
 	font-size: 6em;
 	width: 1em;
 	height: 1.333em;
+
+	background-color: var(--background-color-tertiary);
 	border-radius: var(--border-radius-small);
+}
+
+.finished-actions {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	gap: var(--spacing-medium);
+
+	margin-block-start: var(--spacing-medium);
 }
