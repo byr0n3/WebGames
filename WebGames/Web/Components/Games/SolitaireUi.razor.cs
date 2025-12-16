@@ -22,6 +22,7 @@ namespace WebGames.Web.Components.Games
 
 		private Solitaire.StackType draggedType;
 		private int draggedIndex;
+		private int draggedCardIndex;
 
 		protected override void OnInitialized()
 		{
@@ -91,7 +92,7 @@ namespace WebGames.Web.Components.Games
 				return;
 			}
 
-			this.Game.Move(Solitaire.StackType.Talon, default, Solitaire.StackType.Foundation, default);
+			this.Game.Move(Solitaire.StackType.Talon, default, default, Solitaire.StackType.Foundation, default);
 		}
 
 		private void TableauCardClicked(int tableauIndex)
@@ -101,10 +102,10 @@ namespace WebGames.Web.Components.Games
 				return;
 			}
 
-			this.Game.Move(Solitaire.StackType.Tableau, tableauIndex, Solitaire.StackType.Foundation, default);
+			this.Game.Move(Solitaire.StackType.Tableau, tableauIndex, default, Solitaire.StackType.Foundation, default);
 		}
 
-		private void OnDragStart(Solitaire.StackType type, int index)
+		private void OnDragStart(Solitaire.StackType type, int index, int cardIndex = -1)
 		{
 			if (!this.IsPlaying)
 			{
@@ -113,6 +114,7 @@ namespace WebGames.Web.Components.Games
 
 			this.draggedType = type;
 			this.draggedIndex = index;
+			this.draggedCardIndex = cardIndex;
 		}
 
 		private void OnDrop(Solitaire.StackType type, int index)
@@ -127,7 +129,7 @@ namespace WebGames.Web.Components.Games
 				return;
 			}
 
-			this.Game.Move(this.draggedType, this.draggedIndex, type, index);
+			this.Game.Move(this.draggedType, this.draggedIndex, this.draggedCardIndex, type, index);
 
 			this.draggedType = Solitaire.StackType.Invalid;
 			this.draggedIndex = default;

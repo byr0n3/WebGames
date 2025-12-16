@@ -3,16 +3,16 @@
 	flex-flow: row nowrap;
 	justify-content: space-between;
 	align-items: start;
-	gap: var(--spacing-small);
+	gap: var(--spacing-medium);
 }
 
 .card-lists {
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: start;
-	gap: var(--spacing-small);
+	gap: var(--spacing-medium);
 
-	margin-block-start: var(--spacing-small);
+	margin-block-start: var(--spacing-medium);
 }
 
 .card-list {

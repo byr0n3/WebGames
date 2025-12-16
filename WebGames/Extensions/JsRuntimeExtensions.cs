@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -12,10 +13,12 @@ namespace WebGames.Extensions
 		{
 			public ValueTask ConfettiAsync(in ConfettiConfig config, CancellationToken token = default) =>
 				js.InvokeVoidAsync("window.confetti", token, config);
+
+			public ValueTask ConfettiResetAsync(CancellationToken token = default) =>
+				js.InvokeVoidAsync("window.confetti.reset", token);
 		}
 	}
 
-	// @todo Make `JsonIgnoreCondition.WhenWritingDefault` default
 	public readonly struct ConfettiConfig
 	{
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
@@ -49,10 +52,10 @@ namespace WebGames.Extensions
 		public ConfettiOrigin Origin { get; init; }
 
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-		public string[] Colors { get; init; }
+		public string[]? Colors { get; init; }
 
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-		public string[] Shapes { get; init; }
+		public string[]? Shapes { get; init; }
 
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		public int Scalar { get; init; }
@@ -64,13 +67,28 @@ namespace WebGames.Extensions
 		public bool DisableForReducedMotion { get; init; }
 
 		[StructLayout(LayoutKind.Sequential)]
-		public readonly struct ConfettiOrigin
+		public readonly struct ConfettiOrigin : System.IEquatable<ConfettiOrigin>
 		{
 			[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 			public float X { get; init; }
 
 			[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 			public float Y { get; init; }
+
+			public bool Equals(ConfettiOrigin other) =>
+				this.X.Equals(other.X) && this.Y.Equals(other.Y);
+
+			public override bool Equals(object? @object) =>
+				(@object is ConfettiOrigin other) && this.Equals(other);
+
+			public override int GetHashCode() =>
+				HashCode.Combine(this.X, this.Y);
+
+			public static bool operator ==(ConfettiOrigin left, ConfettiOrigin right) =>
+				left.Equals(right);
+
+			public static bool operator !=(ConfettiOrigin left, ConfettiOrigin right) =>
+				!left.Equals(right);
 		}
 	}
 }

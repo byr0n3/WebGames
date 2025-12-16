@@ -68,12 +68,11 @@
 	--font-size-h5: 1em;
 	--font-size-h6: 0.875em;
 
-	--spacing-extra-tiny: 0.125em;
-	--spacing-tiny: 0.25em;
-	--spacing-small: 0.5em;
-	--spacing-medium: 1em;
-	--spacing-large: 1.125em;
-	--spacing-larger: 1.25em;
+	--spacing-tiny: 0.125em;
+	--spacing-small: 0.25em;
+	--spacing-medium: 0.5em;
+	--spacing-large: 1em;
+	--spacing-larger: 1.125em;
 	--spacing-huge: 1.25em;
 
 	--animation-duration-short: 80ms;
@@ -112,7 +111,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
 	padding: 0;
-	margin-block: 0 1em;
+	margin-block: 0 var(--spacing-medium);
 }
 
 h1 {
@@ -191,7 +190,7 @@ table {
 
 	& th,
 	& td {
-		padding: var(--spacing-tiny);
+		padding: var(--spacing-small);
 
 		background-color: transparent;
 		color: inherit;
@@ -251,7 +250,7 @@ textarea {
 	--min-rows: 1lh;
 
 	resize: block;
-	min-block-size: calc(var(--min-rows) + var(--spacing-small) * 2 + var(--border-width) * 2);
+	min-block-size: calc(var(--min-rows) + var(--spacing-medium) * 2 + var(--border-width) * 2);
 }
 
 :where(input[type="submit"], input[type="reset"], input[type="button"], input[type="radio"], input[type="checkbox"], select, button, details summary):not(:disabled) {
@@ -293,7 +292,7 @@ select {
 	-webkit-appearance: none;
 	appearance: none;
 
-	padding-inline: var(--spacing-small) calc(var(--spacing-small) + var(--spacing-larger));
+	padding-inline: var(--spacing-medium) calc(var(--spacing-medium) + var(--spacing-larger));
 
 	background-color: var(--background-color-secondary);
 	color: var(--color-body);
@@ -312,7 +311,7 @@ input {
 	min-inline-size: 5ch;
 	max-inline-size: 100%;
 
-	padding: var(--spacing-small);
+	padding: var(--spacing-medium);
 	margin: 0;
 
 	background-color: var(--bg);
@@ -505,7 +504,7 @@ button,
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	gap: var(--spacing-tiny);
+	gap: var(--spacing-small);
 
 	min-inline-size: 5em;
 	max-inline-size: 100%;
@@ -621,7 +620,7 @@ button,
 
 	&.btn-icon {
 		min-inline-size: unset;
-		padding: var(--spacing-small);
+		padding: var(--spacing-medium);
 		line-height: 0;
 
 		& > svg {
@@ -632,6 +631,11 @@ button,
 	&.btn-block {
 		display: block;
 		width: 100%;
+	}
+
+	&.btn-lg {
+		padding-block: var(--spacing-small);
+		padding-inline: var(--spacing-medium);
 	}
 
 	&:not(.btn-disabled),
@@ -662,7 +666,7 @@ svg {
 .alert {
 	display: block;
 
-	padding: var(--spacing-medium);
+	padding: var(--spacing-large);
 	margin-block: 0 var(--spacing-medium);
 
 	background-color: var(--background-color-secondary);
@@ -670,6 +674,15 @@ svg {
 
 	border-radius: var(--border-radius);
 	font-size: 1em;
+
+	& button,
+	& .btn {
+		display: flex;
+
+		&:not(:first-child) {
+			margin-block-start: var(--spacing-medium);
+		}
+	}
 
 	&.alert-info {
 		background-color: var(--background-color-info);
@@ -692,8 +705,8 @@ svg {
 	display: inline-block;
 	max-inline-size: 12rem;
 
-	padding-block: var(--spacing-small);
-	padding-inline: var(--spacing-medium);
+	padding-block: var(--spacing-medium);
+	padding-inline: var(--spacing-large);
 
 	background-color: var(--background-color-secondary);
 	color: inherit;

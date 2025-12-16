@@ -39,8 +39,8 @@
 }
 
 .sidebar-header {
-	padding-block: var(--spacing-small) var(--spacing-medium);
-	padding-inline: var(--spacing-medium);
+	padding-block: var(--spacing-medium) var(--spacing-large);
+	padding-inline: var(--spacing-large);
 }
 
 .app-logo ::deep svg {

@@ -1,10 +1,10 @@
 ul.nav-items {
 	list-style: none;
 	margin: 0;
-	padding-inline: var(--spacing-small);
+	padding-inline: var(--spacing-medium);
 
 	& li:not(:first-child) {
-		margin-block-start: var(--spacing-small);
+		margin-block-start: var(--spacing-medium);
 	}
 
 	& ::deep a,
@@ -17,7 +17,7 @@ ul.nav-items {
 
 		color: var(--color-body);
 
-		padding: var(--spacing-tiny) var(--spacing-small);
+		padding: var(--spacing-small) var(--spacing-medium);
 
 		border-radius: var(--border-radius);
 

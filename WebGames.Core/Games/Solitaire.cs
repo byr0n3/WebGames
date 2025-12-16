@@ -206,9 +206,13 @@ namespace WebGames.Core.Games
 		/// </summary>
 		/// <param name="srcType">The type of the stack from which the card(s) will be moved.</param>
 		/// <param name="srcIndex">The index of the source stack. If <paramref name="srcType"/> is <see cref="StackType.Talon"/>, this value is ignored and the current talon index is used instead.</param>
+		/// <param name="srcCardIndex">
+		/// The first card of the source stack to move.
+		/// This parameter is only applicable when both <paramref name="srcType"/> and <paramref name="dstType"/> are <see cref="StackType.Tableau"/>.
+		/// </param>
 		/// <param name="dstType">The type of the stack to which the card(s) will be moved.</param>
 		/// <param name="dstIndex">The index of the destination stack. If <paramref name="dstType"/> is <see cref="StackType.Foundation"/>, this value is overridden to correspond to the suit of the card being moved.</param>
-		public void Move(StackType srcType, int srcIndex, StackType dstType, int dstIndex)
+		public void Move(StackType srcType, int srcIndex, int srcCardIndex, StackType dstType, int dstIndex)
 		{
 			if (this.State != GameState.Playing)
 			{
@@ -227,10 +231,27 @@ namespace WebGames.Core.Games
 				_                    => this.Talon,
 			};
 
+			if (srcType == StackType.Tableau)
+			{
+				// If we're moving a stack of cards from one tableau to another,
+				// we need to take into account what card from the stack was moved.
+				if (dstType == StackType.Tableau)
+				{
+					srcCardIndex = int.Clamp(srcCardIndex, this.TableauVisibility[srcIndex], src.Count - 1);
+				}
+				// Otherwise, the card we're moving is the top-most visible card.
+				else
+				{
+					srcCardIndex = this.TableauVisibility[srcIndex];
+				}
+			}
+
 			var srcCard = (src.Count != 0)
 				? (srcType) switch
 				{
-					StackType.Tableau    => (dstType == StackType.Foundation) ? src[^1] : src[this.TableauVisibility[srcIndex]],
+					// If a card is being moved to a foundation, only the top-most card should be compared.
+					// Otherwise, the card that's being moved needs to be compared.
+					StackType.Tableau    => (dstType == StackType.Foundation) ? src[^1] : src[srcCardIndex],
 					StackType.Foundation => src[^1],
 					_                    => this.TalonCard,
 				}
@@ -238,7 +259,8 @@ namespace WebGames.Core.Games
 
 			var dst = dstType switch
 			{
-				StackType.Tableau    => this.Tableaus[dstIndex],
+				StackType.Tableau => this.Tableaus[dstIndex],
+				// When moving a card to a foundation we should automatically correct which foundation we're moving to.
 				StackType.Foundation => this.Foundations[((int)srcCard.Suit) - 1],
 				_                    => this.Talon,
 			};
@@ -257,13 +279,37 @@ namespace WebGames.Core.Games
 				return;
 			}
 
-			this.MoveCards(srcType, srcIndex, src, srcCard, dstType, dst);
+			// Move a range of cards if a stack was dragged.
+			if ((srcType is StackType.Tableau) && (dstType is StackType.Tableau))
+			{
+				var topCount = src.Count;
+
+				for (var i = srcCardIndex; i < topCount; i++)
+				{
+					dst.Add(src[i]);
+				}
+
+				src.RemoveRange(srcCardIndex, src.Count - srcCardIndex);
+			}
+			// Otherwise only one card needs to be moved.
+			else
+			{
+				dst.Add(srcCard);
+				src.Remove(srcCard);
+			}
 
 			// ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
 			switch (srcType)
 			{
+				// If a card from a tableau was moved, we should only make a new card visible if the top-most visible card was moved.
 				case StackType.Tableau:
-					this.TableauVisibility[srcIndex] = int.Max(this.TableauVisibility[srcIndex] - 1, 0);
+					var visibility = this.TableauVisibility[srcIndex];
+
+					if (srcCardIndex == visibility)
+					{
+						this.TableauVisibility[srcIndex] = int.Max(visibility - 1, 0);
+					}
+
 					break;
 
 				case StackType.Talon:
@@ -281,36 +327,6 @@ namespace WebGames.Core.Games
 			}
 		}
 
-		/// <summary>
-		/// Transfers card(s) between two stacks within the game.
-		/// </summary>
-		/// <param name="srcType">The <see cref="StackType"/> of the stack from which cards will be moved.</param>
-		/// <param name="srcIndex">The index of the source stack within its collection.</param>
-		/// <param name="src">The list that holds the cards of the source stack.</param>
-		/// <param name="srcCard">The card that is the primary element to be moved.</param>
-		/// <param name="dstType">The <see cref="StackType"/> of the stack to which cards will be added.</param>
-		/// <param name="dst">The list that holds the cards of the destination stack.</param>
-		private void MoveCards(StackType srcType, int srcIndex, List<Card> src, Card srcCard, StackType dstType, List<Card> dst)
-		{
-			if ((srcType is StackType.Tableau) && (dstType is StackType.Tableau))
-			{
-				var topCount = src.Count;
-				var visible = this.TableauVisibility[srcIndex];
-
-				for (var i = visible; i < topCount; i++)
-				{
-					dst.Add(src[i]);
-				}
-
-				src.RemoveRange(visible, src.Count - visible);
-			}
-			else
-			{
-				dst.Add(srcCard);
-				src.Remove(srcCard);
-			}
-		}
-
 		private static bool IsMoveValid(StackType dstType, Card dst, Card src)
 		{
 			// If there's no bottom card, the top card HAS to be a king.
@@ -319,16 +335,15 @@ namespace WebGames.Core.Games
 				return src.Rank == (dstType == StackType.Foundation ? CardRank.Ace : CardRank.King);
 			}
 
-			if (!Solitaire.IsMoveValid(dst.Rank, src.Rank))
+			if (dstType == StackType.Foundation)
 			{
-				return false;
+				// Validating if we can move to a foundation works the other way around compared to a tableau.
+				return ((int)dst.Rank - (int)src.Rank) == -1;
 			}
 
-			return (dstType == StackType.Foundation) || Solitaire.IsMoveValid(dst.Suit, src.Suit);
+			// The difference between the 2 cards should be exactly one and the suits of the 2 cards need to differ in color.
+			return (((int)dst.Rank - (int)src.Rank) == 1) || Solitaire.IsMoveValid(dst.Suit, src.Suit);
 		}
-
-		private static bool IsMoveValid(CardRank dst, CardRank src) =>
-			int.Abs((int)src - (int)dst) == 1;
 
 		// @todo Refactor
 		private static bool IsMoveValid(CardSuit dst, CardSuit src) =>

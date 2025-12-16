@@ -12,8 +12,8 @@
 	<div class="game-actions">
 		@* @todo Show confirmation *@
 		<a href="/games" class="btn">Leave</a>
-		
-		<SectionOutlet SectionName="game-actions"/>
+
+		<SectionOutlet SectionName="game-actions" />
 	</div>
 
 	switch (game)
@@ -27,3 +27,5 @@ else
 {
 	<p>Game not found.</p>
 }
+
+<script src="@(Assets["Web/Pages/Games/Game.razor.js"])"></script>

@@ -19,8 +19,12 @@
 @if (Game.State == GameState.Done)
 {
 	@* @todo Celebration *@
-	<div class="alert alert-success">
-		You won! Congratulations!
+	<div class="alert alert-success" role="alert">
+		<h4>Congratulations!</h4>
+		<span>You won! You want to go again?</span>
+		<button type="button" class="d-flex btn-primary" @onclick="@(Restart)">
+			Play again
+		</button>
 	</div>
 }
 
@@ -71,15 +75,16 @@
 			<ol @key="@(tableauKey)" class="card-list">
 				@if (tableau.Count != 0)
 				{
-					for (var cardIndex = 0; cardIndex < tableau.Count; cardIndex++)
+					for (var j = 0; j < tableau.Count; j++)
 					{
+						var cardIndex = j;
 						var cardKey = $"{tableauKey}-card-{cardIndex}";
 						var isVisible = cardIndex >= Game.TableauVisibility[tableauIndex];
 						var card = isVisible ? tableau[cardIndex] : default;
 
 						<li @key="@(cardKey)"
 						    draggable="@((IsPlaying && isVisible).Str())"
-						    @ondragstart="@(() => OnDragStart(Solitaire.StackType.Tableau, tableauIndex))"
+						    @ondragstart="@(() => OnDragStart(Solitaire.StackType.Tableau, tableauIndex, cardIndex))"
 						    @ondragover:preventDefault
 						    @ondrop="@(() => OnDrop(Solitaire.StackType.Tableau, tableauIndex))">
 							<PlayingCard Card="@(card)" Clicked="@(() => TableauCardClicked(tableauIndex))" />

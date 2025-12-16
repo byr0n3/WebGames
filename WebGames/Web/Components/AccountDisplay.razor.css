@@ -3,9 +3,9 @@
 	flex-flow: row nowrap;
 	justify-content: space-between;
 	align-items: center;
-	gap: var(--spacing-tiny);
+	gap: var(--spacing-small);
 
-	padding: var(--spacing-medium);
+	padding: var(--spacing-large);
 }
 
 .user {
@@ -14,13 +14,13 @@
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: center;
-	gap: var(--spacing-small);
+	gap: var(--spacing-medium);
 }
 
 .user-avatar {
 	font-size: 1em;
 
-	padding: var(--spacing-tiny);
+	padding: var(--spacing-small);
 
 	border-radius: var(--border-radius);
 
