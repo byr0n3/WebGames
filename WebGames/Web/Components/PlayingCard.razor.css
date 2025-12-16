@@ -37,6 +37,6 @@
 	font-size: 6rem;
 }
 
-.playing-card.clickable {
+.clickable {
 	cursor: pointer;
 }

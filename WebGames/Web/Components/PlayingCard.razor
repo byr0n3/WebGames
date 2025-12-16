@@ -1,5 +1,4 @@
 @using WebGames.Core.Cards
-@using WebGames.Extensions
 
 @if (Flippable)
 {
@@ -21,10 +20,11 @@ else
 	private RenderFragment Element(Card card) =>
 		@<svg width="1em"
 		      height="1.333em"
+		      viewBox="0 0 450 600"
 		      class="playing-card @(Clickable ? "clickable" : string.Empty) @(Class)"
 		      tabindex="0"
 		      @onclick="@(ClickedAsync)">
-			<use href="/cards.svg#@(card.Id.Str())" />
+			@(CardUi.Get(card))
 		</svg>;
 
 }

@@ -14,5 +14,10 @@ namespace WebGames.Core
 		/// The game has started and is in-progress.
 		/// </summary>
 		Playing,
+
+		/// <summary>
+		/// The game has finished.
+		/// </summary>
+		Done,
 	}
 }

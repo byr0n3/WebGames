@@ -23,6 +23,11 @@
 	<ItemGroup>
 		<ProjectReference Include="../WebGames.Database/WebGames.Database.csproj"/>
 		<ProjectReference Include="../WebGames.Core/WebGames.Core.csproj"/>
+
+		<ProjectReference Include="../WebGames.CardUi/WebGames.CardUi.csproj"
+						  OutputItemType="Analyzer"
+						  ReferenceOutputAssembly="false"
+						  PrivateAssets="all"/>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -47,6 +52,7 @@
 
 	<ItemGroup>
 		<AdditionalFiles Include="icons/*.svg"/>
+		<AdditionalFiles Include="cards.svg"/>
 
 		<Content Include="..\README.md">
 			<Link>README.md</Link>

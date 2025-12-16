@@ -1,0 +1,91 @@
+@using Microsoft.AspNetCore.Components.Sections
+@using WebGames.Core
+@using WebGames.Core.Games
+@using WebGames.Extensions
+
+<SectionContent SectionName="game-actions">
+	<button type="button" @onclick="@(Restart)">
+		Restart
+	</button>
+</SectionContent>
+
+@if (Game.State == GameState.Done)
+{
+	<div class="alert alert-success">
+		You won! Congratulations!
+	</div>
+}
+
+<div id="solitaire-container">
+	<div class="row">
+		<div class="row">
+			<PlayingCard Card="@(default)" Clicked="@(NextTalonCard)" />
+			@if (Game.TalonCard != default)
+			{
+				<div draggable="@(IsPlaying.Str())"
+				     @ondragstart="@(() => OnDragStart(Solitaire.StackType.Talon, default))">
+					<PlayingCard Card="@(Game.TalonCard)" Clicked="@(TalonCardClicked)" />
+				</div>
+			}
+		</div>
+
+		<div class="row">
+			@for (var i = 0; i < Game.Foundations.Length; i++)
+			{
+				var foundationIndex = i;
+				var foundationKey = $"foundation-{foundationIndex}";
+				var foundation = Game.Foundations[foundationIndex];
+				var hasCard = foundation.Count != 0;
+				var card = hasCard ? foundation[^1] : default;
+
+				<div @key="@(foundationKey)"
+				     draggable="@((IsPlaying && hasCard).Str())"
+				     class="@(hasCard ? string.Empty : "empty-card-slot")"
+				     @ondragstart="@(() => OnDragStart(Solitaire.StackType.Foundation, foundationIndex))"
+				     @ondragover:preventDefault
+				     @ondrop="@(() => OnDrop(Solitaire.StackType.Foundation, foundationIndex))">
+					@if (card != default)
+					{
+						<PlayingCard Card="@(card)" />
+					}
+				</div>
+			}
+		</div>
+	</div>
+
+	<div class="card-lists">
+		@for (var i = 0; i < Game.Tableaus.Length; i++)
+		{
+			var tableauIndex = i;
+			var tableauKey = $"tableau-{tableauIndex}";
+			var tableau = Game.Tableaus[tableauIndex];
+
+			<ol @key="@(tableauKey)" class="card-list">
+				@if (tableau.Count != 0)
+				{
+					for (var cardIndex = 0; cardIndex < tableau.Count; cardIndex++)
+					{
+						var cardKey = $"{tableauKey}-card-{cardIndex}";
+						var isVisible = cardIndex >= Game.TableauVisibility[tableauIndex];
+						var card = isVisible ? tableau[cardIndex] : default;
+
+						<li @key="@(cardKey)"
+						    draggable="@((IsPlaying && isVisible).Str())"
+						    @ondragstart="@(() => OnDragStart(Solitaire.StackType.Tableau, tableauIndex))"
+						    @ondragover:preventDefault
+						    @ondrop="@(() => OnDrop(Solitaire.StackType.Tableau, tableauIndex))">
+							<PlayingCard Card="@(card)" Clicked="@(() => TableauCardClicked(tableauIndex))" />
+						</li>
+					}
+				}
+				else
+				{
+					<li class="empty-card-slot"
+					    @ondragover:preventDefault
+					    @ondrop="@(() => OnDrop(Solitaire.StackType.Tableau, tableauIndex))">
+					</li>
+				}
+			</ol>
+		}
+	</div>
+</div>

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using WebGames.Core.Events;
 using WebGames.Core.Utilities;
 
@@ -19,6 +21,7 @@ namespace WebGames.Core
 
 		private readonly List<IGame> games;
 		private readonly IServiceProvider services;
+		private readonly ILogger<GameManager> logger;
 
 		/// <summary>
 		/// Notifies subscribers that the list of games managed by <see cref="GameManager"/> has changed.
@@ -37,6 +40,7 @@ namespace WebGames.Core
 		{
 			this.games = [];
 			this.services = services;
+			this.logger = services.GetRequiredService<ILogger<GameManager>>();
 		}
 
 		/// <summary>
@@ -57,6 +61,12 @@ namespace WebGames.Core
 			this.games.Add(game);
 
 			this.GameListUpdated?.Invoke(this, new GameListUpdatedArgs(game, GameListUpdatedType.Created));
+
+			this.logger.LogDebug("{PlayerName} created a new {GameType} game. ({Players}/{MaxPlayers})",
+								 player.DisplayName,
+								 typeof(TGame).Name,
+								 game.CurrentPlayers.Count,
+								 game.Configuration.MaxPlayers);
 
 			return (TGame)game;
 		}
@@ -109,6 +119,12 @@ namespace WebGames.Core
 				game.Join(player);
 
 				this.GameListUpdated?.Invoke(this, new GameListUpdatedArgs(game, GameListUpdatedType.Updated));
+
+				this.logger.LogDebug("{PlayerName} joined a {GameType} game. ({Players}/{MaxPlayers})",
+									 player.DisplayName,
+									 game.GetType().Name,
+									 game.CurrentPlayers.Count,
+									 game.Configuration.MaxPlayers);
 			}
 
 			return true;
@@ -137,6 +153,12 @@ namespace WebGames.Core
 			{
 				this.GameListUpdated?.Invoke(this, new GameListUpdatedArgs(game, GameListUpdatedType.Updated));
 			}
+
+			this.logger.LogDebug("{PlayerName} left a {GameType} game. ({Players}/{MaxPlayers})",
+								 player.DisplayName,
+								 game.GetType().Name,
+								 game.CurrentPlayers.Count,
+								 game.Configuration.MaxPlayers);
 		}
 
 		private IGame? FindGame(string code) =>

@@ -8,9 +8,9 @@ namespace WebGames.Core.Events
 		/// <summary>
 		/// The type of update that happened.
 		/// </summary>
-		public readonly GameUpdatedType Type;
+		public readonly GameUpdateType Type;
 
-		internal GameUpdatedArgs(GameUpdatedType type)
+		internal GameUpdatedArgs(GameUpdateType type)
 		{
 			this.Type = type;
 		}
@@ -19,7 +19,7 @@ namespace WebGames.Core.Events
 	/// <summary>
 	/// Represents the type of change that has occurred to a game.
 	/// </summary>
-	public enum GameUpdatedType
+	public enum GameUpdateType
 	{
 		/// <summary>
 		/// The state of the game has updated.

@@ -1,22 +1,29 @@
 @page "/games/{code:required}"
-@using WebGames.Extensions
+@using Microsoft.AspNetCore.Components.Sections
+@using WebGames.Core.Games
+@using WebGames.Core.Players
+@using WebGames.Web.Components.Games
 @rendermode RenderModes.Interactive
 
-@if (game is null)
+<PageTitle>Game @(game?.Code ?? string.Empty)</PageTitle>
+
+@if (game is not null)
 {
-	<p>Game not found.</p>
+	<div class="game-actions">
+		@* @todo Show confirmation *@
+		<a href="/games" class="btn">Leave</a>
+		
+		<SectionOutlet SectionName="game-actions"/>
+	</div>
+
+	switch (game)
+	{
+		case Solitaire solitaire when (player is SolitairePlayer solitairePlayer):
+			<SolitaireUi Game="@(solitaire)" Player="@(solitairePlayer)" />
+			break;
+	}
 }
 else
 {
-	<h1>Game @(game.Code)</h1>
-	<p>@(game.State.ToString())</p>
-
-	<ul>
-		@foreach (var player in game.CurrentPlayers)
-		{
-			var key = $"player-{player.Id.Str()}";
-
-			<li @key="@(key)">@(player.DisplayName)</li>
-		}
-	</ul>
+	<p>Game not found.</p>
 }

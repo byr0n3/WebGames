@@ -11,12 +11,13 @@
 	--color-danger: hsl(0, 100%, 85%);
 
 	--color-primary: hsl(255, 90%, 60%);
-	--color-primary-light: hsl(255, 90%, 15%);
-	--color-primary-light-hover: hsl(255, 90%, 20%);
-	--color-primary-light-active: hsl(255, 90%, 25%);
 	--color-primary-hover: hsl(255, 90%, 55%);
 	--color-primary-active: hsl(255, 90%, 50%);
 	--color-primary-contrast: hsl(0, 0%, 95%);
+
+	--color-primary-light: hsl(255, 90%, 25%);
+	--color-primary-light-hover: hsl(255, 90%, 20%);
+	--color-primary-light-active: hsl(255, 90%, 15%);
 
 	--background-color-body: hsl(0, 0%, 10%);
 	--background-color-secondary: hsl(0, 0%, 15%);
@@ -517,6 +518,7 @@ button,
 	border: var(--border-width) solid transparent;
 	border-radius: var(--border-radius-small);
 
+	text-decoration: none;
 	font-weight: normal;
 
 	transform-origin: center;
