@@ -186,8 +186,6 @@ namespace WebGames.Core.Games
 				srcIndex = this.talonIndex;
 			}
 
-			this.ValidateMove(srcType, srcIndex, dstType, dstIndex);
-
 			var src = (srcType) switch
 			{
 				StackType.Tableau    => this.Tableaus[srcIndex],
@@ -198,21 +196,16 @@ namespace WebGames.Core.Games
 			var srcCard = (src.Count != 0)
 				? (srcType) switch
 				{
-					StackType.Tableau    => dstType == StackType.Foundation ? src[^1] : src[this.TableauVisibility[srcIndex]],
+					StackType.Tableau    => (dstType == StackType.Foundation) ? src[^1] : src[this.TableauVisibility[srcIndex]],
 					StackType.Foundation => src[^1],
 					_                    => this.TalonCard,
 				}
 				: default;
 
-			if (dstType == StackType.Foundation)
-			{
-				dstIndex = ((int)srcCard.Suit) - 1;
-			}
-
 			var dst = dstType switch
 			{
 				StackType.Tableau    => this.Tableaus[dstIndex],
-				StackType.Foundation => this.Foundations[dstIndex],
+				StackType.Foundation => this.Foundations[((int)srcCard.Suit) - 1],
 				_                    => this.Talon,
 			};
 
@@ -281,28 +274,6 @@ namespace WebGames.Core.Games
 			{
 				dst.Add(srcCard);
 				src.Remove(srcCard);
-			}
-		}
-
-		[SuppressMessage("ReSharper", "SwitchStatementMissingSomeEnumCasesNoDefault")]
-		private void ValidateMove(StackType srcType, int srcIndex, StackType dstType, int dstIndex)
-		{
-			switch (srcType)
-			{
-				case StackType.Tableau when (srcIndex < 0) || (srcIndex > this.Tableaus.Length):
-					throw new ArgumentException($"Invalid tableau index: {srcIndex}", nameof(srcIndex));
-
-				case StackType.Foundation when (srcIndex < 0) || (srcIndex > this.Foundations.Length):
-					throw new ArgumentException($"Invalid foundation index: {srcIndex}", nameof(srcIndex));
-			}
-
-			switch (dstType)
-			{
-				case StackType.Tableau when (dstIndex < 0) || (dstIndex > this.Tableaus.Length):
-					throw new ArgumentException($"Invalid tableau index: {dstIndex}", nameof(dstIndex));
-
-				case StackType.Foundation when (dstIndex < 0) || (dstIndex > this.Foundations.Length):
-					throw new ArgumentException($"Invalid foundation index: {dstIndex}", nameof(dstIndex));
 			}
 		}
 

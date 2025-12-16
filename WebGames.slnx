@@ -9,6 +9,9 @@
 	<Folder Name="/Workflows/">
 		<File Path=".github/workflows/test.yml"/>
 	</Folder>
+	<Folder Name="/Source Generators/">
+		<Project Path="WebGames.CardUi/WebGames.CardUi.csproj"/>
+	</Folder>
 	<Project Path="WebGames/WebGames.csproj"/>
 	<Project Path="WebGames.Core/WebGames.Core.csproj"/>
 	<Project Path="WebGames.Database/WebGames.Database.csproj"/>
