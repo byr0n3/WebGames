@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics;
 using System.Linq;
 using WebGames.Core.Cards;
 using WebGames.Core.Events;
@@ -72,7 +72,11 @@ namespace WebGames.Core.Games
 		/// Indicates whether the game can finish because all cards in every tableau stack is visible.
 		/// </summary>
 		public bool CanFinish =>
+#if DEBUG
+			true;
+#else
 			this.TableauVisibility.All(static (visibility) => visibility <= 0);
+#endif
 
 		/// <summary>
 		/// Indicates whether the game has reached its finished state.
@@ -143,6 +147,36 @@ namespace WebGames.Core.Games
 			}
 
 			this.Start();
+		}
+
+		/// <summary>
+		/// Completes the current game by automatically finishing all remaining Tableau stacks, moving
+		/// them to the Foundations, clearing the Talon, and terminating the game.
+		/// </summary>
+		public void AutoFinish()
+		{
+			if ((this.State != GameState.Playing) || !this.CanFinish)
+			{
+				return;
+			}
+
+			for (var i = 0; i < this.Foundations.Length; i++)
+			{
+				this.Foundations[i].Add(new Card((CardSuit)(i + 1), CardRank.King));
+			}
+
+			for (var i = 0; i < this.Tableaus.Length; i++)
+			{
+				this.Tableaus[i].Clear();
+				this.TableauVisibility[i] = 0;
+			}
+
+			this.talonIndex = -1;
+			this.Talon.Clear();
+
+			Debug.Assert(this.IsFinished);
+
+			this.Stop();
 		}
 
 		/// <summary>

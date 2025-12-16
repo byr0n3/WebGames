@@ -7,10 +7,18 @@
 	<button type="button" @onclick="@(Restart)">
 		Restart
 	</button>
+
+	@if (Game.CanFinish)
+	{
+		<button type="button" @onclick="@(Finish)">
+			Finish
+		</button>
+	}
 </SectionContent>
 
 @if (Game.State == GameState.Done)
 {
+	@* @todo Celebration *@
 	<div class="alert alert-success">
 		You won! Congratulations!
 	</div>
