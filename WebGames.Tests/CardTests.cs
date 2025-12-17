@@ -5,7 +5,7 @@ namespace WebGames.Tests
 {
 	public sealed class CardTests
 	{
-		private static readonly Card diamondJack = new(CardSuit.Diamond, CardRank.Jack);
+		private static readonly PlayingCard diamondJack = new(CardSuit.Diamond, CardRank.Jack);
 		private const ushort diamondJackId = 2818;
 
 		[Fact]
@@ -19,7 +19,7 @@ namespace WebGames.Tests
 		[Fact]
 		public void CanDeserializeCards()
 		{
-			var card = new Card(CardTests.diamondJackId);
+			var card = new PlayingCard(CardTests.diamondJackId);
 
 			Assert.Equal(CardTests.diamondJack, card);
 		}

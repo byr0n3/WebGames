@@ -1,12 +1,9 @@
 @using Microsoft.AspNetCore.Components.Forms
-@using WebGames.Utilities
 
-<div class="mye-medium">
-	<label for="@(Id)">@(DisplayName.Get(ValueExpression))</label>
+<InputField Id="@(Id)" Help="@(Help)" ValueExpression="@(ValueExpression)">
 	<InputText Value="@(Value)"
 	           ValueChanged="@(ValueChanged)"
 	           ValueExpression="@(ValueExpression)"
 	           id="@(Id)"
 	           @attributes="@(AdditionalAttributes)" />
-	<ValidationMessage For="@(ValueExpression)" />
-</div>
+</InputField>

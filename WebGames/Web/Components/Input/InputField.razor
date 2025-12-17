@@ -1,0 +1,15 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using WebGames.Utilities
+@typeparam TValue
+
+<div class="mye-medium">
+	<label for="@(Id)" class="d-block">
+		@(DisplayName.Get(ValueExpression))
+	</label>
+	@(ChildContent)
+	@if (!string.IsNullOrEmpty(Help))
+	{
+		<p class="my-0 text-secondary">@(Help)</p>
+	}
+	<ValidationMessage For="@(ValueExpression)" class="text-danger" />
+</div>

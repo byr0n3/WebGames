@@ -26,7 +26,7 @@ namespace WebGames.Tests
 			Assert.Equal(0, GetPosition(stack));
 
 			// Take `52 - 1` cards from the deck, so it doesn't reshuffle.
-			var buffer = new Card[CardStack.DeckSize - 1];
+			var buffer = new PlayingCard[CardStack.DeckSize - 1];
 			stack.Take(buffer);
 
 			// The deck shouldn't have reshuffled yet.
@@ -79,7 +79,7 @@ namespace WebGames.Tests
 			return;
 
 			[UnsafeAccessor(UnsafeAccessorKind.Field, Name = "cards")]
-			static extern ref Card[] GetCards(CardStack stack);
+			static extern ref PlayingCard[] GetCards(CardStack stack);
 		}
 	}
 }

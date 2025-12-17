@@ -24,6 +24,10 @@
 
 /* <editor-fold desc="Margin"> */
 
+.m-0 {
+	margin: 0;
+}
+
 .m-small {
 	margin: var(--spacing-small);
 }
@@ -34,6 +38,10 @@
 
 .m-large {
 	margin: var(--spacing-large);
+}
+
+.mx-0 {
+	margin-inline: 0;
 }
 
 .mx-small {
@@ -48,6 +56,10 @@
 	margin-inline: var(--spacing-large);
 }
 
+.my-0 {
+	margin-block: 0;
+}
+
 .my-small {
 	margin-block: var(--spacing-small);
 }
@@ -58,6 +70,10 @@
 
 .my-large {
 	margin-block: var(--spacing-large);
+}
+
+.mxs-0 {
+	margin-inline-start: 0;
 }
 
 .mxs-small {
@@ -72,6 +88,10 @@
 	margin-inline-start: var(--spacing-large);
 }
 
+.mxe-0 {
+	margin-inline-end: 0;
+}
+
 .mxe-small {
 	margin-inline-end: var(--spacing-small);
 }
@@ -84,6 +104,10 @@
 	margin-inline-end: var(--spacing-large);
 }
 
+.mys-0 {
+	margin-block-start: 0;
+}
+
 .mys-small {
 	margin-block-start: var(--spacing-small);
 }
@@ -94,6 +118,10 @@
 
 .mys-large {
 	margin-block-start: var(--spacing-large);
+}
+
+.mye-0 {
+	margin-block-end: 0;
 }
 
 .mye-small {
@@ -200,6 +228,10 @@
 
 /* <editor-fold desc="Flex"> */
 
+.flex-1 {
+	flex: 1;
+}
+
 .flex-column {
 	flex-direction: column;
 }
@@ -262,6 +294,22 @@
 
 .gap-large {
 	gap: var(--spacing-large);
+}
+
+/* </editor-fold> */
+
+/* <editor-fold desc="Color"> */
+
+.text-body {
+	color: var(--color-body);
+}
+
+.text-secondary {
+	color: var(--color-secondary);
+}
+
+.text-danger {
+	color: var(--color-danger);
 }
 
 /* </editor-fold> */

@@ -4,7 +4,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Elegance.AspNet.Authentication;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using WebGames.Database;
@@ -17,7 +18,10 @@ namespace WebGames.Web.Pages
 {
 	public sealed partial class Account : ComponentBase
 	{
-		private const string formName = nameof(Account);
+		private const string settingsFormName = "AccountSettings";
+		private const string detailsFormName = "AccountDetails";
+
+		[Inject] public required NavigationManager Navigation { get; init; }
 
 		[Inject] public required AuthenticationService Authentication { get; init; }
 
@@ -25,34 +29,46 @@ namespace WebGames.Web.Pages
 
 		[Inject] public required IStringLocalizer<AccountLocalization> Localizer { get; init; }
 
-		[SupplyParameterFromForm(FormName = Account.formName)]
-		private UpdateAccountModel Model { get; set; } = new();
+		[Inject] public required IStringLocalizer<UpdateAccountSettingsModelLocalization> SettingsLocalizer { get; init; }
+
+		[CascadingParameter] public required HttpContext HttpContext { get; init; }
+
+		[SupplyParameterFromForm(FormName = Account.settingsFormName)]
+		private UpdateAccountSettingsModel SettingsModel { get; set; } = new();
+
+		[SupplyParameterFromForm(FormName = Account.detailsFormName)]
+		private UpdateAccountDetailsModel DetailsModel { get; set; } = new();
 
 		private ClaimsPrincipal User =>
 			this.Authentication.User ?? new ClaimsPrincipal();
 
-		private EditContext context = null!;
-		private ValidationMessageStore messageStore = null!;
 		private bool success;
 
 		protected override void OnInitialized()
 		{
-			if (!this.Model.IsValid)
+			if (!this.DetailsModel.IsValid)
 			{
-				this.Model = new UpdateAccountModel
+				this.DetailsModel = new UpdateAccountDetailsModel
 				{
 					Username = this.User.GetRequiredClaimValue(ClaimType.Username),
 					Email = this.User.GetRequiredClaimValue(ClaimType.Email),
 				};
 			}
-
-			this.context = new EditContext(this.Model);
-			this.messageStore = new ValidationMessageStore(this.context);
 		}
 
-		private async Task UpdateAsync()
+		private void UpdateSettings()
 		{
-			Debug.Assert(this.Model.IsValid);
+			var requestCulture = new RequestCulture(this.SettingsModel.FormatCulture, this.SettingsModel.UiCulture);
+
+			this.HttpContext.Response.Cookies.Append(Cultures.CookieName, CookieRequestCultureProvider.MakeCookieValue(requestCulture));
+
+			// We need to refresh the page as it started rendering before the culture changed.
+			this.Navigation.Refresh();
+		}
+
+		private async Task UpdateDetailsAsync()
+		{
+			Debug.Assert(this.DetailsModel.IsValid);
 
 			this.success = false;
 
@@ -64,27 +80,22 @@ namespace WebGames.Web.Pages
 
 				Debug.Assert(user is not null);
 
-				user.Username = this.Model.Username;
-				user.Email = this.Model.Email;
+				user.Username = this.DetailsModel.Username;
+				user.Email = this.DetailsModel.Email;
 
-				if (!string.IsNullOrWhiteSpace(this.Model.Password))
+				if (!string.IsNullOrWhiteSpace(this.DetailsModel.Password))
 				{
-					user.Password = Hashing.Hash(this.Model.Password);
+					user.Password = Hashing.Hash(this.DetailsModel.Password);
 				}
 
 				var saved = await db.SaveChangesAsync();
 
-				if (saved == 1)
-				{
-					// @todo `Persistent` from claim
-					await this.Authentication.SignInAsync(user, true);
+				Debug.Assert(saved == 1);
 
-					this.success = true;
-				}
-				else
-				{
-					this.messageStore.Add(FieldIdentifier.Create(() => this.Model.Username), this.Localizer["Failed"]);
-				}
+				// @todo `Persistent` from claim
+				await this.Authentication.SignInAsync(user, true);
+
+				this.success = true;
 			}
 		}
 	}

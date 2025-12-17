@@ -51,7 +51,7 @@ namespace WebGames.CardUi
 
 				  public static class CardUi
 				  {
-				  	public static RenderFragment Get(Card card)
+				  	public static RenderFragment Get(PlayingCard card)
 				  	{
 				  		return (card.Id) switch
 				  		{

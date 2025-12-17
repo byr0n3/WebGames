@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace WebGames.Web.Components.Input
 {
-	public sealed partial class InputRadioGroupField<TValue> : ComponentBase
+	public sealed partial class InputRadioGroupField<TValue, TOption> : ComponentBase
 	{
 		[Parameter] public required TValue Value { get; set; }
 
@@ -13,15 +13,19 @@ namespace WebGames.Web.Components.Input
 
 		[Parameter] public required Expression<Func<TValue>> ValueExpression { get; set; }
 
-		[Parameter] [EditorRequired] public required IEnumerable<TValue> Options { get; set; }
+		[Parameter] [EditorRequired] public required IEnumerable<TOption> Options { get; set; }
 
 		[Parameter] [EditorRequired] public required string Id { get; set; }
 
-		[Parameter] public Func<TValue, string>? GetOptionLabel { get; set; }
+		[Parameter] public string? Help { get; set; }
+
+		[Parameter] public Func<TOption, string>? GetOptionLabel { get; set; }
+
+		[Parameter] public Func<TOption, string>? GetOptionValue { get; set; }
 
 		[Parameter] public string? OptionClass { get; set; }
 
-		[Parameter] public RenderFragment<TValue>? OptionContent { get; set; }
+		[Parameter] public RenderFragment<TOption>? OptionContent { get; set; }
 
 		[Parameter(CaptureUnmatchedValues = true)]
 		public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }

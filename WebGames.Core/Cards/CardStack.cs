@@ -18,9 +18,9 @@ namespace WebGames.Core.Cards
 		/// </summary>
 		public const int DeckSize = 52;
 
-		private static readonly ArrayPool<Card> cardPool = ArrayPool<Card>.Create();
+		private static readonly ArrayPool<PlayingCard> cardPool = ArrayPool<PlayingCard>.Create();
 
-		private readonly Card[] cards;
+		private readonly PlayingCard[] cards;
 		private readonly int capacity;
 
 		private int position;
@@ -28,7 +28,7 @@ namespace WebGames.Core.Cards
 		/// <summary>
 		/// Returns the card currently at the top of the stack without advancing the draw position.
 		/// </summary>
-		public Card Peek =>
+		public PlayingCard Peek =>
 			this.cards[this.position];
 
 		/// <summary>
@@ -64,7 +64,7 @@ namespace WebGames.Core.Cards
 		/// When the stack has been exhausted, it resets and shuffles before returning a card.
 		/// </summary>
 		/// <returns>The card at the current internal position.</returns>
-		public Card Take()
+		public PlayingCard Take()
 		{
 			var card = this.cards[this.position++];
 
@@ -88,7 +88,7 @@ namespace WebGames.Core.Cards
 		/// <exception cref="ArgumentException">
 		/// Thrown when <paramref name="count"/> is greater than the stack's capacity.
 		/// </exception>
-		public void Take(scoped Span<Card> dst, int count = 0)
+		public void Take(scoped Span<PlayingCard> dst, int count = 0)
 		{
 			if (count <= 0)
 			{
@@ -125,7 +125,7 @@ namespace WebGames.Core.Cards
 		/// <exception cref="ArgumentException">
 		/// Thrown when <paramref name="count"/> is greater than the stack's capacity.
 		/// </exception>
-		public void Take(List<Card> dst, int count = 0)
+		public void Take(List<PlayingCard> dst, int count = 0)
 		{
 			if (count <= 0)
 			{
@@ -164,7 +164,7 @@ namespace WebGames.Core.Cards
 					var suit = (byte)((i / 13) + 1);
 					var rank = (byte)((i % 13) + 1);
 
-					this.cards[count++] = new Card(suit, rank);
+					this.cards[count++] = new PlayingCard(suit, rank);
 				}
 			}
 		}

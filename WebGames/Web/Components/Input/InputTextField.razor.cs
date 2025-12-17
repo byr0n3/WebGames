@@ -15,6 +15,8 @@ namespace WebGames.Web.Components.Input
 
 		[Parameter] [EditorRequired] public required string Id { get; set; }
 
+		[Parameter] public string? Help { get; set; }
+
 		[Parameter(CaptureUnmatchedValues = true)]
 		public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 	}

@@ -27,12 +27,12 @@
 <div id="solitaire-container">
 	<div class="row">
 		<div class="row">
-			<PlayingCard Card="@(default)" Clicked="@(NextTalonCard)" />
+			<PlayingCardUi Card="@(default)" Clicked="@(NextTalonCard)" />
 			@if (Game.TalonCard != default)
 			{
 				<div draggable="@(IsPlaying.Str())"
 				     @ondragstart="@(() => OnDragStart(Solitaire.StackType.Talon, default))">
-					<PlayingCard Card="@(Game.TalonCard)" Clicked="@(TalonCardClicked)" />
+					<PlayingCardUi Card="@(Game.TalonCard)" Clicked="@(TalonCardClicked)" />
 				</div>
 			}
 		</div>
@@ -54,7 +54,7 @@
 				     @ondrop="@(() => OnDrop(Solitaire.StackType.Foundation, foundationIndex))">
 					@if (card != default)
 					{
-						<PlayingCard Card="@(card)" />
+						<PlayingCardUi Card="@(card)" />
 					}
 				</div>
 			}
@@ -83,7 +83,7 @@
 						    @ondragstart="@(() => OnDragStart(Solitaire.StackType.Tableau, tableauIndex, cardIndex))"
 						    @ondragover:preventDefault
 						    @ondrop="@(() => OnDrop(Solitaire.StackType.Tableau, tableauIndex))">
-							<PlayingCard Card="@(card)" Clicked="@(() => TableauCardClicked(tableauIndex))" />
+							<PlayingCardUi Card="@(card)" Clicked="@(() => TableauCardClicked(tableauIndex))" />
 						</li>
 					}
 				}

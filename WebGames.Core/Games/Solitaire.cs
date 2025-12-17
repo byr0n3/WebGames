@@ -40,12 +40,12 @@ namespace WebGames.Core.Games
 		/// <summary>
 		/// The 4 card stacks that need to be filled to win the game.
 		/// </summary>
-		public readonly List<Card>[] Foundations;
+		public readonly List<PlayingCard>[] Foundations;
 
 		/// <summary>
 		/// The 7 card stacks on the table that are played with.
 		/// </summary>
-		public readonly List<Card>[] Tableaus;
+		public readonly List<PlayingCard>[] Tableaus;
 
 		/// <summary>
 		/// Indicates what card in the tableau stack is visible.
@@ -55,12 +55,12 @@ namespace WebGames.Core.Games
 		/// <summary>
 		/// The stack of cards the player can draw.
 		/// </summary>
-		public readonly List<Card> Talon;
+		public readonly List<PlayingCard> Talon;
 
 		/// <summary>
 		/// Returns the card currently at the top of the talon.
 		/// </summary>
-		public Card TalonCard =>
+		public PlayingCard TalonCard =>
 			this.talonIndex != -1 ? this.Talon[this.talonIndex] : default;
 
 		/// <summary>
@@ -88,8 +88,8 @@ namespace WebGames.Core.Games
 
 		private Solitaire(string code, GameConfiguration configuration) : base(code, configuration)
 		{
-			this.Foundations = new List<Card>[Solitaire.foundationCount];
-			this.Tableaus = new List<Card>[Solitaire.TableauCount];
+			this.Foundations = new List<PlayingCard>[Solitaire.foundationCount];
+			this.Tableaus = new List<PlayingCard>[Solitaire.TableauCount];
 			this.TableauVisibility = new int[Solitaire.TableauCount];
 			this.Talon = [];
 
@@ -162,7 +162,7 @@ namespace WebGames.Core.Games
 
 			for (var i = 0; i < this.Foundations.Length; i++)
 			{
-				this.Foundations[i].Add(new Card((CardSuit)(i + 1), CardRank.King));
+				this.Foundations[i].Add(new PlayingCard((CardSuit)(i + 1), CardRank.King));
 			}
 
 			for (var i = 0; i < this.Tableaus.Length; i++)
@@ -327,7 +327,7 @@ namespace WebGames.Core.Games
 			}
 		}
 
-		private static bool IsMoveValid(StackType dstType, Card dst, Card src)
+		private static bool IsMoveValid(StackType dstType, PlayingCard dst, PlayingCard src)
 		{
 			// If there's no bottom card, the top card HAS to be a king.
 			if (dst == default)

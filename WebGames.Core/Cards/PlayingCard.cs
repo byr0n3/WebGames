@@ -10,7 +10,7 @@ namespace WebGames.Core.Cards
 	/// </summary>
 	[InlineArray(2)]
 	[JsonConverter(typeof(JsonCardConverter))]
-	public struct Card : System.IEquatable<Card>
+	public struct PlayingCard : System.IEquatable<PlayingCard>
 	{
 		private byte @ref;
 
@@ -38,9 +38,9 @@ namespace WebGames.Core.Cards
 		public ushort Id =>
 			Unsafe.ReadUnaligned<ushort>(ref this.@ref);
 
-		/// <inheritdoc cref="Card"/>
+		/// <inheritdoc cref="PlayingCard"/>
 		/// <param name="id">The card in its numeric form.</param>
-		public Card(ushort id)
+		public PlayingCard(ushort id)
 		{
 			if (BitConverter.IsLittleEndian)
 			{
@@ -54,31 +54,31 @@ namespace WebGames.Core.Cards
 			}
 		}
 
-		/// <inheritdoc cref="Card"/>
+		/// <inheritdoc cref="PlayingCard"/>
 		/// <param name="suit">The suit of the card.</param>
 		/// <param name="rank">The rank of the card.</param>
-		public Card(byte suit, byte rank)
+		public PlayingCard(byte suit, byte rank)
 		{
 			this[0] = suit;
 			this[1] = rank;
 		}
 
-		/// <inheritdoc cref="Card"/>
+		/// <inheritdoc cref="PlayingCard"/>
 		/// <param name="suit">The suit of the card.</param>
 		/// <param name="rank">The rank of the card.</param>
-		public Card(CardSuit suit, CardRank rank)
+		public PlayingCard(CardSuit suit, CardRank rank)
 		{
 			this.Suit = suit;
 			this.Rank = rank;
 		}
 
 		/// <inheritdoc />
-		public readonly bool Equals(Card other) =>
+		public readonly bool Equals(PlayingCard other) =>
 			(this.Suit == other.Suit) && (this.Rank == other.Rank);
 
 		/// <inheritdoc />
 		public readonly override bool Equals(object? @object) =>
-			(@object is Card other) && this.Equals(other);
+			(@object is PlayingCard other) && this.Equals(other);
 
 		/// <inheritdoc />
 		public readonly override int GetHashCode() =>
@@ -89,16 +89,16 @@ namespace WebGames.Core.Cards
 			$"{this.Suit.ToString()} {this.Rank.ToString()}";
 
 		/// <summary>
-		/// Determines whether two <see cref="Card"/> instances represent the same card.
+		/// Determines whether two <see cref="PlayingCard"/> instances represent the same card.
 		/// </summary>
 		/// <param name="left">The first card to compare.</param>
 		/// <param name="right">The second card to compare.</param>
 		/// <returns><see langword="true"/> if both cards have identical suit and rank; otherwise <see langword="false"/>.</returns>
-		public static bool operator ==(Card left, Card right) =>
+		public static bool operator ==(PlayingCard left, PlayingCard right) =>
 			left.Equals(right);
 
 		/// <summary>
-		/// Determines whether two <see cref="Card"/> instances differ in suit or rank.
+		/// Determines whether two <see cref="PlayingCard"/> instances differ in suit or rank.
 		/// </summary>
 		/// <param name="left">The first card to compare.</param>
 		/// <param name="right">The second card to compare.</param>
@@ -106,16 +106,16 @@ namespace WebGames.Core.Cards
 		/// <see langword="true"/> if <paramref name="left"/> and <paramref name="right"/> do not represent the same card;
 		/// otherwise <see langword="false"/>.
 		/// </returns>
-		public static bool operator !=(Card left, Card right) =>
+		public static bool operator !=(PlayingCard left, PlayingCard right) =>
 			!left.Equals(right);
 	}
 
-	internal sealed class JsonCardConverter : JsonConverter<Card>
+	internal sealed class JsonCardConverter : JsonConverter<PlayingCard>
 	{
-		public override Card Read(ref Utf8JsonReader reader, System.Type _, JsonSerializerOptions __) =>
+		public override PlayingCard Read(ref Utf8JsonReader reader, System.Type _, JsonSerializerOptions __) =>
 			new(reader.GetUInt16());
 
-		public override void Write(Utf8JsonWriter writer, Card value, JsonSerializerOptions _) =>
+		public override void Write(Utf8JsonWriter writer, PlayingCard value, JsonSerializerOptions _) =>
 			writer.WriteNumberValue(value.Id);
 	}
 }

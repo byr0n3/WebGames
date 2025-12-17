@@ -1,0 +1,16 @@
+<article class="card @(CardClass)">
+	<header class="card-header @(HeaderClass)">
+		@(HeaderContent)
+	</header>
+
+	<main class="card-content @(ContentClass)">
+		@(ChildContent)
+	</main>
+
+	@if (FooterContent is not null)
+	{
+		<footer class="card-footer @(FooterClass)">
+			@(FooterContent)
+		</footer>
+	}
+</article>

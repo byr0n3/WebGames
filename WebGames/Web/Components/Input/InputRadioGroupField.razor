@@ -1,11 +1,8 @@
 @using Microsoft.AspNetCore.Components.Forms
-@using WebGames.Utilities
 @typeparam TValue
+@typeparam TOption
 
-<div class="mye-medium">
-	<label for="@(Id)" class="d-block mye-medium">
-		@(DisplayName.Get(ValueExpression))
-	</label>
+<InputField Id="@(Id)" Help="@(Help)" ValueExpression="@(ValueExpression)">
 	<InputRadioGroup Value="@(Value)"
 	                 ValueChanged="@(ValueChanged)"
 	                 ValueExpression="@(ValueExpression)"
@@ -13,8 +10,9 @@
 	                 @attributes="@(AdditionalAttributes)">
 		@foreach (var option in Options)
 		{
+			var value = GetOptionValue?.Invoke(option) ?? option?.ToString() ?? string.Empty;
 			var label = GetOptionLabel?.Invoke(option) ?? option?.ToString() ?? string.Empty;
-			var key = $"{Id}-option-{label}";
+			var key = $"{Id}-option-{value}";
 
 			<label @key="@(key)" class="@(OptionClass ?? string.Empty)">
 				@if (OptionContent is not null)
@@ -23,11 +21,10 @@
 				}
 				else
 				{
-					<InputRadio Value="@(option)" />
+					<InputRadio Value="@(value)" />
 					@(label)
 				}
 			</label>
 		}
 	</InputRadioGroup>
-	<ValidationMessage For="@(ValueExpression)" />
-</div>
+</InputField>

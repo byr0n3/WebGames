@@ -7,28 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebGames.Web.Pages {
+namespace WebGames.Models.Requests {
     using System;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AccountLocalization {
+    public class UpdateAccountSettingsModelLocalization {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AccountLocalization() {
+        internal UpdateAccountSettingsModelLocalization() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Pages.AccountLocalization", typeof(AccountLocalization).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Models.Requests.UpdateAccountSettingsModelLocalization", typeof(UpdateAccountSettingsModelLocalization).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -45,39 +45,39 @@ namespace WebGames.Web.Pages {
             }
         }
         
-        public static string Save {
+        public static string FormatCulture {
             get {
-                return ResourceManager.GetString("Save", resourceCulture);
+                return ResourceManager.GetString("FormatCulture", resourceCulture);
             }
         }
         
-        public static string Saved {
+        public static string UiCulture {
             get {
-                return ResourceManager.GetString("Saved", resourceCulture);
+                return ResourceManager.GetString("UiCulture", resourceCulture);
             }
         }
         
-        public static string Failed {
+        public static string FormatCultureHelp {
             get {
-                return ResourceManager.GetString("Failed", resourceCulture);
+                return ResourceManager.GetString("FormatCultureHelp", resourceCulture);
             }
         }
         
-        public static string Title {
+        public static string UiCultureHelp {
             get {
-                return ResourceManager.GetString("Title", resourceCulture);
+                return ResourceManager.GetString("UiCultureHelp", resourceCulture);
             }
         }
         
-        public static string Settings {
+        public static string FormatCultureError {
             get {
-                return ResourceManager.GetString("Settings", resourceCulture);
+                return ResourceManager.GetString("FormatCultureError", resourceCulture);
             }
         }
         
-        public static string Details {
+        public static string UiCultureError {
             get {
-                return ResourceManager.GetString("Details", resourceCulture);
+                return ResourceManager.GetString("UiCultureError", resourceCulture);
             }
         }
     }

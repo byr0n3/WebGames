@@ -1,39 +1,95 @@
 @page "/account"
 @using Microsoft.AspNetCore.Components.Forms
+@using WebGames.Web.Components
 @using WebGames.Web.Components.Input
+
+<PageTitle>@(Localizer["Title"])</PageTitle>
+
+<h1>@(Localizer["Title"])</h1>
 
 @if (success)
 {
 	<div>@(Localizer["Saved"])</div>
 }
 
-@* @todo Language/culture switcher *@
+<div class="d-flex flex-row flex-nowrap justify-space-between align-start gap-medium">
+	<Card CardClass="flex-1">
+		<HeaderContent>
+			<h2>@(Localizer["Settings"])</h2>
+		</HeaderContent>
 
-<EditForm EditContext="@(context)" OnValidSubmit="@(UpdateAsync)" FormName="@(Account.formName)">
-	<DataAnnotationsValidator />
+		<ChildContent>
+			<EditForm Model="@(SettingsModel)"
+			          OnValidSubmit="@(UpdateSettings)"
+			          FormName="@(Account.settingsFormName)"
+			          id="@(Account.settingsFormName)"
+			          class="mye-medium">
+				<DataAnnotationsValidator />
 
-	<InputTextField @bind-Value="@(Model.Username)"
-	                Id="username"
-	                autocomplete="username"
-	                required />
+				<InputSelectField @bind-Value="@(SettingsModel.FormatCulture)"
+				                  Id="culture"
+				                  Options="@(Cultures.Supported)"
+				                  GetOptionLabel="@(static (culture) => culture.NativeName)"
+				                  GetOptionValue="@(static (culture) => culture.Name)"
+				                  Help="@(SettingsLocalizer["FormatCultureHelp"])" />
 
-	<InputTextField @bind-Value="@(Model.Email)"
-	                Id="email"
-	                type="email"
-	                autocomplete="email"
-	                required />
+				<InputSelectField @bind-Value="@(SettingsModel.UiCulture)"
+				                  Id="ui-culture"
+				                  Options="@(Cultures.Supported)"
+				                  GetOptionLabel="@(static (culture) => culture.NativeName)"
+				                  GetOptionValue="@(static (culture) => culture.Name)"
+				                  Help="@(SettingsLocalizer["UiCultureHelp"])" />
+			</EditForm>
+		</ChildContent>
 
-	<InputTextField @bind-Value="@(Model.Password)"
-	                Id="password"
-	                type="password"
-	                autocomplete="new-password"
-	                required />
+		<FooterContent>
+			<button type="submit" class="btn-primary" form="@(Account.settingsFormName)">
+				@(Localizer["Save"])
+			</button>
+		</FooterContent>
+	</Card>
 
-	<InputTextField @bind-Value="@(Model.PasswordConfirmation)"
-	                Id="password-confirmation"
-	                type="password"
-	                autocomplete="new-password"
-	                required />
+	<Card CardClass="flex-1">
+		<HeaderContent>
+			<h2>@(Localizer["Details"])</h2>
+		</HeaderContent>
 
-	<button type="submit">@(Localizer["Save"])</button>
-</EditForm>
+		<ChildContent>
+			<EditForm Model="@(DetailsModel)"
+			          OnValidSubmit="@(UpdateDetailsAsync)"
+			          FormName="@(Account.detailsFormName)"
+			          id="@(Account.detailsFormName)">
+				<DataAnnotationsValidator />
+
+				<InputTextField @bind-Value="@(DetailsModel.Username)"
+				                Id="username"
+				                autocomplete="username"
+				                required />
+
+				<InputTextField @bind-Value="@(DetailsModel.Email)"
+				                Id="email"
+				                type="email"
+				                autocomplete="email"
+				                required />
+
+				<InputTextField @bind-Value="@(DetailsModel.Password)"
+				                Id="password"
+				                type="password"
+				                autocomplete="new-password"
+				                required />
+
+				<InputTextField @bind-Value="@(DetailsModel.PasswordConfirmation)"
+				                Id="password-confirmation"
+				                type="password"
+				                autocomplete="new-password"
+				                required />
+			</EditForm>
+		</ChildContent>
+
+		<FooterContent>
+			<button type="submit" class="btn-primary" form="@(Account.detailsFormName)">
+				@(Localizer["Save"])
+			</button>
+		</FooterContent>
+	</Card>
+</div>

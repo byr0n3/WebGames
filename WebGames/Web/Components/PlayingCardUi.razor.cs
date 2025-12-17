@@ -4,15 +4,15 @@ using WebGames.Core.Cards;
 
 namespace WebGames.Web.Components
 {
-	public sealed partial class PlayingCard : ComponentBase
+	public sealed partial class PlayingCardUi : ComponentBase
 	{
-		[Parameter] [EditorRequired] public Card Card { get; set; }
+		[Parameter] [EditorRequired] public PlayingCard Card { get; set; }
 
 		[Parameter] public string Class { get; set; } = string.Empty;
 
 		[Parameter] public bool? Hidden { get; set; }
 
-		[Parameter] public EventCallback<Card> Clicked { get; set; }
+		[Parameter] public EventCallback<PlayingCard> Clicked { get; set; }
 
 		private bool Clickable =>
 			this.Clicked.HasDelegate;

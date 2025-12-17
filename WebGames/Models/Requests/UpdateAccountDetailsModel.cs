@@ -15,24 +15,24 @@ using WebGames.Services;
 
 namespace WebGames.Models.Requests
 {
-	internal sealed class UpdateAccountModel : IValidatableObject
+	internal sealed class UpdateAccountDetailsModel : IValidatableObject
 	{
 		[Required]
 		[MaxLength(User.UsernameMaxLength)]
-		[Display(Name = nameof(UpdateAccountModel.Username), ResourceType = typeof(UserLocalization))]
+		[Display(Name = nameof(UpdateAccountDetailsModel.Username), ResourceType = typeof(UserLocalization))]
 		public string? Username { get; set; }
 
 		[Required]
 		[EmailAddress]
 		[MaxLength(User.EmailMaxLength)]
-		[Display(Name = nameof(UpdateAccountModel.Email), ResourceType = typeof(UserLocalization))]
+		[Display(Name = nameof(UpdateAccountDetailsModel.Email), ResourceType = typeof(UserLocalization))]
 		public string? Email { get; set; }
 
 		[Password(false)]
-		[Display(Name = nameof(UpdateAccountModel.Password), ResourceType = typeof(UserLocalization))]
+		[Display(Name = nameof(UpdateAccountDetailsModel.Password), ResourceType = typeof(UserLocalization))]
 		public string? Password { get; set; }
 
-		[Display(Name = nameof(UpdateAccountModel.PasswordConfirmation), ResourceType = typeof(UserLocalization))]
+		[Display(Name = nameof(UpdateAccountDetailsModel.PasswordConfirmation), ResourceType = typeof(UserLocalization))]
 		public string? PasswordConfirmation { get; set; }
 
 		public bool IsValid
@@ -49,7 +49,7 @@ namespace WebGames.Models.Requests
 
 			Debug.Assert(userId != default);
 
-			var localizer = context.GetRequiredService<IStringLocalizer<UpdateAccountModel>>();
+			var localizer = context.GetRequiredService<IStringLocalizer<UpdateAccountDetailsModel>>();
 			var db = context.GetRequiredService<IDbContextFactory<WebGamesDbContext>>().CreateDbContext();
 
 			using (db)
