@@ -1,0 +1,267 @@
+/* <editor-fold desc="Display"> */
+
+.d-none {
+	display: none;
+}
+
+.d-block {
+	display: block;
+}
+
+.d-inline-block {
+	display: inline-block;
+}
+
+.d-flex {
+	display: flex;
+}
+
+.d-inline-flex {
+	display: inline-flex;
+}
+
+/* </editor-fold> */
+
+/* <editor-fold desc="Margin"> */
+
+.m-small {
+	margin: var(--spacing-small);
+}
+
+.m-medium {
+	margin: var(--spacing-medium);
+}
+
+.m-large {
+	margin: var(--spacing-large);
+}
+
+.mx-small {
+	margin-inline: var(--spacing-small);
+}
+
+.mx-medium {
+	margin-inline: var(--spacing-medium);
+}
+
+.mx-large {
+	margin-inline: var(--spacing-large);
+}
+
+.my-small {
+	margin-block: var(--spacing-small);
+}
+
+.my-medium {
+	margin-block: var(--spacing-medium);
+}
+
+.my-large {
+	margin-block: var(--spacing-large);
+}
+
+.mxs-small {
+	margin-inline-start: var(--spacing-small);
+}
+
+.mxs-medium {
+	margin-inline-start: var(--spacing-medium);
+}
+
+.mxs-large {
+	margin-inline-start: var(--spacing-large);
+}
+
+.mxe-small {
+	margin-inline-end: var(--spacing-small);
+}
+
+.mxe-medium {
+	margin-inline-end: var(--spacing-medium);
+}
+
+.mxe-large {
+	margin-inline-end: var(--spacing-large);
+}
+
+.mys-small {
+	margin-block-start: var(--spacing-small);
+}
+
+.mys-medium {
+	margin-block-start: var(--spacing-medium);
+}
+
+.mys-large {
+	margin-block-start: var(--spacing-large);
+}
+
+.mye-small {
+	margin-block-end: var(--spacing-small);
+}
+
+.mye-medium {
+	margin-block-end: var(--spacing-medium);
+}
+
+.mye-large {
+	margin-block-end: var(--spacing-large);
+}
+
+/* </editor-fold> */
+
+/* <editor-fold desc="Padding"> */
+
+.p-small {
+	padding: var(--spacing-small);
+}
+
+.p-medium {
+	padding: var(--spacing-medium);
+}
+
+.p-large {
+	padding: var(--spacing-large);
+}
+
+.px-small {
+	padding-inline: var(--spacing-small);
+}
+
+.px-medium {
+	padding-inline: var(--spacing-medium);
+}
+
+.px-large {
+	padding-inline: var(--spacing-large);
+}
+
+.py-small {
+	padding-block: var(--spacing-small);
+}
+
+.py-medium {
+	padding-block: var(--spacing-medium);
+}
+
+.py-large {
+	padding-block: var(--spacing-large);
+}
+
+.pxs-small {
+	padding-inline-start: var(--spacing-small);
+}
+
+.pxs-medium {
+	padding-inline-start: var(--spacing-medium);
+}
+
+.pxs-large {
+	padding-inline-start: var(--spacing-large);
+}
+
+.pxe-small {
+	padding-inline-end: var(--spacing-small);
+}
+
+.pxe-medium {
+	padding-inline-end: var(--spacing-medium);
+}
+
+.pxe-large {
+	padding-inline-end: var(--spacing-large);
+}
+
+.pys-small {
+	padding-block-start: var(--spacing-small);
+}
+
+.pys-medium {
+	padding-block-start: var(--spacing-medium);
+}
+
+.pys-large {
+	padding-block-start: var(--spacing-large);
+}
+
+.pye-small {
+	padding-block-end: var(--spacing-small);
+}
+
+.pye-medium {
+	padding-block-end: var(--spacing-medium);
+}
+
+.pye-large {
+	padding-block-end: var(--spacing-large);
+}
+
+/* </editor-fold> */
+
+/* <editor-fold desc="Flex"> */
+
+.flex-column {
+	flex-direction: column;
+}
+
+.flex-row {
+	flex-direction: row;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.flex-nowrap {
+	flex-wrap: nowrap;
+}
+
+.justify-start {
+	justify-content: flex-start;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+.justify-end {
+	justify-content: flex-end;
+}
+
+.justify-space-between {
+	justify-content: space-between;
+}
+
+.justify-space-around {
+	justify-content: space-around;
+}
+
+.justify-space-evenly {
+	justify-content: space-evenly;
+}
+
+.align-start {
+	align-items: flex-start;
+}
+
+.align-center {
+	align-items: center;
+}
+
+.align-end {
+	align-items: flex-end;
+}
+
+.gap-small {
+	gap: var(--spacing-small);
+}
+
+.gap-medium {
+	gap: var(--spacing-medium);
+}
+
+.gap-large {
+	gap: var(--spacing-large);
+}
+
+/* </editor-fold> */

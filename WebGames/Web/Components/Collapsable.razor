@@ -1,0 +1,11 @@
+@using Elegance.Icons
+
+<button class="@(TriggerClass)" data-visible="@(DefaultVisible)" data-collapsable="@(Id)">
+	@(TriggerContent)
+	<span class="collapsable-chevron" data-chevron>@(Icons.ChevronUp)</span>
+</button>
+
+<div id="@(Id)"
+     class="collapsable-content @(DefaultVisible ? "visible" : string.Empty) @(ContentClass)">
+	@(ChildContent)
+</div>

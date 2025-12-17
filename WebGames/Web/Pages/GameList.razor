@@ -1,0 +1,60 @@
+@page "/games"
+@using Elegance.Icons
+@using WebGames.Extensions
+@using WebGames.Web.Components
+@rendermode RenderModes.Interactive
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+
+<PageTitle>@(Localizer["Title"])</PageTitle>
+
+<h1>@(Localizer["Title"])</h1>
+
+<Collapsable TriggerClass="btn-link mye-large" ContentClass="mye-large">
+	<TriggerContent>
+		@(Localizer["CreateGame"])
+	</TriggerContent>
+
+	<ChildContent>
+		<CreateGameForm />
+	</ChildContent>
+</Collapsable>
+
+@if ((games is null) || (games.Length == 0))
+{
+	<div class="empty">
+		@(Icons.PlayCardK)
+		<h2>@(Localizer["EmptyTitle"])</h2>
+		<p>@(Localizer["EmptySubtitle"])</p>
+	</div>
+}
+else
+{
+	<div class="games">
+		@foreach (var game in games)
+		{
+			var key = $"game-{game.Code}";
+
+			<div @key="@(key)" class="game">
+				<div
+					class="d-flex flex-row flex-nowrap justify-space-between align-center gap-small pye-small mye-small game-header">
+					<h2 class="game-code">@(game.Code)</h2>
+					<span class="player-count">
+						@(game.CurrentPlayers.Count.Str())/@(game.Configuration.MaxPlayers.Str())
+					</span>
+				</div>
+				<p>@(GameLocalizer[game.GetType().Name])</p>
+				<p>@(GameLocalizer[game.State.ToString()])</p>
+				<div class="game-actions">
+					<button type="button" disabled="@(true)">
+						@(Localizer["Spectate"])
+					</button>
+					<button type="button"
+					        disabled="@(!game.Joinable)"
+					        @onclick="@(() => JoinGame(game))">
+						@(Localizer["Join"])
+					</button>
+				</div>
+			</div>
+		}
+	</div>
+}

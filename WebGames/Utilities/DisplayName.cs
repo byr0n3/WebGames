@@ -1,5 +1,7 @@
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -17,6 +19,19 @@ namespace WebGames.Utilities
 			}
 
 			throw new System.ArgumentException("Invalid lambda expression", nameof(lambda));
+		}
+
+		public static string Get<TEnum>(TEnum value) where TEnum : Enum
+		{
+			var name = Enum.GetName(typeof(TEnum), value);
+
+			Debug.Assert(name is not null);
+
+			var fieldInfo = typeof(TEnum).GetField(name);
+
+			Debug.Assert(fieldInfo is not null);
+
+			return fieldInfo.GetCustomAttribute<DisplayAttribute>(true)?.GetName() ?? name;
 		}
 	}
 }

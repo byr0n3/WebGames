@@ -54,6 +54,12 @@ namespace WebGames.Core
 			where TGame : IGame, ICreatableGame
 		{
 			var code = CodeGenerator.Generate();
+
+			if (this.FindGame(code) is not null)
+			{
+				throw new Exception("Generated duplicate game code.");
+			}
+
 			var game = TGame.Create(code, configuration, this.services);
 
 			game.Join(player);

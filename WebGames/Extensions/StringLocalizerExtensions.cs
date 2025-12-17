@@ -8,7 +8,7 @@ namespace WebGames.Extensions
 	{
 		extension(IStringLocalizer localizer)
 		{
-			public string Format(string key, params ReadOnlySpan<object?> @params) =>
+			public string Format(string key, params ReadOnlySpan<object> @params) =>
 				string.Format(CultureInfo.CurrentCulture, localizer[key], @params);
 		}
 	}

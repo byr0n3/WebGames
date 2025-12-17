@@ -1,0 +1,45 @@
+@using Elegance.Icons
+@using Microsoft.AspNetCore.Components.Forms
+@using WebGames.Core
+@using WebGames.Extensions
+@using WebGames.Models.Requests
+@using WebGames.Web.Components.Input
+
+<EditForm Model="@(Model)" OnValidSubmit="@(CreateGame)" FormName="@(CreateGameForm.formName)">
+	<DataAnnotationsValidator />
+
+	<InputRadioGroupField TValue="@(GameType?)"
+	                      @bind-Value="@(Model.Type)"
+	                      Options="@(Enum.GetValues<GameType>().Cast<GameType?>())"
+	                      Id="type">
+		<OptionContent Context="type">
+			<div class="game-type-option" tabindex="0">
+				<InputRadio Value="@(type)" />
+				@(CreateGameForm.GetGameTypeIcon(type))
+				<span class="label">@(type.Value.ToDisplayName())</span>
+			</div>
+		</OptionContent>
+	</InputRadioGroupField>
+
+	<InputSelectField TValue="@(GameVisibility)"
+	                  @bind-Value="@(Model.Visibility)"
+	                  Options="@(Enum.GetValues<GameVisibility>())"
+	                  GetOptionLabel="@((type) => GameLocalizer[type.ToString()])"
+	                  Id="visibility" />
+
+	<button type="submit" class="btn-primary">
+		@(Localizer["Create"])
+	</button>
+</EditForm>
+
+@code {
+
+	private static RenderFragment GetGameTypeIcon(GameType? type) =>
+		(type) switch
+		{
+			GameType.Solitaire => Icons.PlayCardK,
+			GameType.Blackjack => Icons.Number21Small,
+			_                  => Icons.QuestionMark,
+		};
+
+}

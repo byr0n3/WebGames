@@ -1,17 +1,19 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using WebGames.Core;
 using WebGames.Core.Games;
 using WebGames.Core.Players;
 using WebGames.Extensions;
 using WebGames.Models.Requests;
+using WebGames.Resources;
 using WebGames.Services;
 
-namespace WebGames.Web.Pages.Games
+namespace WebGames.Web.Components
 {
-	public sealed partial class Create : ComponentBase
+	public sealed partial class CreateGameForm : ComponentBase
 	{
-		private const string formName = nameof(Create);
+		private const string formName = nameof(CreateGameForm);
 
 		[Inject] public required GameManager GameManager { get; init; }
 
@@ -19,7 +21,11 @@ namespace WebGames.Web.Pages.Games
 
 		[Inject] public required AuthenticationService Authentication { get; init; }
 
-		[SupplyParameterFromForm(FormName = Create.formName)]
+		[Inject] public required IStringLocalizer<GameLocalization> GameLocalizer { get; init; }
+
+		[Inject] public required IStringLocalizer<CreateGameFormLocalization> Localizer { get; init; }
+
+		[SupplyParameterFromForm(FormName = CreateGameForm.formName)]
 		private CreateGameModel Model { get; set; } = new();
 
 		private void CreateGame()

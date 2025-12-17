@@ -1,0 +1,40 @@
+.game-type-option {
+	display: inline-block;
+
+	margin-inline-start: var(--spacing-small);
+	padding: var(--spacing-medium);
+
+	border: var(--border-width) solid var(--border-color-body);
+	border-radius: var(--border-radius);
+
+	cursor: pointer;
+
+	transition: var(--animation-duration) var(--animation-curve);
+	transition-property: background-color, border;
+}
+
+.game-type-option:hover {
+	border: var(--border-width) solid var(--border-color-hover);
+}
+
+.game-type-option:has(input[type="radio"]:checked) {
+	background-color: var(--background-color-secondary);
+}
+
+.game-type-option ::deep > input[type="radio"] {
+	display: none;
+}
+
+.game-type-option ::deep > svg,
+.game-type-option ::deep > .label {
+	display: block;
+	margin-inline: auto;
+}
+
+.game-type-option ::deep > svg {
+	font-size: 4rem;
+}
+
+.game-type-option ::deep > .label {
+	text-align: center;
+}

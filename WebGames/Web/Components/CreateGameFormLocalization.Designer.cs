@@ -7,28 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebGames.Web.Pages.Games {
+namespace WebGames.Web.Components {
     using System;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class GameLocalization {
+    public class CreateGameFormLocalization {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal GameLocalization() {
+        internal CreateGameFormLocalization() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Pages.Games.GameLocalization", typeof(GameLocalization).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Components.CreateGameFormLocalization", typeof(CreateGameFormLocalization).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -45,27 +45,9 @@ namespace WebGames.Web.Pages.Games {
             }
         }
         
-        public static string Title {
+        public static string Create {
             get {
-                return ResourceManager.GetString("Title", resourceCulture);
-            }
-        }
-        
-        public static string Leave {
-            get {
-                return ResourceManager.GetString("Leave", resourceCulture);
-            }
-        }
-        
-        public static string FinishedTitle {
-            get {
-                return ResourceManager.GetString("FinishedTitle", resourceCulture);
-            }
-        }
-        
-        public static string NotFound {
-            get {
-                return ResourceManager.GetString("NotFound", resourceCulture);
+                return ResourceManager.GetString("Create", resourceCulture);
             }
         }
     }

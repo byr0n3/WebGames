@@ -8,9 +8,9 @@ using WebGames.Core.Players;
 using WebGames.Extensions;
 using WebGames.Services;
 
-namespace WebGames.Web.Pages.Games
+namespace WebGames.Web.Pages
 {
-	public sealed partial class Game : ComponentBase, IDisposable
+	public sealed partial class ViewGame : ComponentBase, IDisposable
 	{
 		[Inject] public required GameManager GameManager { get; init; }
 
@@ -18,7 +18,7 @@ namespace WebGames.Web.Pages.Games
 
 		[Inject] public required AuthenticationService Authentication { get; init; }
 
-		[Inject] public required IStringLocalizer<GameLocalization> Localizer { get; init; }
+		[Inject] public required IStringLocalizer<ViewGameLocalization> Localizer { get; init; }
 
 		[Parameter] public required string Code { get; init; }
 

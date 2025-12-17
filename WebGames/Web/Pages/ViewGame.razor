@@ -7,7 +7,7 @@
 @using WebGames.Web.Components.Games
 @rendermode RenderModes.Interactive
 
-<PageTitle>@(Localizer.Format("Title", game?.Code))</PageTitle>
+<PageTitle>@(Localizer.Format("Title", game?.Code ?? string.Empty))</PageTitle>
 
 @if (game is not null)
 {
