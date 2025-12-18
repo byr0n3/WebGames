@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebGames;
+using WebGames.AspNet;
 using WebGames.Core;
 using WebGames.Database;
 using WebGames.Database.Extensions;
@@ -36,6 +37,7 @@ if (app.Environment.IsDevelopment())
 else
 {
 	app.UseExceptionHandler("/error", true);
+	app.UseMiddleware<SynologyHttpsRedirectMiddleware>();
 }
 
 app.UseStatusCodePagesWithReExecute("/not-found", null, true);
