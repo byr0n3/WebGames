@@ -37,8 +37,9 @@ namespace WebGames.Web.Pages.Authentication
 			Debug.Assert(this.Model.IsValid);
 
 			var token = Guid.NewGuid();
-			var expiry = DateTimeOffset.UtcNow.AddMinutes(30); // @todo Configurable
-			UserEmailData? user = null;
+			var expiry = DateTimeOffset.UtcNow.AddMinutes(30);
+
+			UserEmailData? user;
 
 			await using (var db = await this.DbFactory.CreateDbContextAsync())
 			{
@@ -47,21 +48,16 @@ namespace WebGames.Web.Pages.Authentication
 									.ExecuteUpdateAsync((calls) => calls.SetProperty(static (u) => u.PasswordResetToken, token)
 																		.SetProperty(static (u) => u.PasswordResetExpiry, expiry));
 
-				if (saved == 1)
-				{
-					user = await db.Users
-								   .Where((u) => u.PasswordResetToken == token)
-								   .Select(static (u) => new UserEmailData
-								   {
-									   Username = u.Username,
-									   Email = u.Email,
-								   })
-								   .FirstOrDefaultAsync();
-				}
-				else
-				{
-					// @todo Show error
-				}
+				Debug.Assert(saved == 1);
+
+				user = await db.Users
+							   .Where((u) => u.PasswordResetToken == token)
+							   .Select(static (u) => new UserEmailData
+							   {
+								   Username = u.Username,
+								   Email = u.Email,
+							   })
+							   .FirstOrDefaultAsync();
 			}
 
 			this.Model.Email = null;

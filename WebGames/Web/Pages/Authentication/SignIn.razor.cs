@@ -51,8 +51,19 @@ namespace WebGames.Web.Pages.Authentication
 				return;
 			}
 
-			// @todo Validate & sanitize
-			this.Navigation.NavigateTo(this.ReturnUrl ?? "/", true);
+			this.Navigation.NavigateTo(this.GetReturnUrl(), true);
+		}
+
+		private string GetReturnUrl()
+		{
+			const string @default = "/";
+
+			if (string.IsNullOrWhiteSpace(this.ReturnUrl) || (this.ReturnUrl[0] != '/'))
+			{
+				return @default;
+			}
+
+			return this.ReturnUrl;
 		}
 	}
 }

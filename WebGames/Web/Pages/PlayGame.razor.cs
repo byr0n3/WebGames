@@ -44,7 +44,6 @@ namespace WebGames.Web.Pages
 		private void OnGameUpdated(IGame __, GameUpdatedArgs ___) =>
 			_ = this.InvokeAsync(this.StateHasChanged);
 
-		// @todo Refactor
 		public void Dispose()
 		{
 			if (this.game is null)

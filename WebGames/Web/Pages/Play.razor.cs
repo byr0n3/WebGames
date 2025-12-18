@@ -41,13 +41,13 @@ namespace WebGames.Web.Pages
 			_ = this.InvokeAsync(this.StateHasChanged);
 		}
 
-		// @todo Refactor
 		private void JoinGame(IGame game)
 		{
 			Debug.Assert(this.Authentication.User is not null);
 
 			bool joined;
 
+			// @todo Refactor
 			if (game is Solitaire solitaire)
 			{
 				joined = this.GameManager.TryGetOrJoin(solitaire, this.Authentication.User.AsPlayer<SolitairePlayer>());
@@ -57,14 +57,9 @@ namespace WebGames.Web.Pages
 				throw new System.Exception($"Unknown game type: {game.GetType().Name}");
 			}
 
-			if (joined)
-			{
-				this.Navigation.NavigateTo($"/play/{game.Code}", true);
-			}
-			else
-			{
-				// @todo Show error
-			}
+			Debug.Assert(joined);
+
+			this.Navigation.NavigateTo($"/play/{game.Code}", true);
 		}
 
 		public void Dispose() =>

@@ -152,7 +152,6 @@ namespace WebGames.Services
 			}
 
 			public override string ToString() =>
-				// @todo Limit TextBody and show ellipsis
 				$"[{this.From?.ToString() ?? "Default"}] -> [{this.To}] {this.Subject}: {this.TextBody}";
 		}
 	}

@@ -15,7 +15,6 @@ namespace WebGames.AspNet
 			this.required = required;
 		}
 
-		// @todo Localize errors
 		protected override ValidationResult? IsValid(object? @object, ValidationContext context)
 		{
 			if (!this.required && @object is null)

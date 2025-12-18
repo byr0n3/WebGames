@@ -49,7 +49,6 @@ namespace WebGames.Web.Pages.Authentication
 
 				var saved = await db.SaveChangesAsync();
 
-				// @todo Show error
 				Debug.Assert(saved == 1);
 			}
 
