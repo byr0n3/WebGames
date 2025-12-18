@@ -43,16 +43,8 @@ namespace WebGames.Web.Pages.Authentication
 
 			if (result is not AuthenticationResult.Success)
 			{
-				var error = (result) switch
-				{
-					AuthenticationResult.InvalidCredentials => nameof(AuthenticationResult.InvalidCredentials),
-					AuthenticationResult.MfaRequired        => nameof(AuthenticationResult.MfaRequired),
-					AuthenticationResult.AccountLockedOut   => nameof(AuthenticationResult.AccountLockedOut),
-					_                                       => nameof(AuthenticationResult.UnknownError),
-				};
-
-				var messageStore = new ValidationMessageStore(this.context);
-				messageStore.Add(FieldIdentifier.Create(() => this.Model.User), error);
+				new ValidationMessageStore(this.context)
+					.Add(FieldIdentifier.Create(() => this.Model.User), this.Localizer[result.ToString()]);
 
 				this.Model.Password = null;
 
