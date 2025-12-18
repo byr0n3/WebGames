@@ -8,6 +8,7 @@
 	</Folder>
 	<Folder Name="/Workflows/">
 		<File Path=".github/workflows/test.yml"/>
+		<File Path=".github/workflows/release.yml"/>
 	</Folder>
 	<Folder Name="/Source Generators/">
 		<Project Path="WebGames.CardUi/WebGames.CardUi.csproj"/>
