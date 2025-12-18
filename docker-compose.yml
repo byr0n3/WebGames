@@ -1,6 +1,9 @@
 services:
   webgames:
     image: "ghcr.io/byr0n3/webgames:latest"
+    depends_on:
+      database:
+        condition: service_healthy
     environment:
       - DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=0
       - ConnectionStrings__WebGames=Host=/var/run/postgresql;Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USERNAME};Password=${POSTGRES_PASSWORD};Command Timeout=60

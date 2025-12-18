@@ -57,6 +57,7 @@ namespace WebGames.Web.Pages.Authentication
 				{ nameof(AccountConfirmation.Token), token },
 			});
 
+			// @todo Mail queue
 			await this.Smtp.SendAsync(new SmtpService.SmtpMessageDescriptor
 			{
 				To = new MailboxAddress(this.Model.Username, this.Model.Email),
