@@ -7,28 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebGames.Web.Components {
+namespace WebGames.Web.Pages {
     using System;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class NavigationLocalization {
+    public class ErrorLocalization {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal NavigationLocalization() {
+        internal ErrorLocalization() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Components.NavigationLocalization", typeof(NavigationLocalization).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Pages.ErrorLocalization", typeof(ErrorLocalization).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -45,27 +45,15 @@ namespace WebGames.Web.Components {
             }
         }
         
-        public static string Home {
+        public static string Title {
             get {
-                return ResourceManager.GetString("Home", resourceCulture);
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         
-        public static string Play {
+        public static string Subtitle {
             get {
-                return ResourceManager.GetString("Play", resourceCulture);
-            }
-        }
-        
-        public static string SignIn {
-            get {
-                return ResourceManager.GetString("SignIn", resourceCulture);
-            }
-        }
-        
-        public static string SignUp {
-            get {
-                return ResourceManager.GetString("SignUp", resourceCulture);
+                return ResourceManager.GetString("Subtitle", resourceCulture);
             }
         }
     }

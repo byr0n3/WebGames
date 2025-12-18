@@ -13,5 +13,9 @@ namespace WebGames.Web.Components.Input
 		[Parameter] [EditorRequired] public required Expression<Func<TValue>> ValueExpression { get; set; }
 
 		[Parameter] public string? Help { get; set; }
+
+		[Parameter] public bool Block { get; set; }
+
+		[Parameter] public bool LabelBlock { get; set; } = true;
 	}
 }

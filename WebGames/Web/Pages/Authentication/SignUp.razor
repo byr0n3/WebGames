@@ -3,35 +3,41 @@
 @using WebGames.Web.Components
 @using WebGames.Web.Components.Input
 
-<PageTitle>@(Localizer["SignUp"])</PageTitle>
+<AppPageTitle Title="@(Localizer["SignUp"])" />
 
-<EditForm Model="@(Model)" OnValidSubmit="@(SignUpAsync)" FormName="@(SignUp.formName)">
+<EditForm Model="@(Model)" OnValidSubmit="@(SignUpAsync)" FormName="@(SignUp.formName)" class="centered-container">
 	<DataAnnotationsValidator />
+
+	<h1>@(Localizer["SignUp"])</h1>
 
 	<InputTextField @bind-Value="@(Model.Username)"
 	                Id="username"
+	                Block
 	                autocomplete="username"
 	                required />
 
 	<InputTextField @bind-Value="@(Model.Email)"
 	                Id="email"
+	                Block
 	                type="email"
 	                autocomplete="email"
 	                required />
 
 	<InputTextField @bind-Value="@(Model.Password)"
 	                Id="password"
+	                Block
 	                type="password"
 	                autocomplete="new-password"
 	                required />
 
 	<InputTextField @bind-Value="@(Model.PasswordConfirmation)"
 	                Id="password-confirmation"
+	                Block
 	                type="password"
 	                autocomplete="new-password"
 	                required />
 
-	<a href="/sign-in">@(Localizer["SignIn"])</a>
+	<button type="submit" class="btn-primary btn-block">@(Localizer["SignUp"])</button>
 
-	<button type="submit" class="btn-primary">@(Localizer["SignUp"])</button>
+	<a href="/sign-in">@(Localizer["SignIn"])</a>
 </EditForm>

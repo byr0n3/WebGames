@@ -1,16 +1,17 @@
 ﻿@using Elegance.Icons
 @using Microsoft.AspNetCore.Components.Authorization
-@using WebGames.Extensions
+@using Microsoft.Extensions.Options
 @using WebGames.Models
 @using WebGames.Web.Components
 @inherits LayoutComponentBase
 
 <div class="container">
 	<div class="sidebar">
-		<div class="sidebar-header">
+		<div class="sidebar-header d-flex flex-row flex-nowrap align-center gap-medium">
 			<span class="app-logo">
 				@(Icons.Joker)
 			</span>
+			<span class="app-title">@(AppOptions.Value.Name)</span>
 		</div>
 
 		<Navigation />
@@ -32,3 +33,9 @@
 	<a href="." class="reload">Reload</a>
 	<span class="dismiss">🗙</span>
 </div>
+
+@code {
+
+	[Inject] public required IOptions<AppOptions> AppOptions { get; init; }
+
+}

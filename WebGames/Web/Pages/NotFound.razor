@@ -1,9 +1,10 @@
 ﻿@page "/not-found"
 @using Microsoft.Extensions.Localization
+@using WebGames.Web.Components
 @using WebGames.Web.Layout
 @layout MainLayout
 
-<PageTitle>@(Localizer["Title"])</PageTitle>
+<AppPageTitle Title="@(Localizer["Title"])" />
 
 <h1>@(Localizer["Title"])</h1>
 <p>@(Localizer["Subtitle"])</p>

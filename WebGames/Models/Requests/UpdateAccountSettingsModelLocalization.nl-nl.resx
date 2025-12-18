@@ -1,11 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <root>
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-        <xsd:element name="root" msdata:IsDataSet="true">
-            
-        </xsd:element>
-    </xsd:schema>
     <resheader name="resmimetype">
         <value>text/microsoft-resx</value>
     </resheader>
@@ -19,21 +12,21 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="FormatCulture" xml:space="preserve">
-        <value>Formatting</value>
-    </data>
-    <data name="UiCulture" xml:space="preserve">
-        <value>UI language</value>
-    </data>
-    <data name="FormatCultureHelp" xml:space="preserve">
-        <value>This controls how different values are formatted, like currencies, dates, times, etc.</value>
-    </data>
-    <data name="UiCultureHelp" xml:space="preserve">
-        <value>This controls the displayed language of the app.</value>
+        <value>Opmaak</value>
     </data>
     <data name="FormatCultureError" xml:space="preserve">
-        <value>Invalid culture.</value>
+        <value>Ongeldige waarde.</value>
+    </data>
+    <data name="FormatCultureHelp" xml:space="preserve">
+        <value>Dit bepaalt hoe verschillende waarden worden geformatteerd, zoals valuta, datums, tijden, enzovoort.</value>
+    </data>
+    <data name="UiCulture" xml:space="preserve">
+        <value>UI-taal</value>
     </data>
     <data name="UiCultureError" xml:space="preserve">
-        <value>Invalid culture.</value>
+        <value>Ongeldige waarde.</value>
+    </data>
+    <data name="UiCultureHelp" xml:space="preserve">
+        <value>Hiermee wordt de weergegeven taal van de app bepaald.</value>
     </data>
 </root>

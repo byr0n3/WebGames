@@ -1,11 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <root>
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-        <xsd:element name="root" msdata:IsDataSet="true">
-            
-        </xsd:element>
-    </xsd:schema>
     <resheader name="resmimetype">
         <value>text/microsoft-resx</value>
     </resheader>
@@ -18,16 +11,25 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="Home" xml:space="preserve">
+    <data name="PageTitle" xml:space="preserve">
         <value>Home</value>
     </data>
+    <data name="Title" xml:space="preserve">
+        <value>Welkom bij {0}!</value>
+    </data>
+    <data name="AuthenticatedSubtitle" xml:space="preserve">
+        <value>Klik op de knop om te beginnen met spelen!</value>
+    </data>
     <data name="Play" xml:space="preserve">
-        <value>Play</value>
+        <value>Speel</value>
+    </data>
+    <data name="UnauthenticatedSubtitle" xml:space="preserve">
+        <value>Login of maak een account aan om te spelen!</value>
     </data>
     <data name="SignIn" xml:space="preserve">
-        <value>Sign in</value>
+        <value>Inloggen</value>
     </data>
     <data name="SignUp" xml:space="preserve">
-        <value>Sign up</value>
+        <value>Registeren</value>
     </data>
 </root>

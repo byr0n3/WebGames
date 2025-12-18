@@ -1,33 +1,42 @@
 @page "/sign-in"
 @using Microsoft.AspNetCore.Components.Forms
+@using WebGames.Web.Components
 @using WebGames.Web.Components.Input
-@using InputTextField = WebGames.Web.Components.Input.InputTextField
 
-<PageTitle>@(Localizer["SignIn"])</PageTitle>
+<AppPageTitle Title="@(Localizer["SignIn"])" />
 
-@if (SignedUp)
-{
-	<div>@(Localizer[nameof(SignIn.SignedUp)])</div>
-}
-
-<EditForm EditContext="@(context)" OnValidSubmit="@(SignInAsync)" FormName="@(SignIn.formName)">
+<EditForm EditContext="@(context)"
+          OnValidSubmit="@(SignInAsync)"
+          FormName="@(SignIn.formName)"
+          class="centered-container">
 	<DataAnnotationsValidator />
+
+	<h1>@(Localizer["SignIn"])</h1>
+
+	@if (SignedUp)
+	{
+		<div>@(Localizer[nameof(SignIn.SignedUp)])</div>
+	}
 
 	<InputTextField @bind-Value="@(Model.User)"
 	                Id="user"
+	                Block
 	                autocomplete="username"
 	                required />
 
 	<InputTextField @bind-Value="@(Model.Password)"
 	                Id="password"
+	                Block
 	                type="password"
 	                autocomplete="current-password"
 	                required />
 
-	<InputCheckboxField @bind-Value="@(Model.Persistent)" Id="persistent" />
+	<InputCheckboxField @bind-Value="@(Model.Persistent)" Id="persistent" Block />
 
-	<a href="/forgot-password">@(Localizer["ForgotPassword"])</a>
-	<a href="/sign-up">@(Localizer["SignUp"])</a>
+	<button type="submit" class="btn-primary btn-block">@(Localizer["SignIn"])</button>
 
-	<button type="submit" class="btn-primary">@(Localizer["SignIn"])</button>
+	<div class="w-100 d-flex flex-row flex-nowrap justify-space-between align-items-center gap-medium">
+		<a href="/forgot-password">@(Localizer["ForgotPassword"])</a>
+		<a href="/sign-up">@(Localizer["SignUp"])</a>
+	</div>
 </EditForm>

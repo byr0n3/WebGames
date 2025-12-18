@@ -17,6 +17,8 @@ namespace WebGames.Web.Components.Input
 
 		[Parameter] public string? Help { get; set; }
 
+		[Parameter] public bool Block { get; set; }
+
 		[Parameter(CaptureUnmatchedValues = true)]
 		public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 	}

@@ -50,5 +50,17 @@ namespace WebGames.Web.Pages.Authentication {
                 return ResourceManager.GetString("Update", resourceCulture);
             }
         }
+        
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        public static string ResetPassword {
+            get {
+                return ResourceManager.GetString("ResetPassword", resourceCulture);
+            }
+        }
     }
 }

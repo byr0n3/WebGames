@@ -1,0 +1,38 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Blackjack" xml:space="preserve">
+        <value>Blackjack</value>
+    </data>
+    <data name="Finished" xml:space="preserve">
+        <value>Klaar</value>
+    </data>
+    <data name="FriendsOnly" xml:space="preserve">
+        <value>Alleen vrienden</value>
+    </data>
+    <data name="Idle" xml:space="preserve">
+        <value>Wachten voor spelers</value>
+    </data>
+    <data name="Playing" xml:space="preserve">
+        <value>Bezig</value>
+    </data>
+    <data name="Private" xml:space="preserve">
+        <value>Privé</value>
+    </data>
+    <data name="Public" xml:space="preserve">
+        <value>Openbaar</value>
+    </data>
+    <data name="Solitaire" xml:space="preserve">
+        <value>Patience</value>
+    </data>
+</root>

@@ -1,9 +1,10 @@
 @using Microsoft.AspNetCore.Components.Forms
 
-<InputField Id="@(Id)" Help="@(Help)" ValueExpression="@(ValueExpression)">
+<InputField Id="@(Id)" Help="@(Help)" ValueExpression="@(ValueExpression)" Block="@(Block)">
 	<InputText Value="@(Value)"
 	           ValueChanged="@(ValueChanged)"
 	           ValueExpression="@(ValueExpression)"
 	           id="@(Id)"
+	           class="@(Block ? "w-100" : string.Empty)"
 	           @attributes="@(AdditionalAttributes)" />
 </InputField>

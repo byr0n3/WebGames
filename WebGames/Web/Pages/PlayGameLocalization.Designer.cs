@@ -14,21 +14,21 @@ namespace WebGames.Web.Pages {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class GameListLocalization {
+    public class PlayGameLocalization {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal GameListLocalization() {
+        internal PlayGameLocalization() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Pages.GameListLocalization", typeof(GameListLocalization).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Pages.PlayGameLocalization", typeof(PlayGameLocalization).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,33 +51,21 @@ namespace WebGames.Web.Pages {
             }
         }
         
-        public static string CreateGame {
+        public static string Leave {
             get {
-                return ResourceManager.GetString("CreateGame", resourceCulture);
+                return ResourceManager.GetString("Leave", resourceCulture);
             }
         }
         
-        public static string EmptyTitle {
+        public static string FinishedTitle {
             get {
-                return ResourceManager.GetString("EmptyTitle", resourceCulture);
+                return ResourceManager.GetString("FinishedTitle", resourceCulture);
             }
         }
         
-        public static string EmptySubtitle {
+        public static string NotFound {
             get {
-                return ResourceManager.GetString("EmptySubtitle", resourceCulture);
-            }
-        }
-        
-        public static string Spectate {
-            get {
-                return ResourceManager.GetString("Spectate", resourceCulture);
-            }
-        }
-        
-        public static string Join {
-            get {
-                return ResourceManager.GetString("Join", resourceCulture);
+                return ResourceManager.GetString("NotFound", resourceCulture);
             }
         }
     }

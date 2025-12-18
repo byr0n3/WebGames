@@ -1,6 +1,39 @@
 ﻿@page "/"
+@using Elegance.Icons
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.Extensions.Localization
+@using Microsoft.Extensions.Options
+@using WebGames.Extensions
+@using WebGames.Models
+@using WebGames.Web.Components
 
-<PageTitle>Home</PageTitle>
+<AppPageTitle Title="@(Localizer["PageTitle"])" />
 
-<h1>Hello, world!</h1>
-<p>Welcome to your new app.</p>
+<div class="centered-container text-center">
+	<span class="app-logo">
+		@(Icons.Joker)
+	</span>
+	<h1 class="m-0">@(Localizer.Format("Title", Options.Value.Name))</h1>
+	<AuthorizeView>
+		<Authorized>
+			<p class="m-0">@(Localizer["AuthenticatedSubtitle"])</p>
+			<a href="/play" class="btn btn-primary">@(Localizer["Play"])</a>
+		</Authorized>
+
+		<NotAuthorized>
+			<p class="m-0">@(Localizer["UnauthenticatedSubtitle"])</p>
+			<div>
+				<a href="/sign-in" class="btn btn-light">@(Localizer["SignIn"])</a>
+				<a href="/sign-up" class="btn btn-primary">@(Localizer["SignUp"])</a>
+			</div>
+		</NotAuthorized>
+	</AuthorizeView>
+</div>
+
+@code {
+
+	[Inject] public required IOptions<AppOptions> Options { get; init; }
+
+	[Inject] public required IStringLocalizer<HomeLocalization> Localizer { get; init; }
+
+}

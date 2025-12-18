@@ -1,11 +1,11 @@
-@page "/games"
+@page "/play"
 @using Elegance.Icons
 @using WebGames.Extensions
 @using WebGames.Web.Components
 @rendermode RenderModes.Interactive
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 
-<PageTitle>@(Localizer["Title"])</PageTitle>
+<AppPageTitle Title="@(Localizer["Title"])" />
 
 <h1>@(Localizer["Title"])</h1>
 

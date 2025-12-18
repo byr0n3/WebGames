@@ -1,8 +1,16 @@
 ﻿@page "/error"
+@using Microsoft.Extensions.Localization
+@using WebGames.Web.Components
 @using WebGames.Web.Layout
 @layout MainLayout
 
-<PageTitle>Error</PageTitle>
+<AppPageTitle Title="@(Localizer["Title"])" />
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<h1 class="text-danger">@(Localizer["Title"])</h1>
+<h2 class="text-danger">@(Localizer["Subtitle"])</h2>
+
+@code {
+
+	[Inject] public required IStringLocalizer<ErrorLocalization> Localizer { get; init; }
+
+}

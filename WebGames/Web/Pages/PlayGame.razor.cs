@@ -10,7 +10,7 @@ using WebGames.Services;
 
 namespace WebGames.Web.Pages
 {
-	public sealed partial class ViewGame : ComponentBase, IDisposable
+	public sealed partial class PlayGame : ComponentBase, IDisposable
 	{
 		[Inject] public required GameManager GameManager { get; init; }
 
@@ -18,7 +18,7 @@ namespace WebGames.Web.Pages
 
 		[Inject] public required AuthenticationService Authentication { get; init; }
 
-		[Inject] public required IStringLocalizer<ViewGameLocalization> Localizer { get; init; }
+		[Inject] public required IStringLocalizer<PlayGameLocalization> Localizer { get; init; }
 
 		[Parameter] public required string Code { get; init; }
 
@@ -34,7 +34,7 @@ namespace WebGames.Web.Pages
 
 			if (!this.GameManager.TryGetOrJoin(this.Code, this.player, out this.game))
 			{
-				this.Navigation.NavigateTo("/games", true);
+				this.Navigation.NavigateTo("/play", true);
 				return;
 			}
 

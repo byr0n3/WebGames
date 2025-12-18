@@ -19,6 +19,8 @@ namespace WebGames.Web.Components.Input
 
 		[Parameter] public string? Help { get; set; }
 
+		[Parameter] public bool Block { get; set; }
+
 		[Parameter] public Func<TOption, string>? GetOptionLabel { get; set; }
 
 		[Parameter] public Func<TOption, string>? GetOptionValue { get; set; }

@@ -29,12 +29,10 @@ namespace WebGames.Web.Pages.Authentication
 		private SignInModel Model { get; set; } = new();
 
 		private EditContext context = null!;
-		private ValidationMessageStore messageStore = null!;
 
 		protected override void OnInitialized()
 		{
 			this.context = new EditContext(this.Model);
-			this.messageStore = new ValidationMessageStore(this.context);
 		}
 
 		private async Task SignInAsync()
@@ -53,7 +51,8 @@ namespace WebGames.Web.Pages.Authentication
 					_                                       => nameof(AuthenticationResult.UnknownError),
 				};
 
-				this.messageStore.Add(FieldIdentifier.Create(() => this.Model.User), error);
+				var messageStore = new ValidationMessageStore(this.context);
+				messageStore.Add(FieldIdentifier.Create(() => this.Model.User), error);
 
 				this.Model.Password = null;
 

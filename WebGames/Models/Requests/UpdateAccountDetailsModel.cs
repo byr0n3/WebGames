@@ -49,7 +49,7 @@ namespace WebGames.Models.Requests
 
 			Debug.Assert(userId != default);
 
-			var localizer = context.GetRequiredService<IStringLocalizer<UpdateAccountDetailsModel>>();
+			var localizer = context.GetRequiredService<IStringLocalizer<SignUpModelLocalization>>();
 			var db = context.GetRequiredService<IDbContextFactory<WebGamesDbContext>>().CreateDbContext();
 
 			using (db)

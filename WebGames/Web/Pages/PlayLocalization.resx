@@ -18,10 +18,22 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="UsernameTaken" xml:space="preserve">
-        <value>Username is already taken.</value>
+    <data name="Title" xml:space="preserve">
+        <value>Active games</value>
     </data>
-    <data name="EmailTaken" xml:space="preserve">
-        <value>E-mail is already taken.</value>
+    <data name="CreateGame" xml:space="preserve">
+        <value>Create new game</value>
+    </data>
+    <data name="EmptyTitle" xml:space="preserve">
+        <value>There's no active games!</value>
+    </data>
+    <data name="EmptySubtitle" xml:space="preserve">
+        <value>Feel free to create one to start playing.</value>
+    </data>
+    <data name="Spectate" xml:space="preserve">
+        <value>Spectate</value>
+    </data>
+    <data name="Join" xml:space="preserve">
+        <value>Join</value>
     </data>
 </root>

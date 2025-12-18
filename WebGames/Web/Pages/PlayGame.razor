@@ -1,18 +1,19 @@
-@page "/games/{code:required}"
+@page "/play/{code:required}"
 @using Microsoft.AspNetCore.Components.Sections
 @using WebGames.Core
 @using WebGames.Core.Games
 @using WebGames.Core.Players
 @using WebGames.Extensions
+@using WebGames.Web.Components
 @using WebGames.Web.Components.Games
 @rendermode RenderModes.Interactive
 
-<PageTitle>@(Localizer.Format("Title", game?.Code ?? string.Empty))</PageTitle>
+<AppPageTitle Title="@(Localizer.Format("Title", game?.Code ?? string.Empty))" />
 
 @if (game is not null)
 {
 	<div class="game-actions">
-		<a href="/games" class="btn">@(Localizer["Leave"])</a>
+		<a href="/play" class="btn">@(Localizer["Leave"])</a>
 
 		<SectionOutlet SectionName="game-actions" />
 	</div>
@@ -37,4 +38,4 @@ else
 	<p>@(Localizer["NotFound"])</p>
 }
 
-<script src="@(Assets["Web/Pages/Games/Game.razor.js"])"></script>
+<script src="@(Assets["Web/Pages/PlayGame.razor.js"])"></script>

@@ -2,8 +2,8 @@
 @using WebGames.Utilities
 @typeparam TValue
 
-<div class="mye-medium">
-	<label for="@(Id)" class="d-block">
+<div class="mye-medium @(Block ? "w-100" : string.Empty)">
+	<label for="@(Id)" class="@(LabelBlock ? "d-block" : string.Empty)">
 		@(DisplayName.Get(ValueExpression))
 	</label>
 	@(ChildContent)

@@ -7,28 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebGames.Models.Requests {
+namespace WebGames.Web.Pages {
     using System;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class UpdateAccountModelLocalization {
+    public class PlayLocalization {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal UpdateAccountModelLocalization() {
+        internal PlayLocalization() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Models.Requests.UpdateAccountModelLocalization", typeof(UpdateAccountModelLocalization).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Pages.PlayLocalization", typeof(PlayLocalization).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -45,15 +45,39 @@ namespace WebGames.Models.Requests {
             }
         }
         
-        public static string UsernameTaken {
+        public static string Title {
             get {
-                return ResourceManager.GetString("UsernameTaken", resourceCulture);
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         
-        public static string EmailTaken {
+        public static string CreateGame {
             get {
-                return ResourceManager.GetString("EmailTaken", resourceCulture);
+                return ResourceManager.GetString("CreateGame", resourceCulture);
+            }
+        }
+        
+        public static string EmptyTitle {
+            get {
+                return ResourceManager.GetString("EmptyTitle", resourceCulture);
+            }
+        }
+        
+        public static string EmptySubtitle {
+            get {
+                return ResourceManager.GetString("EmptySubtitle", resourceCulture);
+            }
+        }
+        
+        public static string Spectate {
+            get {
+                return ResourceManager.GetString("Spectate", resourceCulture);
+            }
+        }
+        
+        public static string Join {
+            get {
+                return ResourceManager.GetString("Join", resourceCulture);
             }
         }
     }

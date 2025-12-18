@@ -56,7 +56,7 @@ namespace WebGames.Web.Components
 				_                  => throw new System.Exception($"Unknown game type: {this.Model.Type}"),
 			};
 
-			this.Navigation.NavigateTo($"/games/{game.Code}", true);
+			this.Navigation.NavigateTo($"/play/{game.Code}", true);
 		}
 	}
 }

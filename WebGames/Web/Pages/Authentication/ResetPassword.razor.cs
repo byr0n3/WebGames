@@ -29,12 +29,10 @@ namespace WebGames.Web.Pages.Authentication
 		private ResetPasswordModel Model { get; set; } = new();
 
 		private EditContext context = null!;
-		private ValidationMessageStore messageStore = null!;
 
 		protected override Task OnInitializedAsync()
 		{
 			this.context = new EditContext(this.Model);
-			this.messageStore = new ValidationMessageStore(this.context);
 
 			return this.ValidateAsync();
 		}
@@ -80,7 +78,8 @@ namespace WebGames.Web.Pages.Authentication
 				}
 				else
 				{
-					this.messageStore.Add(FieldIdentifier.Create(() => this.Model.Password), "Something went wrong.");
+					var messageStore = new ValidationMessageStore(this.context);
+					messageStore.Add(FieldIdentifier.Create(() => this.Model.Password), this.Localizer["Error"]);
 				}
 			}
 		}

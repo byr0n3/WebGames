@@ -43,13 +43,8 @@
 	padding-inline: var(--spacing-large);
 }
 
-.app-logo ::deep svg {
-	font-size: 4em;
-
-	background-color: var(--color-primary);
-	color: var(--color-body);
-
-	border-radius: var(--border-radius-large);
+.app-title {
+	font-size: 1.5rem;
 }
 
 #blazor-error-ui {

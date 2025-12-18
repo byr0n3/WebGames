@@ -14,21 +14,21 @@ namespace WebGames.Web.Pages {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ViewGameLocalization {
+    public class HomeLocalization {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ViewGameLocalization() {
+        internal HomeLocalization() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Pages.ViewGameLocalization", typeof(ViewGameLocalization).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Pages.HomeLocalization", typeof(HomeLocalization).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -45,27 +45,45 @@ namespace WebGames.Web.Pages {
             }
         }
         
+        public static string PageTitle {
+            get {
+                return ResourceManager.GetString("PageTitle", resourceCulture);
+            }
+        }
+        
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         
-        public static string Leave {
+        public static string AuthenticatedSubtitle {
             get {
-                return ResourceManager.GetString("Leave", resourceCulture);
+                return ResourceManager.GetString("AuthenticatedSubtitle", resourceCulture);
             }
         }
         
-        public static string FinishedTitle {
+        public static string Play {
             get {
-                return ResourceManager.GetString("FinishedTitle", resourceCulture);
+                return ResourceManager.GetString("Play", resourceCulture);
             }
         }
         
-        public static string NotFound {
+        public static string UnauthenticatedSubtitle {
             get {
-                return ResourceManager.GetString("NotFound", resourceCulture);
+                return ResourceManager.GetString("UnauthenticatedSubtitle", resourceCulture);
+            }
+        }
+        
+        public static string SignIn {
+            get {
+                return ResourceManager.GetString("SignIn", resourceCulture);
+            }
+        }
+        
+        public static string SignUp {
+            get {
+                return ResourceManager.GetString("SignUp", resourceCulture);
             }
         }
     }

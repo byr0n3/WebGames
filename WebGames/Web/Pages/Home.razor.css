@@ -1,0 +1,3 @@
+.app-logo ::deep > svg {
+	font-size: 4rem;
+}
