@@ -6,3 +6,5 @@ riderModule.iml
 .DS_Store
 *.user
 tests/
+.env
+db/

@@ -1,0 +1,39 @@
+services:
+  webgames:
+    image: "ghcr.io/byr0n3/webgames:latest"
+    environment:
+      - DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=0
+      - ConnectionStrings__WebGames=Host=/var/run/postgresql;Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USERNAME};Password=${POSTGRES_PASSWORD};Command Timeout=60
+      - App__Name=${APP_NAME}
+      - App__BaseUrl=${APP_BASE_URL}
+      - Smtp__Host=${SMTP_HOST}
+      - Smtp__Port=${SMTP_PORT}
+      - Smtp__Username=${SMTP_USERNAME}
+      - Smtp__Password=${SMTP_PASSWORD}
+      - Smtp__UseSsl=${SMTP_USE_SSL}
+      - Smtp__ValidateSslCertificate=${SMTP_VALIDATE_SSL_CERTIFICATE}
+      - Smtp__DefaultFrom=${SMTP_DEFAULT_FROM}
+    restart: unless-stopped
+    volumes:
+      - db-socket:/var/run/postgresql
+    ports:
+      - "${HOST:-127.0.0.1}:${PORT:-5000}:8080"
+
+  database:
+    image: postgres:18.1-alpine3.23
+    environment:
+      - POSTGRES_PORT=${POSTGRES_PORT:-65432}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    restart: unless-stopped
+    shm_size: 128mb
+    command: -p ${POSTGRES_PORT:-65432}
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USERNAME}" ]
+    volumes:
+      - ./db:/var/lib/postgresql/18/docker
+      - db-socket:/var/run/postgresql
+
+volumes:
+  db-socket:

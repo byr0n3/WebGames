@@ -38,5 +38,5 @@ jobs:
           -p:ContainerRegistry="ghcr.io" \
           -p:ContainerRepository="${{ github.repository }}" \
           -p:ContainerImageTags="\"${{ github.ref_name }};latest\"" \
-          -p:ContainerBaseImage="mcr.microsoft.com/dotnet/aspnet:10.0.1-alpine3.23-composite" \
+          -p:ContainerBaseImage="mcr.microsoft.com/dotnet/aspnet:10.0.1-noble-chiseled-composite-extra" \
           /t:PublishContainer

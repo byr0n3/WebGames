@@ -3,12 +3,6 @@
 
 A web-app for playing simple games, made in C# & Blazor.
 
-## Name suggestions
-
-- **_Virtual Funhouse_**
-- **Arcadia Nexus**
-- **Pixel Playground**
-
 ## Development
 
 ### Database setup
