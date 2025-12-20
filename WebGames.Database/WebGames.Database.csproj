@@ -3,7 +3,7 @@
 	<ItemGroup>
 		<PackageReference Include="Elegance.AspNet.Authentication" Version="$(EleganceVersion)"/>
 
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0"/>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1"/>
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0"/>
 	</ItemGroup>
 
