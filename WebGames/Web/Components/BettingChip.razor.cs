@@ -1,8 +1,8 @@
 using System.Globalization;
 using System.Threading.Tasks;
+using Elegance.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
-using WebGames.Extensions;
 
 namespace WebGames.Web.Components
 {

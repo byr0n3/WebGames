@@ -1,6 +1,6 @@
+@using Elegance.Extensions
 @using Microsoft.AspNetCore.Components.Sections
 @using WebGames.Core.Games
-@using WebGames.Extensions
 
 <SectionContent SectionName="game-actions">
 	<button type="button" @onclick="@(RestartAsync)">
@@ -79,11 +79,14 @@
 						var card = isVisible ? tableau[cardIndex] : default;
 
 						<li @key="@(cardKey)"
-						    draggable="@((IsPlaying && isVisible).Str())"
-						    @ondragstart="@(() => OnDragStart(Solitaire.StackType.Tableau, tableauIndex, cardIndex))"
-						    @ondragover:preventDefault
-						    @ondrop="@(() => OnDrop(Solitaire.StackType.Tableau, tableauIndex))">
-							<PlayingCardUi Card="@(card)" Clicked="@(() => TableauCardClicked(tableauIndex))" />
+							draggable="@((IsPlaying && isVisible).Str())"
+							@ondragstart="@(() => OnDragStart(Solitaire.StackType.Tableau, tableauIndex, cardIndex))"
+							@ondragover:preventDefault
+							@ondrop="@(() => OnDrop(Solitaire.StackType.Tableau, tableauIndex))">
+							@* Don't worry about it. *@
+							@* ReSharper disable once CSharpWarnings::CS8604 *@
+							<PlayingCardUi Card="@(card)"
+										   Clicked="@(isVisible ? () => TableauCardClicked(tableauIndex) : null)" />
 						</li>
 					}
 				}

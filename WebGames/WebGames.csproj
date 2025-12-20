@@ -11,10 +11,11 @@
 	<ItemGroup>
 		<PackageReference Include="Elegance.AspNet.Authentication" Version="$(EleganceVersion)"/>
 		<PackageReference Include="Elegance.Enums" Version="$(EleganceVersion)"/>
+		<PackageReference Include="Elegance.Extensions" Version="$(EleganceVersion)"/>
 		<PackageReference Include="Elegance.Icons" Version="$(EleganceVersion)" PrivateAssets="all"/>
 
 		<PackageReference Include="MailKitLite" Version="4.14.1"/>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>

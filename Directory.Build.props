@@ -16,17 +16,17 @@
 		<NoWarn>$(NoWarn);MA0016;MA0046;MA0048;MA0051;MA0003;CS0436;MA0038;MA0041</NoWarn>
 
 		<IsPublishable>false</IsPublishable>
-		<EleganceVersion>0.5.1</EleganceVersion>
+		<EleganceVersion>0.6.0</EleganceVersion>
 	</PropertyGroup>
 
 	<ItemGroup Condition=" '$(Configuration)' != 'Release' ">
 		<PackageReference Include="AsyncFixer" Version="1.6.0" PrivateAssets="All"/>
 		<PackageReference Include="ErrorProne.NET.CoreAnalyzers" Version="0.8.2-beta.1" PrivateAssets="all"/>
 		<PackageReference Include="ErrorProne.NET.Structs" Version="0.6.1-beta.1" PrivateAssets="all"/>
-		<PackageReference Include="Meziantou.Analyzer" Version="2.0.257" PrivateAssets="all"/>
-		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.100" PrivateAssets="all"/>
+		<PackageReference Include="Meziantou.Analyzer" Version="2.0.264" PrivateAssets="all"/>
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.101" PrivateAssets="all"/>
 		<PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15" PrivateAssets="all"/>
-		<PackageReference Include="Roslynator.Analyzers" Version="4.14.1" PrivateAssets="all"/>
+		<PackageReference Include="Roslynator.Analyzers" Version="4.15.0" PrivateAssets="all"/>
 	</ItemGroup>
 
 	<ItemGroup>
