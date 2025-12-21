@@ -16,9 +16,13 @@ services:
       - Smtp__UseSsl=${SMTP_USE_SSL}
       - Smtp__ValidateSslCertificate=${SMTP_VALIDATE_SSL_CERTIFICATE}
       - Smtp__DefaultFrom=${SMTP_DEFAULT_FROM}
+      - Upload__RootPath=${UPLOAD_ROOT_PATH}
+      - Upload__MaxProfilePictureFileSize=${UPLOAD_MAX_PROFILE_PICTURE_FILE_SIZE}
+      - Upload__MaxProfilePictureDimensions=${UPLOAD_MAX_PROFILE_PICTURE_DIMENSIONS}
     restart: unless-stopped
     volumes:
       - db-socket:/var/run/postgresql
+      - ./uploads:/uploads
     ports:
       - "${HOST:-127.0.0.1}:${PORT:-5000}:8080"
 

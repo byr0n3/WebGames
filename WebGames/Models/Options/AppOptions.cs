@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Options;
 
-namespace WebGames.Models
+namespace WebGames.Models.Options
 {
 	public sealed class AppOptions : IOptions<AppOptions>
 	{

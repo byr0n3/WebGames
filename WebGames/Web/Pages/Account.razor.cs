@@ -90,10 +90,11 @@ namespace WebGames.Web.Pages
 
 				var saved = await db.SaveChangesAsync();
 
-				Debug.Assert(saved == 1);
-
-				// @todo `Persistent` from claim
-				await this.Authentication.SignInAsync(user, true);
+				if (saved == 1)
+				{
+					// @todo `Persistent` from claim
+					await this.Authentication.SignInAsync(user, true);
+				}
 
 				this.success = true;
 			}

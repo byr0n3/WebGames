@@ -6,7 +6,9 @@
 
 <div class="account">
 	<div class="user">
-		<span class="user-avatar">@(Icons.User)</span>
+		<ProfilePicture UserId="@(User.GetClaimValue<int>(ClaimType.Id))"
+		                Username="@(User.GetRequiredClaimValue(ClaimType.Username))"
+		                class="user-avatar" />
 		<NavLink href="/account" class="account-link">
 			@(User.GetRequiredClaimValue(ClaimType.Username))
 		</NavLink>

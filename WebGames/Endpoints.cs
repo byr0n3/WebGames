@@ -1,10 +1,13 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using WebGames.Database;
 using WebGames.Database.Models;
+using WebGames.Models.Options;
 
 namespace WebGames
 {
@@ -36,6 +39,22 @@ namespace WebGames
 					context.Response.StatusCode = StatusCodes.Status404NotFound;
 				}
 			}
+		}
+
+		public static Task GetProfilePictureAsync(HttpContext context, int userId, IOptions<UploadOptions> uploadOptions)
+		{
+			// @todo Validate user's profile picture visibility setting (public, friends-only, private)
+
+			var path = uploadOptions.Value.GetProfilePicturePath(userId);
+
+			// @todo Return default
+			if (!Path.Exists(path))
+			{
+				context.Response.StatusCode = StatusCodes.Status404NotFound;
+				return Task.CompletedTask;
+			}
+
+			return context.Response.SendFileAsync(path, context.RequestAborted);
 		}
 	}
 }

@@ -488,7 +488,8 @@ input[type="checkbox"] {
 }
 
 button,
-.btn {
+.btn,
+input::file-selector-button {
 	--bg: var(--btn-background-color);
 	--fg: var(--btn-color);
 
@@ -768,6 +769,22 @@ button.badge:is(:hover, :focus) {
 	color: var(--color-body);
 
 	border-radius: var(--border-radius-large);
+}
+
+.user-avatar {
+	--size: 2em;
+
+	width: var(--size);
+	height: var(--size);
+
+	object-fit: cover;
+
+	margin: 0;
+	padding: var(--spacing-tiny);
+
+	border-radius: var(--border-radius-circle);
+
+	background-color: hsl(0, 0%, 30%);
 }
 
 .blazor-error-boundary {

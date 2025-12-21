@@ -15,6 +15,9 @@
 		<PackageReference Include="Elegance.Icons" Version="$(EleganceVersion)" PrivateAssets="all"/>
 
 		<PackageReference Include="MailKitLite" Version="4.14.1"/>
+
+		<PackageReference Include="SkiaSharp" Version="3.119.2-preview.1"/>
+
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

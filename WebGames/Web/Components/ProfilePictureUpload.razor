@@ -1,0 +1,11 @@
+@using Microsoft.AspNetCore.Components.Forms
+@rendermode RenderModes.Interactive
+
+@if (error is not null)
+{
+	<div class="alert alert-danger" role="alert">
+		@(error)
+	</div>
+}
+
+<InputFile OnChange="@(OnUploadAsync)" accept="image/*" />

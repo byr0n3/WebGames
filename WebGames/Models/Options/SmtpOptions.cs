@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Microsoft.Extensions.Options;
 
-namespace WebGames.Models
+namespace WebGames.Models.Options
 {
 	public sealed class SmtpOptions : IOptions<SmtpOptions>, ICredentials
 	{

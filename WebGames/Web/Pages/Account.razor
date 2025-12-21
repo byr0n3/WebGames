@@ -1,5 +1,7 @@
 @page "/account"
 @using Microsoft.AspNetCore.Components.Forms
+@using WebGames.Extensions
+@using WebGames.Models
 @using WebGames.Web.Components
 @using WebGames.Web.Components.Input
 
@@ -9,8 +11,25 @@
 
 @if (success)
 {
-	<div>@(Localizer["Saved"])</div>
+	<div class="alert alert-success" role="alert">
+		@(Localizer["Saved"])
+	</div>
 }
+
+<Card CardClass="mye-medium w-50">
+	<HeaderContent>
+		<h2>@(Localizer["ProfilePicture"])</h2>
+	</HeaderContent>
+
+	<ChildContent>
+		<ProfilePicture UserId="@(User.GetClaimValue<int>(ClaimType.Id))"
+		                Username="@(User.GetRequiredClaimValue(ClaimType.Username))"
+		                class="user-avatar"
+		                style="--size: 5em; display: inline-block" />
+
+		<ProfilePictureUpload />
+	</ChildContent>
+</Card>
 
 <div class="container d-flex justify-space-between align-start gap-medium">
 	<Card CardClass="flex-1 w-100">
@@ -75,14 +94,12 @@
 				<InputTextField @bind-Value="@(DetailsModel.Password)"
 				                Id="password"
 				                type="password"
-				                autocomplete="new-password"
-				                required />
+				                autocomplete="new-password" />
 
 				<InputTextField @bind-Value="@(DetailsModel.PasswordConfirmation)"
 				                Id="password-confirmation"
 				                type="password"
-				                autocomplete="new-password"
-				                required />
+				                autocomplete="new-password" />
 			</EditForm>
 		</ChildContent>
 

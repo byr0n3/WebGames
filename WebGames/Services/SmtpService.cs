@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using WebGames.Models;
+using WebGames.Models.Options;
 
 namespace WebGames.Services
 {

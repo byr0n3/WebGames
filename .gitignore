@@ -8,3 +8,5 @@ riderModule.iml
 tests/
 .env
 db/
+WebGames/uploads/**/*
+!WebGames/uploads/.gitkeep

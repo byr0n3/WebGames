@@ -1,0 +1,32 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Success" xml:space="preserve">
+        <value>Je profiel foto is geupload!</value>
+    </data>
+    <data name="ErrorFileSize" xml:space="preserve">
+        <value>Bestand is te groot.</value>
+    </data>
+    <data name="ErrorFileCount" xml:space="preserve">
+        <value>Maximaal 1 bestand toegestaan.</value>
+    </data>
+    <data name="ErrorContentType" xml:space="preserve">
+        <value>Bestand is geen foto.</value>
+    </data>
+    <data name="ErrorConvertImage" xml:space="preserve">
+        <value>Er ging iets mis tijdens het omzetten van de foto.</value>
+    </data>
+    <data name="ErrorLoadImage" xml:space="preserve">
+        <value>Er ging iets mis tijdens het laden van de foto.</value>
+    </data>
+</root>

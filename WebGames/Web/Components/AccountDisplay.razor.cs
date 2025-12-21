@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
+using WebGames.Extensions;
+using WebGames.Models;
 using WebGames.Services;
 
 namespace WebGames.Web.Components

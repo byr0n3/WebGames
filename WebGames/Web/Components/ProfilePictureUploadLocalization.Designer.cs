@@ -7,28 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebGames.Web.Pages {
+namespace WebGames.Web.Components {
     using System;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AccountLocalization {
+    public class ProfilePictureUploadLocalization {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AccountLocalization() {
+        internal ProfilePictureUploadLocalization() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Pages.AccountLocalization", typeof(AccountLocalization).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Components.ProfilePictureUploadLocalization", typeof(ProfilePictureUploadLocalization).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -45,45 +45,39 @@ namespace WebGames.Web.Pages {
             }
         }
         
-        public static string Save {
+        public static string Success {
             get {
-                return ResourceManager.GetString("Save", resourceCulture);
+                return ResourceManager.GetString("Success", resourceCulture);
             }
         }
         
-        public static string Saved {
+        public static string ErrorFileCount {
             get {
-                return ResourceManager.GetString("Saved", resourceCulture);
+                return ResourceManager.GetString("ErrorFileCount", resourceCulture);
             }
         }
         
-        public static string Failed {
+        public static string ErrorContentType {
             get {
-                return ResourceManager.GetString("Failed", resourceCulture);
+                return ResourceManager.GetString("ErrorContentType", resourceCulture);
             }
         }
         
-        public static string Title {
+        public static string ErrorFileSize {
             get {
-                return ResourceManager.GetString("Title", resourceCulture);
+                return ResourceManager.GetString("ErrorFileSize", resourceCulture);
             }
         }
         
-        public static string Settings {
+        public static string ErrorLoadImage {
             get {
-                return ResourceManager.GetString("Settings", resourceCulture);
+                return ResourceManager.GetString("ErrorLoadImage", resourceCulture);
             }
         }
         
-        public static string Details {
+        public static string ErrorConvertImage {
             get {
-                return ResourceManager.GetString("Details", resourceCulture);
-            }
-        }
-        
-        public static string ProfilePicture {
-            get {
-                return ResourceManager.GetString("ProfilePicture", resourceCulture);
+                return ResourceManager.GetString("ErrorConvertImage", resourceCulture);
             }
         }
     }

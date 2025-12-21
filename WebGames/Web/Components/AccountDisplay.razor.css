@@ -17,16 +17,6 @@
 	gap: var(--spacing-medium);
 }
 
-.user-avatar {
-	font-size: 1em;
-
-	padding: var(--spacing-small);
-
-	border-radius: var(--border-radius);
-
-	background-color: hsl(0, 0%, 30%);
-}
-
 ::deep .account-link {
 	flex: 1;
 

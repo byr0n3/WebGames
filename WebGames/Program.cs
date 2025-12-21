@@ -15,7 +15,7 @@ using WebGames.Core;
 using WebGames.Database;
 using WebGames.Database.Extensions;
 using WebGames.Database.Models;
-using WebGames.Models;
+using WebGames.Models.Options;
 using WebGames.Services;
 using WebGames.Web;
 using WebGames.Web.Pages.Authentication;
@@ -69,6 +69,7 @@ app.MapRazorComponents<App>()
    .AddInteractiveServerRenderMode();
 
 app.MapGet("/activate-account/{token:guid}", Endpoints.ActivateAsync);
+app.MapGet("/profile-picture/{userId:int}", Endpoints.GetProfilePictureAsync);
 
 await app.RunAsync().ConfigureAwait(false);
 
@@ -130,6 +131,17 @@ static void ConfigureServices(IServiceCollection services, ConfigurationManager 
 	services.AddSingleton<SmtpService>();
 
 	services.AddSingleton<GameManager>();
+
+	services.Configure<UploadOptions>((options) =>
+	{
+		var upload = configuration.GetSection("Upload");
+
+		options.RootPath = upload[nameof(options.RootPath)] ?? options.RootPath;
+		options.MaxProfilePictureFileSize =
+			upload.GetValue<int?>(nameof(options.MaxProfilePictureFileSize)) ?? options.MaxProfilePictureFileSize;
+		options.MaxProfilePictureDimensions =
+			upload.GetValue<int?>(nameof(options.MaxProfilePictureDimensions)) ?? options.MaxProfilePictureDimensions;
+	});
 }
 
 // Function is only used in prod.

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components.Sections;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
-using WebGames.Models;
+using WebGames.Models.Options;
 
 namespace WebGames.Web.Components
 {
