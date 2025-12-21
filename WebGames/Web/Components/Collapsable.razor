@@ -5,7 +5,8 @@
 	<span class="collapsable-chevron" data-chevron>@(Icons.ChevronUp)</span>
 </button>
 
-<div id="@(Id)"
-     class="collapsable-content @(DefaultVisible ? "visible" : string.Empty) @(ContentClass)">
-	@(ChildContent)
+<div class="collapsable-container @(ContentClass)">
+	<div id="@(Id)" class="collapsable-content @(DefaultVisible ? "visible" : string.Empty)">
+		@(ChildContent)
+	</div>
 </div>

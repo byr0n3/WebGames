@@ -1,17 +1,16 @@
-.collapsable-content {
-	/* @todo Breaks animation/transition but causes layout shift otherwise */
-	display: none;
+.collapsable-container {
+	overflow: hidden;
+}
 
-	/* @todo Height of content */
-	margin-block-start: -25%;
-	transition: margin-block-start 250ms var(--animation-curve);
+.collapsable-content {
+	margin-top: -100%;
+	transition: margin-top var(--animation-duration-longer) var(--animation-curve);
 }
 
 .collapsable-content.visible {
-	display: block;
-	margin-block-start: 0;
+	margin-top: 0;
 }
 
 .collapsable-chevron {
-	transition: rotate 250ms var(--animation-curve);
+	transition: rotate var(--animation-duration-longer) var(--animation-curve);
 }

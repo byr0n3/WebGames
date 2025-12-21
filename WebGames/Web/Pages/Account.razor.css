@@ -1,0 +1,9 @@
+.container {
+	flex-direction: column;
+}
+
+@media (min-width: 48em) {
+	.container {
+		flex-flow: row nowrap;
+	}
+}

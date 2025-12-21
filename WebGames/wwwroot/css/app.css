@@ -78,6 +78,7 @@
 	--animation-duration-short: 80ms;
 	--animation-duration: 120ms;
 	--animation-duration-long: 160ms;
+	--animation-duration-longer: 200ms;
 	--animation-curve: cubic-bezier(0.33, 1, 0.66, 1);
 }
 
@@ -761,10 +762,10 @@ button.badge:is(:hover, :focus) {
 	justify-content: center;
 	align-items: center;
 	gap: var(--spacing-medium);
-	
+
 	height: 100%;
 	width: fit-content;
-	
+
 	margin-inline: auto;
 }
 

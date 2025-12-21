@@ -28,7 +28,6 @@ window.Collapsable = {
 			update(!content.classList.contains('visible'));
 		});
 
-		// @todo Animate
 		function update(visible) {
 			if (visible) {
 				content.classList.add('visible');
@@ -36,7 +35,6 @@ window.Collapsable = {
 				content.classList.remove('visible');
 			}
 
-			// content.hidden = !visible;
 			chevron.style.rotate = visible ? '180deg' : '0deg';
 		}
 	},

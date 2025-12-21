@@ -1,3 +1,7 @@
+::deep .form-content {
+	background-color: var(--background-color-body);
+}
+
 .empty {
 	position: absolute;
 	inset-block-end: 50%;

@@ -1,17 +1,37 @@
 ﻿@using Elegance.Icons
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.Extensions.Options
 @using WebGames.Models
 @using WebGames.Web.Components
 @inherits LayoutComponentBase
 
-<div class="container">
-	<div class="sidebar">
-		<div class="sidebar-header d-flex flex-row flex-nowrap align-center gap-medium">
-			<span class="app-logo">
-				@(Icons.Joker)
-			</span>
-			<span class="app-title">@(AppOptions.Value.Name)</span>
+<div class="navbar flex-row flex-nowrap justify-space-between align-center gap-medium">
+	<NavLink Match="@(NavLinkMatch.All)" 
+			 href="/" 
+			 class="d-flex flex-row flex-nowrap align-center gap-medium home-link">
+		<span class="app-logo">
+			@(Icons.Joker)
+		</span>
+		<span class="app-title">@(AppOptions.Value.Name)</span>
+	</NavLink>
+
+	<button id="menu-toggle" type="button" class="btn-lg btn-icon" aria-label="Show navigation drawer">
+		@(Icons.Menu2)
+	</button>
+</div>
+
+<div class="container d-flex flex-row flex-nowrap align-start">
+	<div id="sidebar" class="sidebar">
+		<div class="sidebar-header">
+			<NavLink Match="@(NavLinkMatch.All)"
+			         href="/"
+			         class="d-flex flex-row flex-nowrap align-center gap-medium home-link">
+				<span class="app-logo">
+					@(Icons.Joker)
+				</span>
+				<span class="app-title">@(AppOptions.Value.Name)</span>
+			</NavLink>
 		</div>
 
 		<Navigation />
@@ -33,6 +53,8 @@
 	<a href="." class="reload">Reload</a>
 	<span class="dismiss">🗙</span>
 </div>
+
+<script src="@(Assets["Web/Layout/MainLayout.razor.js"])"></script>
 
 @code {
 
