@@ -35,5 +35,10 @@ namespace WebGames.Core
 		/// </list>
 		/// </remarks>
 		public bool AutoStart { get; init; }
+
+		/// <summary>
+		/// Should players be allowed to spectate the game?
+		/// </summary>
+		public bool AllowSpectators { get; init; }
 	}
 }

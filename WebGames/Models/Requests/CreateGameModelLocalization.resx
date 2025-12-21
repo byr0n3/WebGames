@@ -24,4 +24,16 @@
     <data name="Visibility" xml:space="preserve">
         <value>Visibility</value>
     </data>
+    <data name="AllowSpectators" xml:space="preserve">
+        <value>Allow spectators?</value>
+    </data>
+    <data name="MinPlayers" xml:space="preserve">
+        <value>Minimum players</value>
+    </data>
+    <data name="MaxPlayers" xml:space="preserve">
+        <value>Maximum players</value>
+    </data>
+    <data name="AutoStart" xml:space="preserve">
+        <value>Auto start?</value>
+    </data>
 </root>

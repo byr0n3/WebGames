@@ -288,25 +288,17 @@ table {
 	color: inherit;
 }
 
+input,
 select {
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	appearance: none;
-
-	padding-inline: var(--spacing-medium) calc(var(--spacing-medium) + var(--spacing-larger));
-
-	background-color: var(--background-color-secondary);
-	color: var(--color-body);
-
-	border: var(--border-width-small) solid var(--border-color-body);
-}
-
-input {
 	--outline-offset: 0;
 
 	--bg: var(--input-background);
 	--fg: var(--color-body);
 	--border: var(--border-color-body);
+
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
 
 	display: block;
 	min-inline-size: 5ch;
@@ -695,9 +687,9 @@ svg {
 	}
 
 	&.alert-glowing {
-		-webkit-box-shadow: 0 0 2em 0.5em var(--bg);
-		-moz-box-shadow: 0 0 2em 0.5em var(--bg);
-		box-shadow: 0 0 2em 0.5em var(--bg);
+		-webkit-box-shadow: 0 0 var(--spacing-huge) var(--spacing-medium) var(--bg);
+		-moz-box-shadow: 0 0 var(--spacing-huge) var(--spacing-medium) var(--bg);
+		box-shadow: 0 0 var(--spacing-huge) var(--spacing-medium) var(--bg);
 	}
 }
 

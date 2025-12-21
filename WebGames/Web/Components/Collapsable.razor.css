@@ -3,7 +3,9 @@
 }
 
 .collapsable-content {
-	margin-top: -100%;
+	--content-height: 100%;
+
+	margin-top: calc(var(--content-height) * -1);
 	transition: margin-top var(--animation-duration-longer) var(--animation-curve);
 }
 

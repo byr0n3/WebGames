@@ -1,4 +1,5 @@
 @page "/play/{code:required}"
+@page "/play/{code:required}/spectate"
 @using Microsoft.AspNetCore.Components.Sections
 @using WebGames.Core
 @using WebGames.Core.Games
@@ -10,15 +11,22 @@
 
 <AppPageTitle Title="@(Localizer.Format("Title", game?.Code ?? string.Empty))" />
 
-@if (game is not null)
+@if (game is null)
+{
+	<p>@(Localizer["NotFound"])</p>
+}
+else
 {
 	<div class="game-actions">
-		<a href="/play" class="btn">@(Localizer["Leave"])</a>
+		<button type="button" @onclick="@(LeaveAsync)">@(Localizer["Leave"])</button>
 
-		<SectionOutlet SectionName="game-actions" />
+		@if (!spectating)
+		{
+			<SectionOutlet SectionName="game-actions" />
+		}
 	</div>
 
-	@if (game.State == GameState.Finished)
+	if (game.State == GameState.Finished)
 	{
 		<div class="alert alert-success alert-glowing game-finished-alert" role="alert">
 			<h4>@(Localizer["FinishedTitle"])</h4>
@@ -28,14 +36,10 @@
 
 	switch (game)
 	{
-		case Solitaire solitaire when (player is SolitairePlayer solitairePlayer):
-			<SolitaireUi Game="@(solitaire)" Player="@(solitairePlayer)" />
+		case Solitaire solitaire:
+			<SolitaireUi Game="@(solitaire)" Player="@(player as SolitairePlayer)" />
 			break;
 	}
-}
-else
-{
-	<p>@(Localizer["NotFound"])</p>
 }
 
 <script src="@(Assets["Web/Pages/PlayGame.razor.js"])"></script>

@@ -22,6 +22,10 @@ window.Collapsable = {
 		const content = document.getElementById(id);
 		const chevron = trigger.querySelector(`[${DATA_CHEVRON}]`);
 
+		const contentHeight = Math.ceil(content.getBoundingClientRect().height);
+
+		content.style.setProperty('--content-height', `${contentHeight}px`);
+
 		update(visible);
 
 		trigger.addEventListener('click', function () {

@@ -19,10 +19,13 @@ namespace WebGames.Web.Components.Games
 
 		[Parameter] [EditorRequired] public required Solitaire Game { get; set; }
 
-		[Parameter] [EditorRequired] public required SolitairePlayer Player { get; set; }
+		[Parameter] public SolitairePlayer? Player { get; set; }
+
+		private bool Spectating =>
+			this.Player is null;
 
 		private bool IsPlaying =>
-			this.Game.State == GameState.Playing;
+			(this.Game.State == GameState.Playing) && !this.Spectating;
 
 		private Solitaire.StackType draggedType;
 		private int draggedIndex;
@@ -70,6 +73,11 @@ namespace WebGames.Web.Components.Games
 
 		private async Task RestartAsync()
 		{
+			if (this.Spectating)
+			{
+				return;
+			}
+
 			var confirmed = await this.Js.ConfirmAsync("Are you sure you want to restart the game?");
 
 			if (confirmed)
@@ -108,9 +116,9 @@ namespace WebGames.Web.Components.Games
 			this.Game.Move(Solitaire.StackType.Talon, default, default, Solitaire.StackType.Foundation, default);
 		}
 
-		private void TableauCardClicked(int tableauIndex)
+		private void TableauCardClicked(int tableauIndex, int cardIndex)
 		{
-			if (!this.IsPlaying)
+			if (!this.IsPlaying || (cardIndex < this.Game.TableauVisibility[tableauIndex]))
 			{
 				return;
 			}

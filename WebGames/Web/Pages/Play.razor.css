@@ -1,5 +1,6 @@
 ::deep .form-content {
 	background-color: var(--background-color-body);
+	z-index: 1;
 }
 
 .empty {
@@ -9,7 +10,17 @@
 
 	text-align: center;
 
+	-webkit-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	
 	z-index: -1;
+}
+
+@media (min-width: 48em) {
+	.empty {
+		z-index: 0;
+	}
 }
 
 .empty ::deep > svg {

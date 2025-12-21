@@ -1,0 +1,12 @@
+@using Microsoft.AspNetCore.Components.Forms
+@typeparam TValue
+
+<InputField Id="@(Id)" Help="@(Help)" ValueExpression="@(ValueExpression)" Block="@(Block)">
+	<InputNumber TValue="@(TValue)"
+	             Value="@(Value)"
+	             ValueChanged="@(ValueChanged)"
+	             ValueExpression="@(ValueExpression)"
+	             id="@(Id)"
+	             class="@(Block ? "w-100" : string.Empty)"
+	             @attributes="@(AdditionalAttributes)" />
+</InputField>

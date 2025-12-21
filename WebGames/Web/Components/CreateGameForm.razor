@@ -11,8 +11,9 @@
 	<InputRadioGroupField TValue="@(GameType?)"
 	                      TOption="@(GameType)"
 	                      @bind-Value="@(Model.Type)"
+	                      @bind-Value:after="@(OnGameTypeChange)"
 	                      Options="@(Enum.GetValues<GameType>())"
-	                      Id="type">
+	                      Id="@(nameof(Model.Type))">
 		<OptionContent Context="type">
 			<div class="game-type-option" tabindex="0">
 				<InputRadio Value="@(type)" />
@@ -27,7 +28,21 @@
 	                  @bind-Value="@(Model.Visibility)"
 	                  Options="@(Enum.GetValues<GameVisibility>())"
 	                  GetOptionLabel="@((type) => GameLocalizer[type.ToString()])"
-	                  Id="visibility" />
+	                  Id="@(nameof(Model.Visibility))" />
+
+	<InputNumberField @bind-Value="@(Model.MinPlayers)"
+	                  Id="@(nameof(Model.MinPlayers))"
+	                  min="1"
+	                  max="99" />
+
+	<InputNumberField @bind-Value="@(Model.MaxPlayers)"
+	                  Id="@(nameof(Model.MaxPlayers))"
+	                  min="1"
+	                  max="99" />
+
+	<InputCheckboxField @bind-Value="@(Model.AutoStart)" Id="@(nameof(Model.AutoStart))" />
+
+	<InputCheckboxField @bind-Value="@(Model.AllowSpectators)" Id="@(nameof(Model.AllowSpectators))" />
 
 	<button type="submit" class="btn-primary">
 		@(Localizer["Create"])

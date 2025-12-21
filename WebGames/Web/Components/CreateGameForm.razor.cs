@@ -32,16 +32,13 @@ namespace WebGames.Web.Components
 		{
 			Debug.Assert(this.Authentication.User is not null);
 
-			var defaultConfiguration = (this.Model.Type) switch
+			var configuration = new GameConfiguration
 			{
-				GameType.Solitaire => Solitaire.DefaultConfiguration,
-				_                  => throw new System.Exception($"Unknown game type: {this.Model.Type}"),
-			};
-
-			// @todo More configurable options
-			var configuration = defaultConfiguration with
-			{
+				MinPlayers = this.Model.MinPlayers,
+				MaxPlayers = this.Model.MaxPlayers,
 				Visibility = this.Model.Visibility,
+				AutoStart = this.Model.AutoStart,
+				AllowSpectators = this.Model.AllowSpectators,
 			};
 
 			var player = (this.Model.Type) switch
@@ -57,6 +54,19 @@ namespace WebGames.Web.Components
 			};
 
 			this.Navigation.NavigateTo($"/play/{game.Code}", true);
+		}
+
+		private void OnGameTypeChange()
+		{
+			var defaultConfiguration = (this.Model.Type) switch
+			{
+				GameType.Solitaire => Solitaire.DefaultConfiguration,
+				_                  => default,
+			};
+
+			this.Model.MinPlayers = defaultConfiguration.MinPlayers;
+			this.Model.MaxPlayers = defaultConfiguration.MaxPlayers;
+			this.Model.AutoStart = defaultConfiguration.AutoStart;
 		}
 	}
 }

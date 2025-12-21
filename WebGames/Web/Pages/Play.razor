@@ -46,14 +46,14 @@
 					<p>@(GameLocalizer[game.GetType().Name])</p>
 					<p>@(GameLocalizer[game.State.ToString()])</p>
 					<div class="game-actions">
-						<button type="button" disabled="@(true)">
+						<a href="@(game.Configuration.AllowSpectators ? $"/play/{game.Code}/spectate" : string.Empty)"
+						   class="btn @(game.Configuration.AllowSpectators ? string.Empty : "btn-disabled")">
 							@(Localizer["Spectate"])
-						</button>
-						<button type="button"
-						        disabled="@(!game.Joinable)"
-						        @onclick="@(() => JoinGame(game))">
+						</a>
+						<a href="@(game.Joinable ? $"/play/{game.Code}" : string.Empty)"
+						   class="btn @(game.Joinable ? string.Empty : "btn-disabled")">
 							@(Localizer["Join"])
-						</button>
+						</a>
 					</div>
 				</div>
 			}

@@ -79,14 +79,12 @@
 						var card = isVisible ? tableau[cardIndex] : default;
 
 						<li @key="@(cardKey)"
-							draggable="@((IsPlaying && isVisible).Str())"
-							@ondragstart="@(() => OnDragStart(Solitaire.StackType.Tableau, tableauIndex, cardIndex))"
-							@ondragover:preventDefault
-							@ondrop="@(() => OnDrop(Solitaire.StackType.Tableau, tableauIndex))">
-							@* Don't worry about it. *@
-							@* ReSharper disable once CSharpWarnings::CS8604 *@
+						    draggable="@((IsPlaying && isVisible).Str())"
+						    @ondragstart="@(() => OnDragStart(Solitaire.StackType.Tableau, tableauIndex, cardIndex))"
+						    @ondragover:preventDefault
+						    @ondrop="@(() => OnDrop(Solitaire.StackType.Tableau, tableauIndex))">
 							<PlayingCardUi Card="@(card)"
-										   Clicked="@(isVisible ? () => TableauCardClicked(tableauIndex) : null)" />
+							               Clicked="@(() => TableauCardClicked(tableauIndex, cardIndex))" />
 						</li>
 					}
 				}

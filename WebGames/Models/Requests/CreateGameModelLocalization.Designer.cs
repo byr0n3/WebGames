@@ -56,5 +56,29 @@ namespace WebGames.Models.Requests {
                 return ResourceManager.GetString("Visibility", resourceCulture);
             }
         }
+        
+        public static string AllowSpectators {
+            get {
+                return ResourceManager.GetString("AllowSpectators", resourceCulture);
+            }
+        }
+        
+        public static string MinPlayers {
+            get {
+                return ResourceManager.GetString("MinPlayers", resourceCulture);
+            }
+        }
+        
+        public static string MaxPlayers {
+            get {
+                return ResourceManager.GetString("MaxPlayers", resourceCulture);
+            }
+        }
+        
+        public static string AutoStart {
+            get {
+                return ResourceManager.GetString("AutoStart", resourceCulture);
+            }
+        }
     }
 }

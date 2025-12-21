@@ -78,6 +78,24 @@ namespace WebGames.Core
 		}
 
 		/// <summary>
+		/// Attempts to locate a game by its unique code.
+		/// </summary>
+		/// <param name="code">The unique identifier of the game to retrieve.</param>
+		/// <param name="game">
+		/// When the method returns <see langword="true"/>, contains the matching <see cref="IGame"/> instance;
+		/// otherwise, set to <see langword="null"/>.
+		/// </param>
+		/// <returns>
+		/// <see langword="true"/> if a matching game was found, otherwise, <see langword="false"/>.
+		/// </returns>
+		public bool TryGet(string code, [NotNullWhen(true)] out IGame? game)
+		{
+			game = this.FindGame(code);
+
+			return game is not null;
+		}
+
+		/// <summary>
 		/// Attempts to locate a game by its unique code and ensure the specified player can join it.
 		/// If the game is found, is joinable, and the player is either already a participant or can be added,
 		/// the method will optionally add the player to the game.
@@ -92,12 +110,8 @@ namespace WebGames.Core
 		/// <see langword="true"/> if a matching game was found, is joinable, and the player is (or has become) a participant;
 		/// otherwise, <see langword="false"/>.
 		/// </returns>
-		public bool TryGetOrJoin(string code, IPlayer player, [NotNullWhen(true)] out IGame? game)
-		{
-			game = this.FindGame(code);
-
-			return game is not null && this.TryGetOrJoin(game, player);
-		}
+		public bool TryJoin(string code, IPlayer player, [NotNullWhen(true)] out IGame? game) =>
+			this.TryGet(code, out game) && this.TryJoin(game, player);
 
 		/// <summary>
 		/// Attempts to locate a game by its unique code and ensure the specified player can join it.
@@ -110,7 +124,7 @@ namespace WebGames.Core
 		/// <see langword="true"/> if a matching game was found, is joinable, and the player is (or has become) a participant;
 		/// otherwise, <see langword="false"/>.
 		/// </returns>
-		public bool TryGetOrJoin(IGame game, IPlayer player)
+		public bool TryJoin(IGame game, IPlayer player)
 		{
 			var joinable = game.Joinable;
 			var joined = game.ContainsPlayer(player);

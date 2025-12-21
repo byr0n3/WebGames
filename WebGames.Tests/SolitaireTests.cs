@@ -99,7 +99,7 @@ namespace WebGames.Tests
 			var (_, game) = SolitaireTests.Create(gameManager, Solitaire.DefaultConfiguration with { MaxPlayers = 2, AutoStart = false });
 
 			// Trying to join a game using the wrong player type should throw an exception.
-			Assert.Throws<PlayerTypeException>(() => gameManager.TryGetOrJoin(game, invalidPlayer));
+			Assert.Throws<PlayerTypeException>(() => gameManager.TryJoin(game, invalidPlayer));
 
 			// Trying to leave using the wrong player type should throw an exception.
 			Assert.Throws<PlayerTypeException>(() => gameManager.Leave(game, invalidPlayer));

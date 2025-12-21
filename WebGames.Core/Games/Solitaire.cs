@@ -35,6 +35,7 @@ namespace WebGames.Core.Games
 			MinPlayers = 1,
 			MaxPlayers = 1,
 			AutoStart = true,
+			AllowSpectators = true,
 		};
 
 		/// <summary>
@@ -233,17 +234,12 @@ namespace WebGames.Core.Games
 
 			if (srcType == StackType.Tableau)
 			{
-				// If we're moving a stack of cards from one tableau to another,
-				// we need to take into account what card from the stack was moved.
-				if (dstType == StackType.Tableau)
-				{
-					srcCardIndex = int.Clamp(srcCardIndex, this.TableauVisibility[srcIndex], src.Count - 1);
-				}
-				// Otherwise, the card we're moving is the top-most visible card.
-				else
-				{
-					srcCardIndex = this.TableauVisibility[srcIndex];
-				}
+				srcCardIndex = dstType == StackType.Tableau
+					// If we're moving a stack of cards from one tableau to another,
+					// we need to take into account what card from the stack was moved.
+					? int.Clamp(srcCardIndex, this.TableauVisibility[srcIndex], src.Count - 1)
+					// Otherwise, the card we're moving is the top-most visible card.
+					: this.TableauVisibility[srcIndex];
 			}
 
 			var srcCard = (src.Count != 0)

@@ -50,5 +50,11 @@ namespace WebGames.Web.Components {
                 return ResourceManager.GetString("Create", resourceCulture);
             }
         }
+        
+        public static string AllowSpectators {
+            get {
+                return ResourceManager.GetString("AllowSpectators", resourceCulture);
+            }
+        }
     }
 }
