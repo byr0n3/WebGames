@@ -139,9 +139,11 @@ static void ConfigureServices(IServiceCollection services, ConfigurationManager 
 		options.RootPath = upload[nameof(options.RootPath)] ?? options.RootPath;
 		options.MaxProfilePictureFileSize =
 			upload.GetValue<int?>(nameof(options.MaxProfilePictureFileSize)) ?? options.MaxProfilePictureFileSize;
-		options.MaxProfilePictureDimensions =
-			upload.GetValue<int?>(nameof(options.MaxProfilePictureDimensions)) ?? options.MaxProfilePictureDimensions;
+		options.MaxProfilePictureDimensionSize =
+			upload.GetValue<int?>(nameof(options.MaxProfilePictureDimensionSize)) ?? options.MaxProfilePictureDimensionSize;
 	});
+
+	services.AddSingleton<UploadService>();
 }
 
 // Function is only used in prod.

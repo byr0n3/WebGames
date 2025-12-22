@@ -8,5 +8,5 @@ riderModule.iml
 tests/
 .env
 db/
-WebGames/uploads/**/*
-!WebGames/uploads/.gitkeep
+WebGames/uploads/profile-pictures/*.webp
+!WebGames/uploads/profile-pictures/default.webp

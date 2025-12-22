@@ -18,7 +18,7 @@ services:
       - Smtp__DefaultFrom=${SMTP_DEFAULT_FROM}
       - Upload__RootPath=${UPLOAD_ROOT_PATH}
       - Upload__MaxProfilePictureFileSize=${UPLOAD_MAX_PROFILE_PICTURE_FILE_SIZE}
-      - Upload__MaxProfilePictureDimensions=${UPLOAD_MAX_PROFILE_PICTURE_DIMENSIONS}
+      - Upload__MaxProfilePictureDimensionSize=${UPLOAD_MAX_PROFILE_PICTURE_DIMENSION_SIZE}
     restart: unless-stopped
     volumes:
       - db-socket:/var/run/postgresql

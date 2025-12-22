@@ -47,11 +47,9 @@ namespace WebGames
 
 			var path = uploadOptions.Value.GetProfilePicturePath(userId);
 
-			// @todo Return default
 			if (!Path.Exists(path))
 			{
-				context.Response.StatusCode = StatusCodes.Status404NotFound;
-				return Task.CompletedTask;
+				path = uploadOptions.Value.GetDefaultProfilePicturePath();
 			}
 
 			return context.Response.SendFileAsync(path, context.RequestAborted);
