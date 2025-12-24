@@ -111,7 +111,7 @@ static void ConfigureServices(IServiceCollection services, ConfigurationManager 
 		}
 	);
 
-	services.AddDatabase(configuration.GetConnectionString("WebGames") ?? throw new Exception(), environment.IsDevelopment());
+	services.AddDatabase(configuration, environment.IsDevelopment());
 
 	services.AddSingleton<RendererService>();
 

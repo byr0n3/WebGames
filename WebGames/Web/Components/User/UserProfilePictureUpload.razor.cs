@@ -10,9 +10,9 @@ using WebGames.Extensions;
 using WebGames.Models;
 using WebGames.Services;
 
-namespace WebGames.Web.Components
+namespace WebGames.Web.Components.User
 {
-	public sealed partial class ProfilePictureUpload : ComponentBase
+	public sealed partial class UserProfilePictureUpload : ComponentBase
 	{
 		[Inject] public required UploadService Upload { get; init; }
 
@@ -20,7 +20,7 @@ namespace WebGames.Web.Components
 
 		[Inject] public required AuthenticationService Authentication { get; init; }
 
-		[Inject] public required IStringLocalizer<ProfilePictureUploadLocalization> Localizer { get; init; }
+		[Inject] public required IStringLocalizer<UserProfilePictureUploadLocalization> Localizer { get; init; }
 
 		private string? error;
 

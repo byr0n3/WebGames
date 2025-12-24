@@ -3,13 +3,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Localization;
-using WebGames.Extensions;
-using WebGames.Models;
 using WebGames.Services;
 
-namespace WebGames.Web.Components
+namespace WebGames.Web.Components.User
 {
-	public sealed partial class AccountDisplay : ComponentBase
+	public sealed partial class NavUserDisplay : ComponentBase
 	{
 		private const string signOutFormName = "SignOut";
 
@@ -17,7 +15,7 @@ namespace WebGames.Web.Components
 
 		[Inject] public required AuthenticationService Authentication { get; init; }
 
-		[Inject] public required IStringLocalizer<AccountDisplayLocalization> Localizer { get; init; }
+		[Inject] public required IStringLocalizer<NavUserDisplayLocalization> Localizer { get; init; }
 
 		[Parameter] [EditorRequired] public required ClaimsPrincipal User { get; set; }
 

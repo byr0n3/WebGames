@@ -14,21 +14,21 @@ namespace WebGames.Web.Components {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ProfilePictureUploadLocalization {
+    public class NavUserDisplayLocalization {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ProfilePictureUploadLocalization() {
+        internal NavUserDisplayLocalization() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Components.ProfilePictureUploadLocalization", typeof(ProfilePictureUploadLocalization).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("WebGames.Web.Components.User.NavUserDisplayLocalization", typeof(NavUserDisplayLocalization).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -45,39 +45,9 @@ namespace WebGames.Web.Components {
             }
         }
         
-        public static string Success {
+        public static string SignOut {
             get {
-                return ResourceManager.GetString("Success", resourceCulture);
-            }
-        }
-        
-        public static string ErrorFileCount {
-            get {
-                return ResourceManager.GetString("ErrorFileCount", resourceCulture);
-            }
-        }
-        
-        public static string ErrorContentType {
-            get {
-                return ResourceManager.GetString("ErrorContentType", resourceCulture);
-            }
-        }
-        
-        public static string ErrorFileSize {
-            get {
-                return ResourceManager.GetString("ErrorFileSize", resourceCulture);
-            }
-        }
-        
-        public static string ErrorLoadImage {
-            get {
-                return ResourceManager.GetString("ErrorLoadImage", resourceCulture);
-            }
-        }
-        
-        public static string ErrorConvertImage {
-            get {
-                return ResourceManager.GetString("ErrorConvertImage", resourceCulture);
+                return ResourceManager.GetString("SignOut", resourceCulture);
             }
         }
     }

@@ -36,7 +36,7 @@ namespace WebGames.Tests
 				});
 			});
 
-			services.AddDatabase(configuration.GetConnectionString("WebGames") ?? throw new Exception(), true);
+			services.AddDatabase(configuration, true);
 
 			// We want a new GameManager everytime we require it from the service provider,
 			// as multithreaded tests can influence the test results.

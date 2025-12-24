@@ -35,7 +35,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     restart: unless-stopped
     shm_size: 128mb
-    command: -p ${POSTGRES_PORT:-65432}
+    command: -p ${POSTGRES_PORT:-65432} -c wal_level=logical
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USERNAME}", "-p", "${POSTGRES_PORT}" ]
       interval: 5s

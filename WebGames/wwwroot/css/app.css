@@ -695,17 +695,19 @@ svg {
 }
 
 .badge {
+	--bg: var(--background-color-secondary);
+	--fg: inherit;
+
 	display: inline-block;
 	max-inline-size: 12rem;
 
-	padding-block: var(--spacing-medium);
-	padding-inline: var(--spacing-large);
+	padding-block: var(--spacing-small);
+	padding-inline: var(--spacing-medium);
 
-	background-color: var(--background-color-secondary);
-	color: inherit;
+	background-color: var(--bg);
+	color: var(--fg);
 
 	border-radius: var(--border-radius-pill);
-	border: var(--border-width) solid transparent;
 
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -713,23 +715,23 @@ svg {
 	overflow: hidden;
 
 	&.badge-info {
-		background-color: var(--background-color-info);
-		color: var(--color-info);
+		--bg: var(--background-color-info);
+		--fg: var(--color-info);
 	}
 
 	&.badge-success {
-		background-color: var(--background-color-success);
-		color: var(--color-success);
+		--bg: var(--background-color-success);
+		--fg: var(--color-success);
 	}
 
 	&.badge-warning {
-		background-color: var(--background-color-warning);
-		color: var(--color-warning);
+		--bg: var(--background-color-warning);
+		--fg: var(--color-warning);
 	}
 
 	&.badge-danger {
-		background-color: var(--background-color-danger);
-		color: var(--color-danger);
+		--bg: var(--background-color-danger);
+		--fg: var(--color-danger);
 	}
 }
 

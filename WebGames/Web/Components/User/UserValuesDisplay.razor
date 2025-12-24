@@ -1,0 +1,14 @@
+@using Elegance.Extensions
+@using Elegance.Icons
+@using WebGames.Extensions
+@rendermode RenderModes.Interactive
+
+<span class="badge badge-info">
+	@(Icons.CoinBitcoin)
+	@(coins.Humanize())
+</span>
+
+<span class="badge badge-info" title="@(level.Str()) XP">
+	@(Icons.Sparkles)
+	@(level.Str())
+</span>

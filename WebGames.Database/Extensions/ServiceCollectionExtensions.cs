@@ -1,8 +1,11 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
+using WebGames.Database.BackgroundServices;
+using WebGames.Database.Models.Options;
 
 namespace WebGames.Database.Extensions
 {
@@ -10,8 +13,10 @@ namespace WebGames.Database.Extensions
 	{
 		extension(IServiceCollection services)
 		{
-			public void AddDatabase(string connectionString, bool isDevelopment, int poolSize = 8)
+			public void AddDatabase(IConfigurationRoot configuration, bool isDevelopment, int poolSize = 8)
 			{
+				var connectionString = configuration.GetConnectionString("WebGames") ?? throw new Exception();
+
 				services.AddPooledDbContextFactory<WebGamesDbContext>((options) =>
 				{
 					var builder = new NpgsqlDataSourceBuilder(connectionString);
@@ -31,6 +36,16 @@ namespace WebGames.Database.Extensions
 						   .EnableThreadSafetyChecks(isDevelopment)
 						   .UseNpgsql(dataSource);
 				}, poolSize);
+
+				services.Configure<DatabaseSynchronizationOptions>((options) =>
+				{
+					var sync = configuration.GetSection("DatabaseSynchronization");
+
+					options.ConnectionString = sync[nameof(options.ConnectionString)] ?? connectionString;
+					options.Slot = sync[nameof(options.Slot)] ?? options.Slot;
+				});
+
+				services.AddHostedService<DatabaseSynchronizationService>();
 			}
 		}
 	}

@@ -4,11 +4,16 @@
 @using WebGames.Extensions
 @using WebGames.Models
 
-<div class="account">
+<div class="row justify-end pys-large pye-medium">
+	<UserValuesDisplay UserId="@(User.GetClaimValue<int>(ClaimType.Id))" />
+</div>
+
+<div class="row justify-space-between pye-large">
 	<div class="user">
-		<ProfilePicture UserId="@(User.GetClaimValue<int>(ClaimType.Id))"
-		                Username="@(User.GetRequiredClaimValue(ClaimType.Username))"
-		                class="user-avatar" />
+		<UserProfilePicture UserId="@(User.GetClaimValue<int>(ClaimType.Id))"
+		                    Username="@(User.GetRequiredClaimValue(ClaimType.Username))"
+		                    class="user-avatar" />
+
 		<NavLink href="/account" class="account-link">
 			@(User.GetRequiredClaimValue(ClaimType.Username))
 		</NavLink>
@@ -16,7 +21,7 @@
 
 	<EditForm EditContext="@(editContext)"
 	          OnValidSubmit="@(SignOutAsync)"
-	          FormName="@(AccountDisplay.signOutFormName)">
+	          FormName="@(NavUserDisplay.signOutFormName)">
 		<button type="submit"
 		        class="sign-out-btn btn-icon"
 		        title="@(Localizer["SignOut"])"

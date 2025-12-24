@@ -4,6 +4,7 @@
 @using WebGames.Models
 @using WebGames.Web.Components
 @using WebGames.Web.Components.Input
+@using WebGames.Web.Components.User
 
 <AppPageTitle Title="@(Localizer["Title"])" />
 
@@ -22,12 +23,12 @@
 	</HeaderContent>
 
 	<ChildContent>
-		<ProfilePicture UserId="@(User.GetClaimValue<int>(ClaimType.Id))"
-		                Username="@(User.GetRequiredClaimValue(ClaimType.Username))"
-		                class="user-avatar"
-		                style="--size: 5em; display: inline-block" />
+		<UserProfilePicture UserId="@(User.GetClaimValue<int>(ClaimType.Id))"
+		                    Username="@(User.GetRequiredClaimValue(ClaimType.Username))"
+		                    class="user-avatar"
+		                    style="--size: 5em; display: inline-block" />
 
-		<ProfilePictureUpload />
+		<UserProfilePictureUpload />
 	</ChildContent>
 </Card>
 

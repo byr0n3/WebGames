@@ -44,6 +44,10 @@ namespace WebGames.Database.Models
 
 		public bool HasMfaEnabled { get; init; }
 
+		public long Coins { get; init; }
+
+		public long Xp { get; init; }
+
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public DateTimeOffset Created { get; init; }
 

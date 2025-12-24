@@ -24,6 +24,16 @@ namespace WebGames.Extensions
 
 	public readonly struct ConfettiConfig
 	{
+		public static readonly ConfettiConfig Default = new()
+		{
+			ParticleCount = 100,
+			Spread = 70,
+			Origin = new ConfettiConfig.ConfettiOrigin
+			{
+				Y = 0.6f,
+			},
+		};
+
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
 		public int ParticleCount { get; init; }
 

@@ -51,15 +51,7 @@ namespace WebGames.Web.Components.Games
 					break;
 
 				case GameState.Finished:
-					_ = this.InvokeAsync(() => this.Js.ConfettiAsync(new ConfettiConfig
-					{
-						ParticleCount = 100,
-						Spread = 70,
-						Origin = new ConfettiConfig.ConfettiOrigin
-						{
-							Y = 0.6f,
-						},
-					}).AsTask());
+					_ = this.InvokeAsync(() => this.Js.ConfettiAsync(in ConfettiConfig.Default).AsTask());
 
 					// @todo Update player win stats
 					break;

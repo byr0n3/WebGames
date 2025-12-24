@@ -4,12 +4,13 @@
 @using Microsoft.Extensions.Options
 @using WebGames.Models.Options
 @using WebGames.Web.Components
+@using WebGames.Web.Components.User
 @inherits LayoutComponentBase
 
 <div class="navbar flex-row flex-nowrap justify-space-between align-center gap-medium">
-	<NavLink Match="@(NavLinkMatch.All)" 
-			 href="/" 
-			 class="d-flex flex-row flex-nowrap align-center gap-medium home-link">
+	<NavLink Match="@(NavLinkMatch.All)"
+	         href="/"
+	         class="d-flex flex-row flex-nowrap align-center gap-medium home-link">
 		<span class="app-logo">
 			@(Icons.Joker)
 		</span>
@@ -38,7 +39,7 @@
 
 		<AuthorizeView>
 			<Authorized Context="auth">
-				<AccountDisplay User="@(auth.User)" />
+				<NavUserDisplay User="@(auth.User)" />
 			</Authorized>
 		</AuthorizeView>
 	</div>

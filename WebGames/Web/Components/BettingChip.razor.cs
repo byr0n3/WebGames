@@ -1,8 +1,7 @@
-using System.Globalization;
 using System.Threading.Tasks;
-using Elegance.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
+using WebGames.Extensions;
 
 namespace WebGames.Web.Components
 {
@@ -10,11 +9,11 @@ namespace WebGames.Web.Components
 	{
 		[Inject] public required IStringLocalizer<BettingChipLocalization> Localizer { get; init; }
 
-		[Parameter] [EditorRequired] public ulong Value { get; set; }
+		[Parameter] [EditorRequired] public long Value { get; set; }
 
 		[Parameter] public string Class { get; set; } = string.Empty;
 
-		[Parameter] public EventCallback<ulong> Clicked { get; set; }
+		[Parameter] public EventCallback<long> Clicked { get; set; }
 
 		private bool Clickable =>
 			this.Clicked.HasDelegate;
@@ -24,7 +23,7 @@ namespace WebGames.Web.Components
 
 		protected override void OnParametersSet()
 		{
-			this.label = BettingChip.Humanize(this.Value);
+			this.label = this.Value.Humanize();
 			this.color = BettingChip.GetColor(this.Value);
 		}
 
@@ -32,7 +31,7 @@ namespace WebGames.Web.Components
 			this.Clicked.InvokeAsync(this.Value);
 
 		// @todo Based on algorithm
-		private static string GetColor(ulong value) =>
+		private static string GetColor(long value) =>
 			(value) switch
 			{
 				>= 10000000 => "#d1a204",
@@ -44,30 +43,5 @@ namespace WebGames.Web.Components
 				>= 10       => "#d16711",
 				_           => "#bf2b5f",
 			};
-
-		private static string Humanize(ulong value)
-		{
-			const float divide = 3f;
-
-			var mag = (int)(float.Floor(float.Log10(value)) / divide);
-			var divisor = float.Pow(10f, mag * divide);
-
-			char? suffix = (mag) switch
-			{
-				3 => 'B',
-				2 => 'M',
-				1 => 'K',
-				_ => null,
-			};
-
-			if (suffix is null)
-			{
-				return value.Str();
-			}
-
-			var rounded = float.Round(value / divisor, 1, System.MidpointRounding.ToZero);
-
-			return string.Create(CultureInfo.InvariantCulture, $"{rounded:N0}{suffix}");
-		}
 	}
 }
