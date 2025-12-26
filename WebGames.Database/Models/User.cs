@@ -44,7 +44,7 @@ namespace WebGames.Database.Models
 
 		public bool HasMfaEnabled { get; init; }
 
-		public long Coins { get; init; }
+		public long Coins { get; init; } = 500;
 
 		public long Xp { get; init; }
 

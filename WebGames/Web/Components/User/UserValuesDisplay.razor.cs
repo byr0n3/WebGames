@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.JSInterop;
 using WebGames.Database;
-using WebGames.Database.BackgroundServices;
+using WebGames.Database.Replication;
 using WebGames.Extensions;
 
 namespace WebGames.Web.Components.User
@@ -18,33 +18,36 @@ namespace WebGames.Web.Components.User
 
 		[Parameter] [EditorRequired] public required int UserId { get; set; }
 
+		private ReplicationSubscription? subscription;
+
 		private long coins;
 		private int level;
 
 		protected override void OnInitialized()
 		{
-			DatabaseSynchronizationService.UpdateMessageReceived += this.OnUpdateMessageReceived;
+			this.subscription = DatabaseReplicationService.Subscribe<Database.Models.User>(this.OnUserUpdated);
 		}
 
 		protected override Task OnParametersSetAsync() =>
 			this.UpdateAsync();
 
-		private void OnUpdateMessageReceived(string table, DatabaseUpdateData data)
+		private void OnUserUpdated(Database.Models.User user, ReplicationType type)
 		{
-			if ((table is not "Users") || (data.Get<int>(nameof(Database.Models.User.Id)) != this.UserId))
+			if ((type != ReplicationType.Updated) || (user.Id != this.UserId))
 			{
 				return;
 			}
 
-			var nextCoins = data.Get<long>(nameof(Database.Models.User.Coins));
-			var nextLevel = data.Get<long>(nameof(Database.Models.User.Xp)).XpToLevel();
-			var updated = (this.coins != nextCoins) || (this.level != nextLevel);
+			var nextLevel = user.Xp.XpToLevel();
+			var updated = (this.coins != user.Coins) || (this.level != nextLevel);
 
-			if (this.coins != nextCoins)
+			if (this.coins != user.Coins)
 			{
-				this.coins = nextCoins;
+				_ = user.Coins > this.coins
+					? this.InvokeAsync(this.PlayCoinsGainedAnimationAsync)
+					: this.InvokeAsync(this.PlayCoinsRemovedAnimationAsync);
 
-				// @todo Animation
+				this.coins = user.Coins;
 			}
 
 			if (this.level != nextLevel)
@@ -83,6 +86,12 @@ namespace WebGames.Web.Components.User
 			}
 		}
 
+		private Task PlayCoinsRemovedAnimationAsync() =>
+			Task.CompletedTask;
+
+		private Task PlayCoinsGainedAnimationAsync() =>
+			Task.CompletedTask;
+
 		private async Task PlayLevelUpAnimationAsync()
 		{
 			await this.Js.ConfettiAsync(in ConfettiConfig.Default);
@@ -92,7 +101,10 @@ namespace WebGames.Web.Components.User
 
 		public void Dispose()
 		{
-			DatabaseSynchronizationService.UpdateMessageReceived -= this.OnUpdateMessageReceived;
+			if (this.subscription is not null)
+			{
+				DatabaseReplicationService.Unsubscribe(this.subscription);
+			}
 		}
 	}
 }

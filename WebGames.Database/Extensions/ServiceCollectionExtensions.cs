@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
-using WebGames.Database.BackgroundServices;
+using WebGames.Database.Replication;
 using WebGames.Database.Models.Options;
 
 namespace WebGames.Database.Extensions
@@ -45,7 +45,7 @@ namespace WebGames.Database.Extensions
 					options.Slot = sync[nameof(options.Slot)] ?? options.Slot;
 				});
 
-				services.AddHostedService<DatabaseSynchronizationService>();
+				services.AddHostedService<DatabaseReplicationService>();
 			}
 		}
 	}
