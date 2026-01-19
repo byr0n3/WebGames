@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;
 using Npgsql.Replication.PgOutput;
-using Npgsql.Replication.PgOutput.Messages;
+using WebGames.Database.Extensions;
 
 namespace WebGames.Database.Replication
 {
@@ -39,7 +39,8 @@ namespace WebGames.Database.Replication
 				}
 
 				// Get property from the entity's model (`GetFieldName` returns the column name).
-				var property = entityType.GetProperty(replicationValue.GetFieldName());
+				var column = replicationValue.GetFieldName();
+				var property = entityType.GetPropertyByColumn(column);
 				var index = property.GetIndex();
 
 				if (index == -1)
